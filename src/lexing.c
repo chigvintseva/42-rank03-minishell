@@ -1,40 +1,4 @@
-//#include "minishell.c"
-
-typedef struct s_lexer
-{
-	int		i;
-	char 	*s;
-}	t_lexer;
-
-typedef enum e_token_type
-{
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	HEREDOC,
-	REDIR_APPEND,
-	WORD
-}	t_token_type;
-
-typedef struct s_token
-{
-	t_token_type	type;
-
-}	t_token;
-
-int is_operator(char c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
-
-int is_space(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-}
+#include "../include/minishell.h"
 
 void	handle_operator(t_lexer *input)
 {
@@ -62,43 +26,42 @@ void	handle_operator(t_lexer *input)
 	}
 	input->i++;
 }
-void	count_len(char *s, int *len)
+
+void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 {
-	int	i;
+		(*i)++;
+		while (s[*i] && s[*i] != quote)
+		{
+			if(word)
+				*(*word)++ = s[(*i)++];
+			else
+			{
+				(*len)++;
+				(*i)++;
+			}
+		}
+		if (s[*i] != quote)
+			; // return error
+		(*i)++;
+}
+
+void	count_len(t_lexer *input, int *len)
+{
+	int	tmp_i;
 
 	*len = 0;
-	i = 0;
-	while (!is_operator(s[i]) && !is_space(s[i]) && s[i])
+	tmp_i = input->i;
+	while (!is_operator(input->s[tmp_i]) && !is_space(input->s[tmp_i]) && input->s[tmp_i])
 	{
-		if (s[i] != '"' && s[i] != 39)
+		if (input->s[tmp_i] != '"' && input->s[tmp_i] != '\'')
 		{
 			(*len)++;
-			i++;
+			tmp_i++;
 		}
-		if (s[i] == '"')
-		{
-			i++;
-			while (s[i] && s[i] != '"')
-			{
-				(*len)++;
-				i++;
-			}
-			if (s[i] != '"')
-				; // return error
-			i++;
-		}
-		if (s[i] == 39)
-		{
-			i++;
-			while (s[i] && s[i] != 39)
-			{
-				(*len)++;
-				i++;
-			}
-			if (s[i] != 39)
-				; // return error
-			i++;
-		}
+		if (input->s[tmp_i] == '"')
+			handle_quotes('"', len, 0, input->s, &tmp_i); //NULL
+		if (input->s[tmp_i] == '\'')
+			handle_quotes('\'', len, 0, input->s, &tmp_i); //NULL
 	}
 }
 
@@ -106,49 +69,25 @@ void	handle_word(t_lexer *input)
 {
 	char	*word;
 	int		len;
+	char	*tmp;
 
-	count_len(&(input->s[input->i]), &len);
+	count_len(input, &len); // check error		
 	word = malloc((len * sizeof(char)) + 1);
-	while (!is_operator(input->s[input->i]) && !is_space(input->s[input->i]) && input->s[input->i])
+	if (!word)
+		return ;
+	while (!is_operator(input->s[input->i]) && !is_space(input->s[input->i])
+		&& input->s[input->i])
 	{
-		if (input->s[input->i] != '"' && input->s[input->i] == 39)
-		{
-			*word = input->s[input->i];
-		}
+		if (input->s[input->i] != '"' && input->s[input->i] != '\'')
+			*word++ = input->s[input->i++];
 		if (input->s[input->i] == '"')
-		{
-			input->i++;
-			while (input->s[input->i])
-			{	if (input->s[input->i] != '"')
-					len++; 
-				else
-				{
-					input->i++;
-					break;
-				}
-				input->i++;
-			}
-			if (input->s[input->i - 1] != '"')
-				;//return error
-		}
-		if (input->s[input->i] == 39)
-		{
-			input->i++;
-			while (input->s[input->i])
-			{	if (input->s[input->i] != 39)
-					len++;
-				else
-				{
-					input->i++;
-					break;
-				}
-				input->i++;
-			}
-			if (input->s[input->i - 1] != 39)
-				;//return error
-		}
+			handle_quotes('"', 0, &word, input->s, &input->i);
+		if (input->s[input->i] == '\'')
+			handle_quotes('\'', 0, &word, input->s, &input->i);
 	}
-
+	*word = '\0';
+	//create token using tmp
+	free(tmp);
 }
 
 void lexer(char *str)
@@ -167,7 +106,7 @@ void lexer(char *str)
 		else
 		{
 			handle_word(&input);
-			input.i++;
+			input.i++; //?
 		}
 	}
 
