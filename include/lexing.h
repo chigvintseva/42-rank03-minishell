@@ -5,7 +5,16 @@ typedef struct s_lexer
 {
 	int		i;
 	char 	*s;
+	t_token	*tokens;
 }	t_lexer;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_token;
 
 typedef enum e_token_type
 {
@@ -17,13 +26,10 @@ typedef enum e_token_type
 	WORD
 }	t_token_type;
 
-typedef struct s_token
-{
-	t_token_type	type;
-
-}	t_token;
-
-int is_operator(char c);
-int is_space(char c);
+int 	is_operator(char c);
+int 	is_space(char c);
+t_token	*create_token(char *value, t_token_type type);
+void	tokenadd_back(t_token **lst, t_token *new);
+void	free_tokens(t_token *lst);
 
 #endif
