@@ -1,30 +1,30 @@
 #include "../include/minishell.h"
 
-void	handle_operator(t_lexer *input)
+t_token	*handle_operator(t_lexer *input)
 {
 	if (input->s[input->i] == '|')
-		; //create token
+		return (create_token("|", PIPE)); //create token
 	else if (input->s[input->i] == '<')
 	{
 		if (input->s[input->i + 1] == '<')
 		{
-			; //create token
 			input->i++;
+			return (create_token("<<", HEREDOC)); //create token
 		}
 		else
-			; //create token
+			return (create_token("<", REDIR_IN)); //create token
 	}
 	else if (input->s[input->i]  == '>')
 	{
 		if (input->s[input->i + 1] == '>')
 		{
-			; //create token
 			input->i++;
+			return (create_token(">>", REDIR_APPEND));  //create token
 		}
 		else
-			; //create token
+			return (create_token(">", REDIR_OUT));  //create token
 	}
-	input->i++;
+	return (NULL);
 }
 
 void handle_quotes(char quote, int *len, char **word, char *s, int *i)
@@ -51,7 +51,8 @@ void	count_len(t_lexer *input, int *len)
 
 	*len = 0;
 	tmp_i = input->i;
-	while (!is_operator(input->s[tmp_i]) && !is_space(input->s[tmp_i]) && input->s[tmp_i])
+	while (!is_operator(input->s[tmp_i]) && !is_space(input->s[tmp_i])
+		&& input->s[tmp_i])
 	{
 		if (input->s[tmp_i] != '"' && input->s[tmp_i] != '\'')
 		{
@@ -65,16 +66,18 @@ void	count_len(t_lexer *input, int *len)
 	}
 }
 
-void	handle_word(t_lexer *input)
+t_token	*handle_word(t_lexer *input)
 {
 	char	*word;
 	int		len;
 	char	*tmp;
+	t_token	*token_word;
 
 	count_len(input, &len); // check error		
 	word = malloc((len * sizeof(char)) + 1);
 	if (!word)
-		return ;
+		return (NULL);
+	tmp = word;
 	while (!is_operator(input->s[input->i]) && !is_space(input->s[input->i])
 		&& input->s[input->i])
 	{
@@ -86,28 +89,36 @@ void	handle_word(t_lexer *input)
 			handle_quotes('\'', 0, &word, input->s, &input->i);
 	}
 	*word = '\0';
-	//create token using tmp
+	token_word = create_token(tmp, WORD);
 	free(tmp);
+	return (token_word);
 }
 
-void lexer(char *str)
+t_token *lexer(char *str)
 {
 	t_lexer	input;
+	t_token	*new_token;
 
-
+	if (!str)
+		return (NULL);
 	input.s = str;
 	input.i = 0;
+	input.tokens = NULL;
 	while (input.s[input.i])
 	{
 		if (is_space(input.s[input.i]))
 			input.i++;
-		else if (is_operator(input.s[input.i]))
-			handle_operator(&input);
+		if (is_operator(input.s[input.i]))
+		{
+			new_token = handle_operator(&input);
+			tokenadd_back(&input.tokens, new_token);
+			input.i++;
+		}
 		else
 		{
-			handle_word(&input);
-			input.i++; //?
+			new_token = handle_word(&input);
+			tokenadd_back(&input.tokens, new_token);
 		}
 	}
-
+	return (input.tokens);
 }

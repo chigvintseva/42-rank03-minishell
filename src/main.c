@@ -14,11 +14,14 @@ void	print_tokens(t_token *lst)
 int	main(int argc, char *argv[])
 {
 	char	*input;
+	t_token	*tokens;
 
 	input = readline("minishell$ ");
 	if (!input)
 		return (0);
-	//lexer(input);
-
+	tokens = lexer(input);
+	print_tokens(tokens);
+	free_tokens(tokens);
+	free(input);
 	return (0);
 }

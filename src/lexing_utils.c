@@ -14,15 +14,19 @@ int is_space(char c)
 	return (0);
 }
 
-t_token	*create_token(char *value, t_token_type type)
+t_token	*create_token(const char *value, t_token_type type)
 {
 	t_token	*node;
+	char	*dup_value;
 
+	if (!value)
+		return (NULL);
 	node = malloc(sizeof(t_token));
 	if (!node)
 		return (NULL);
+	dup_value = strdup(value); // include libft
 	node->type = type;
-	node->value = value;
+	node->value = dup_value;
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
