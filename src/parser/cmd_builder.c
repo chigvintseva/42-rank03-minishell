@@ -12,3 +12,7 @@
 
 #include "../../include/minishell.h"
 
+t_cmd	*build_cmd(t_token *start, t_token *end)
+{
+	
+}

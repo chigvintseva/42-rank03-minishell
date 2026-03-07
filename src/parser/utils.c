@@ -21,6 +21,19 @@ t_token	*get_last_token(t_token *head)
 	return (head);
 }
 
+t_token	*find_last_pipe(t_token *start, t_token *end)
+{
+	if (start == NULL || end == NULL)
+		return (NULL);
+	while (end != start)
+	{
+		if (end->type == PIPE)
+			return (end);
+		end = end->prev;
+	}
+	return (NULL);
+}
+
 int	is_redir_token(t_token_type type)
 {
 	if (type == REDIR_IN || type == REDIR_OUT
