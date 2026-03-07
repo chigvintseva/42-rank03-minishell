@@ -35,16 +35,25 @@ typedef struct s_ast
 	t_ast_type		type;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	t_cmd			*scmd;
+	t_cmd			*cmd;
 }	t_ast;
 
 
 t_ast	*parse_tokens(t_token *tokens);
 
+
+// utils
 t_token	*get_last_token(t_token *head);
-int	is_redir_token(t_token_type type);
-int	is_word_token(t_token_type type);
+int		is_redir_token(t_token_type type);
+int		is_word_token(t_token_type type);
 int		token_in_range(t_token *start, t_token *end, t_token *target);
+// create_new
+t_ast	*ast_new_cmd(t_cmd *cmd);
+t_ast	*ast_new_pipe(void);
+t_cmd	*new_cm(char **argv, int argc, t_redir *redirs);
+t_redir	*new_redir(t_redir_type type, char *target);
+
+
 
 int	validate_syntax(t_token *tokens);
 int	check_pipe_syntax(t_token *token);
