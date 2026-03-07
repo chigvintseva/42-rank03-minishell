@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2025/12/02 18:29:29 by achigvin         ###   ########.fr       */
+/*   Created: 2026/03/07 14:00:15 by achigvin          #+#    #+#             */
+/*   Updated: 2026/03/07 14:00:15 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../include/minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include "libft/libft.h"
-# include "lexer.h"
-# include "parser.h"
+t_token	*get_last_token(t_token *head)
+{
+	while (head->next != NULL)
+		head = head->next;
+	return (head);
+}
 
-#endif
+int	is_redir_token(t_token_type type)
+{
+
+}
+
+int	is_word_token(t_token_type type)
+{
+
+}
+
+int		token_in_range(t_token *start, t_token *end, t_token *target)
+{
+
+}
