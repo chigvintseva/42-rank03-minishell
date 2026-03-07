@@ -19,9 +19,7 @@ t_ast	*parse_tokens(t_token *tokens)
 	if (tokens == NULL)
 		return (NULL);
 	if (is_syntax_valid(tokens) == 0)
-		reutrn (NULL);
-	root = build_ast(tokens);
-	if (root = NULL)
 		return (NULL);
+	root = build_ast(tokens, get_last_token(tokens));
 	return (root);
 }

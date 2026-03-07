@@ -11,3 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+t_ast	*build_ast(t_token *start, t_token *end)
+{
+
+}
