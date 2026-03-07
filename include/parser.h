@@ -38,7 +38,7 @@ typedef struct s_ast
 	t_cmd			*cmd;
 }	t_ast;
 
-
+// parser
 t_ast	*parse_tokens(t_token *tokens);
 
 
@@ -50,7 +50,7 @@ int		token_in_range(t_token *start, t_token *end, t_token *target);
 // create_new
 t_ast	*ast_new_cmd(t_cmd *cmd);
 t_ast	*ast_new_pipe(void);
-t_cmd	*new_cm(char **argv, int argc, t_redir *redirs);
+t_cmd	*new_cmd(char **argv, int argc, t_redir *redirs);
 t_redir	*new_redir(t_redir_type type, char *target);
 
 
