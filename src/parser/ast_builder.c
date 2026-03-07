@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-t_ast	*build_cmd_node(t_token *start, t_token *end)
+static t_ast	*build_cmd_node(t_token *start, t_token *end)
 {
 	t_cmd	*cmd;
 	t_ast	*node;
@@ -26,7 +26,7 @@ t_ast	*build_cmd_node(t_token *start, t_token *end)
 	return (node);
 }
 
-t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe)
+static t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe)
 {
 	t_ast	*left;
 	t_ast	*right;
