@@ -22,7 +22,6 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
-
 typedef struct s_cmd
 {
 	char	**argv;
@@ -41,22 +40,30 @@ typedef struct s_ast
 // parser
 t_ast	*parse_tokens(t_token *tokens);
 
-
 // utils
 t_token	*get_last_token(t_token *head);
+t_token	*find_last_pipe(t_token *start, t_token *end);
 int		is_redir_token(t_token_type type);
 int		is_word_token(t_token_type type);
 int		token_in_range(t_token *start, t_token *end, t_token *target);
+
 // create_new
-t_ast	*ast_new_cmd(t_cmd *cmd);
 t_ast	*ast_new_pipe(void);
+t_ast	*ast_new_cmd(t_cmd *cmd);
 t_cmd	*new_cmd(char **argv, int argc, t_redir *redirs);
 t_redir	*new_redir(t_redir_type type, char *target);
 
+// syntax_rules
+int	redir_rules(t_token *lst);
+int pipe_rules(t_token *lst);
+int	is_syntax_valid(t_token *lst);
 
+// free_functions
 
-int	validate_syntax(t_token *tokens);
-int	check_pipe_syntax(t_token *token);
-int	check_redir_syntax(t_token *token);
+void	free_redirs(t_redir *head);
+void	free_argv(char **argv);
+void	free_cmd(t_cmd *cmd);
+void	free_ast(t_ast *root);
+void	free_part_argv(char **argv, size_t filled)
 
 #endif

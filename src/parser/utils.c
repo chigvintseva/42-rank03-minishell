@@ -25,10 +25,12 @@ t_token	*find_last_pipe(t_token *start, t_token *end)
 {
 	if (start == NULL || end == NULL)
 		return (NULL);
-	while (end != start)
+	while (end != NULL)
 	{
 		if (end->type == PIPE)
 			return (end);
+		if (end == start)
+			break ;
 		end = end->prev;
 	}
 	return (NULL);
