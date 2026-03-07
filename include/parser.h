@@ -40,6 +40,22 @@ typedef struct s_ast
 // parser
 t_ast	*parse_tokens(t_token *tokens);
 
+// ast_builder
+static t_ast	*build_cmd_node(t_token *start, t_token *end);
+static t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe);
+t_ast	*build_ast(t_token *start, t_token *end);
+
+// cmd_builder_utils
+t_redir_type	token_to_redir_type(t_token_type type);
+void	redir_add_back(t_redir **head, t_redir *new_node);
+t_redir	*redir_error(t_redir *head, int *error);
+
+// cmd_builder
+static int	count_cmd_words(t_token *start, t_token *end);
+static t_redir	*extract_redirs(t_token *start, t_token *end, int *error);
+static char	**extract_argv(t_token *start, t_token *end, int argc);
+t_cmd	*build_cmd(t_token *start, t_token *end);
+
 // utils
 t_token	*get_last_token(t_token *head);
 t_token	*find_last_pipe(t_token *start, t_token *end);
@@ -59,11 +75,11 @@ int pipe_rules(t_token *lst);
 int	is_syntax_valid(t_token *lst);
 
 // free_functions
-
 void	free_redirs(t_redir *head);
 void	free_argv(char **argv);
 void	free_cmd(t_cmd *cmd);
 void	free_ast(t_ast *root);
 void	free_part_argv(char **argv, size_t filled)
+
 
 #endif

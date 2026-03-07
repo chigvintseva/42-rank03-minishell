@@ -38,7 +38,7 @@ static t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe)
 	right = build_ast(pipe->next, end);
 	if (!right)
 		return (free_ast(left), NULL);
-	node = ast_new_pipe;
+	node = ast_new_pipe();
 	if (!node)
 		return (free_ast(left), free_ast(right), NULL);
 	node->left = left;
@@ -49,10 +49,6 @@ static t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe)
 t_ast	*build_ast(t_token *start, t_token *end)
 {
 	t_token	*pipe;
-	t_ast	*left;
-	t_ast	*right;
-	t_ast	*node;
-	t_cmd	*new_cmd;
 
 	if (start == NULL || end == NULL 
 		|| token_in_range(start, end, end) == 0)
