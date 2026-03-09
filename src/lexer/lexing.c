@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 t_token	*handle_operator(t_lexer *input)
 {
@@ -41,7 +41,7 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 			}
 		}
 		// if (s[*i] != quote)
-		// 	exit_with_error("dquote>", 1); // return error
+		// 	exit_with_error("quotes", 1); // return error
 		(*i)++;
 }
 
@@ -73,7 +73,7 @@ t_token	*handle_word(t_lexer *input)
 	char	*tmp;
 	t_token	*token_word;
 
-	count_len(input, &len); // check error		
+	count_len(input, &len);	
 	word = malloc((len * sizeof(char)) + 1);
 	if (!word)
 		return (NULL);
@@ -112,16 +112,16 @@ t_token *lexer(char *str)
 		{
 			new_token = handle_operator(&input);
 			if (!new_token) 
-				return (NULL); // or ?
-			tokenadd_back(&input.tokens, new_token);
+				return (free_tokens(input.tokens), NULL); // or ?
+			tokenadd_back(&input.tokens, new_token); // error check?
 			input.i++;
 		}
 		else
 		{
 			new_token = handle_word(&input);
 			if (!new_token)
-				return (NULL); // or ?
-			tokenadd_back(&input.tokens, new_token);
+				return (free_tokens(input.tokens), NULL); // or ?
+			tokenadd_back(&input.tokens, new_token); // error check?
 		}
 	}
 	return (input.tokens);

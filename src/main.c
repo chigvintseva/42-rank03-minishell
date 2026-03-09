@@ -30,12 +30,13 @@ int	main(int argc, char *argv[])
 	if (!input)
 		return (0);
 	error = check_specialchars(input);
-	if (error)
+	if (error == 1)
 		return (free(input), exit_with_error("Invalid character", 1), 1);
 	if (error == 2)
 		return (free(input), exit_with_error("Unclosed quotes", 1), 1);
 	tokens = lexer(input);
 	if (!tokens)
+		return (free(input), exit_with_error("Error", 1), 1);
 	print_tokens(tokens);
 	free_tokens(tokens);
 	free(input);
