@@ -40,8 +40,8 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 				(*i)++;
 			}
 		}
-		if (s[*i] != quote)
-			; // return error
+		// if (s[*i] != quote)
+		// 	exit_with_error("dquote>", 1); // return error
 		(*i)++;
 }
 
@@ -111,12 +111,16 @@ t_token *lexer(char *str)
 		if (is_operator(input.s[input.i]))
 		{
 			new_token = handle_operator(&input);
+			if (!new_token) 
+				return (NULL); // or ?
 			tokenadd_back(&input.tokens, new_token);
 			input.i++;
 		}
 		else
 		{
 			new_token = handle_word(&input);
+			if (!new_token)
+				return (NULL); // or ?
 			tokenadd_back(&input.tokens, new_token);
 		}
 	}

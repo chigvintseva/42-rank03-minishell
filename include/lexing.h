@@ -28,7 +28,8 @@ typedef struct s_lexer
 
 t_token *lexer(char *str);
 int 	is_operator(char c);
-int 	is_space(char c);
+int 	is_space(const char c);
+int		check_specialchars(char *s);
 t_token	*create_token(const char *value, t_token_type type);
 void	tokenadd_back(t_token **lst, t_token *new);
 void	free_tokens(t_token *lst);
