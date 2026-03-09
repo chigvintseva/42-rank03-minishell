@@ -49,7 +49,7 @@ int	redir_rules(t_token *lst)
 // 	size_t	len;
 
 // 	if (s1 == NULL)
-// 		return (0);
+// 		return (0);s
 // 	len = ft_strlen(s1);
 // 	if (len == 1)
 // 	{
