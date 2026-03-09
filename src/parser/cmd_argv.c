@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static int	add_or_free_argv(char **argv, int i, t_token *c)
+int	add_or_free_argv(char **argv, int i, t_token *c)
 {
 	argv[i] = ft_strdup(c->value);
 	if (!argv[i])
@@ -20,7 +20,7 @@ static int	add_or_free_argv(char **argv, int i, t_token *c)
 	return (i + 1);
 }
 
-static char	**extract_argv(t_token *start, t_token *end, int argc)
+char	**extract_argv(t_token *start, t_token *end, int argc)
 {
 	char	**argv;
 	t_token	*c;

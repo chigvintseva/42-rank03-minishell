@@ -12,6 +12,7 @@ SRC_DIR = ../src/parser
 SRC = $(SRC_DIR)/ast_builder.c \
 	  $(SRC_DIR)/cmd_builder.c \
 	  $(SRC_DIR)/cmd_builder_utils.c \
+	  $(SRC_DIR)/cmd_argv.c \
 	  $(SRC_DIR)/create_new.c \
 	  $(SRC_DIR)/free_functions.c \
 	  $(SRC_DIR)/parser.c \

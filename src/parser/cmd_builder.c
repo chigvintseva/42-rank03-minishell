@@ -6,16 +6,17 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/09 13:12:58 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:19:59 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	count_cmd_words(t_token *start, t_token *end)
+int	count_cmd_words(t_token *start, t_token *end)
 {
 	t_token	*cur;
 	int		count;
+
 	if (start == NULL || end == NULL)
 		return (-1);
 	cur = start;
@@ -37,7 +38,7 @@ static int	count_cmd_words(t_token *start, t_token *end)
 	return (count);
 }
 
-static t_redir	*process_single_redir(t_token *cur, t_token *end,
+t_redir	*process_single_redir(t_token *cur, t_token *end,
 		t_redir *head, int *error)
 {
 	t_redir	*new_node;
@@ -51,7 +52,7 @@ static t_redir	*process_single_redir(t_token *cur, t_token *end,
 	return (head);
 }
 
-static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
+t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 {
 	t_token	*cur;
 	t_redir	*head;
@@ -74,8 +75,7 @@ static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 	}
 	return (head);
 }
-static char	**get_argv_and_redirs(t_token *start, t_token *end,
-		int argc, t_redir **redirs)
+char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
 	int		error;
 	char	**argv;

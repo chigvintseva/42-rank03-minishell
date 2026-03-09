@@ -43,8 +43,6 @@ typedef struct s_ast
 t_ast	*parse_tokens(t_token *tokens);
 
 // ast_builder
-static t_ast	*build_cmd_node(t_token *start, t_token *end);
-static t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe);
 t_ast	*build_ast(t_token *start, t_token *end);
 
 // cmd_builder_utils
@@ -53,14 +51,14 @@ void	redir_add_back(t_redir **head, t_redir *new_node);
 t_redir	*redir_error(t_redir *head, int *error);
 
 // cmd_argv
-static int	add_or_free_argv(char **argv, int i, t_token *c);
-static char	**extract_argv(t_token *start, t_token *end, int argc);
+int	add_or_free_argv(char **argv, int i, t_token *c);
+char	**extract_argv(t_token *start, t_token *end, int argc);
 
 // cmd_builder
-static int	count_cmd_words(t_token *start, t_token *end);
-static t_redir	*process_single_redir(t_token *redir_token, t_token *end, t_redir *head, int *error);
-static t_redir	*extract_redirs(t_token *start, t_token *end, int *error);
-static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs);
+int	count_cmd_words(t_token *start, t_token *end);
+t_redir	*process_single_redir(t_token *redir_token, t_token *end, t_redir *head, int *error);
+t_redir	*extract_redirs(t_token *start, t_token *end, int *error);
+char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs);
 t_cmd	*build_cmd(t_token *start, t_token *end);
 
 // utils
