@@ -16,7 +16,7 @@ void	exit_with_error(char *msg, int code)
 	if (errno)
 		perror(msg);
 	else
-		printf("%s\n", msg);
+		printf("Error: %s\n", msg);
 	exit(code);
 }
 
@@ -26,10 +26,10 @@ int	main()
 	int		error;
 	t_token	*tokens;
 
-	input = readline("minishell$ ");
+	input = readline("minishell$ "); // will be inside while(1) in amin nof minishell to get user's input
 	if (!input)
-		return (0);
-	error = check_specialchars(input);
+		return (exit_with_error("Error", 1), 1);
+	error = check_specialchars(input); // syntax check for uncloased " and symbols like ; && 
 	if (error == 1)
 		return (free(input), exit_with_error("Invalid character", 1), 1);
 	if (error == 2)

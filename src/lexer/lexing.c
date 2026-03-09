@@ -2,6 +2,8 @@
 
 t_token	*handle_operator(t_lexer *input)
 {
+	if (!input || !input->s)
+		return (NULL);
 	if (input->s[input->i] == '|')
 		return (create_token("|", PIPE)); //create token
 	else if (input->s[input->i] == '<')
@@ -32,7 +34,7 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 		(*i)++;
 		while (s[*i] && s[*i] != quote)
 		{
-			if(word)
+			if(word) // null or 0 or why pointer 
 				*(*word)++ = s[(*i)++];
 			else
 			{
@@ -40,7 +42,7 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 				(*i)++;
 			}
 		}
-		// if (s[*i] != quote)
+		// if (s[*i] != quote) // impossible to get in here, maybe the check not needed at all
 		// 	exit_with_error("quotes", 1); // return error
 		(*i)++;
 }
@@ -90,8 +92,7 @@ t_token	*handle_word(t_lexer *input)
 	}
 	*word = '\0';
 	token_word = create_token(tmp, WORD);
-	free(tmp);
-	return (token_word);
+	return (free(tmp), token_word);
 }
 
 t_token *lexer(char *str)
@@ -112,16 +113,18 @@ t_token *lexer(char *str)
 		{
 			new_token = handle_operator(&input);
 			if (!new_token) 
-				return (free_tokens(input.tokens), NULL); // or ?
-			tokenadd_back(&input.tokens, new_token); // error check?
+				return (free_tokens(input.tokens), NULL);
+			if (tokenadd_back(&input.tokens, new_token) == -1)
+				return (free_tokens(input.tokens), NULL);
 			input.i++;
 		}
 		else
 		{
 			new_token = handle_word(&input);
 			if (!new_token)
-				return (free_tokens(input.tokens), NULL); // or ?
-			tokenadd_back(&input.tokens, new_token); // error check?
+				return (free_tokens(input.tokens), NULL);
+			if (tokenadd_back(&input.tokens, new_token) == -1)
+				return (free_tokens(input.tokens), NULL);
 		}
 	}
 	return (input.tokens);

@@ -2,38 +2,41 @@
 
 t_token	*create_token(const char *value, t_token_type type)
 {
-	t_token	*node;
+	t_token	*token;
 	char	*dup_value;
 
 	if (!value)
 		return (NULL);
-	node = malloc(sizeof(t_token));
-	if (!node)
+	token = malloc(sizeof(t_token));
+	if (!token)
 		return (NULL);
-	dup_value = strdup(value); // include libft
-	node->type = type;
-	node->value = dup_value;
-	node->next = NULL;
-	node->prev = NULL;
-	return (node);
+	dup_value = ft_strdup(value);
+	if (!dup_value)
+		return (free(token), NULL);
+	token->type = type;
+	token->value = dup_value;
+	token->next = NULL;
+	token->prev = NULL;
+	return (token);
 }
 
-void	tokenadd_back(t_token **lst, t_token *new)
+int	tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*tmp;
 
 	if (!lst || !new)
-		return ; // error?
+		return (-1);
 	if (!*lst)
 	{
 		*lst = new;
-		return ;
+		return (0);
 	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->prev = tmp;
+	return (0);
 }
 
 void	free_tokens(t_token *lst)
