@@ -20,7 +20,7 @@ void	exit_with_error(char *msg, int code)
 	exit(code);
 }
 
-int	main(int argc, char *argv[])
+int	main()
 {
 	char	*input;
 	int		error;
