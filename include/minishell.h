@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2025/12/02 18:29:29 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/11 19:59:10 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@
 # include "libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
+# include "runner.h"
 
 #endif
