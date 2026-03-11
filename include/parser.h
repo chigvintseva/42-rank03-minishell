@@ -1,8 +1,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "minishell.h"
-
 typedef enum	e_ast_type
 {
 	AST_CMD,
