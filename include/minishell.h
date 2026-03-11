@@ -20,4 +20,6 @@
 # include "lexer.h"
 # include "parser.h"
 
+void	exit_with_error(char *msg, int code);
+
 #endif

@@ -21,16 +21,17 @@ typedef struct s_token
 
 typedef struct s_lexer
 {
-	int		i;
-	char 	*s;
+	int		i; // index in a str form input
+	char 	*s; // string form input
 	t_token	*tokens;
 }	t_lexer;
 
 t_token *lexer(char *str);
 int 	is_operator(char c);
-int 	is_space(char c);
+int 	is_space(const char c);
+int		check_specialchars(char *s);
 t_token	*create_token(const char *value, t_token_type type);
-void	tokenadd_back(t_token **lst, t_token *new);
+int		tokenadd_back(t_token **lst, t_token *new);
 void	free_tokens(t_token *lst);
 
 #endif
