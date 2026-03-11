@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2025/12/02 18:29:29 by achigvin         ###   ########.fr       */
+/*   Created: 2025/05/15 17:42:59 by achigvin          #+#    #+#             */
+/*   Updated: 2025/05/15 17:43:00 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include "libft/libft.h"
-# include "lexer.h"
-# include "parser.h"
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*s1;
+	size_t			i;
 
-#endif
+	s1 = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		*s1 = '\0';
+		i++;
+		s1++;
+	}
+}
