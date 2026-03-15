@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/11 19:59:10 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/15 23:37:35 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <unistd.h>
 # include "libft/libft.h"
 # include "lexer.h"
 # include "parser.h"

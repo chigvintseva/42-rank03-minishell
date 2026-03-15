@@ -1,20 +1,6 @@
 #include "../../include/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0')
-	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-int	is_builtin(char *cmd)
+static int	is_builtin(char *cmd)
 {
 	if (!cmd)
 		return (0);
@@ -35,7 +21,7 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	execute_builtin(char **cmd_arg)
+static int	execute_builtin(char **cmd_arg)
 {
 	if (!ft_strcmp(cmd_arg[0], "echo"))
 		return (builtin_echo());
@@ -54,16 +40,61 @@ int	execute_builtin(char **cmd_arg)
 	return (0);
 }
 
-int	execute_external(t_cmd *cmd)
+static void	execute_external(t_cmd *cmd, char **env)
 {
-	
+	char	*cmd_path;
+	int		perm_error;
+
+	perm_error = 0;
+	if (!ft_strchr(cmd->argv[0], '/'))
+	{
+		cmd_path = parsing(cmd->argv[0], env, &perm_error);
+		if (!cmd_path)
+		{
+			if (perm_error)
+			{
+				ft_putstr_fd("minishell: command not found: ", 2);
+				ft_putendl_fd(cmd->argv[0], 2);
+				exit(127);
+			}
+			else
+			{
+				ft_putstr_fd("minishell: Permission denied: ", 2);
+				ft_putendl_fd(cmd->argv[0], 2);
+				exit(126);
+			}
+		}
+		if (execve(cmd_path, cmd->argv, env) == -1)
+		{
+			free(cmd_path);
+			exit_with_error("execve", 126);
+		}
+	}
+	else
+	{
+		if (execve(cmd->argv[0], cmd->argv, env) == -1)
+			exit_with_error("execve", EXIT_FAILURE); // exit code 126/127 ???
+	}
 }
 
-int	execute_cmd(t_cmd *cmd) // argv = {{ls} {-l}}
+int	execute_cmd(t_cmd *cmd, t_shell	*shell)
 {
+	pid_t	pid;
+	int		status;
+
 	if (!cmd || !cmd->argv)
 		return (0);
 	if (is_builtin(cmd->argv[0]))
 		return (execute_builtin(cmd->argv));
-	return (execute_external(cmd));
+	pid = fork();
+	if (pid == -1)
+		return (0);
+	if (pid == 0)
+		execute_external(cmd, shell->env);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+            shell->exit_status = WEXITSTATUS(status);
+    else if (WIFSIGNALED(status))
+            shell->exit_status = 128 + WTERMSIG(status);
+	return (1);
 }
