@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/11 16:42:25 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:25:20 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,13 @@ int	check_specialchars(char *s)
 	if (in_single || in_double)
 		return (2);
 	return (0);
+}
+
+void	print_tokens(t_token *lst)
+{
+	while (lst)
+	{
+		printf("type: %d valuse: %s\n", lst->type, lst->value);
+		lst = lst->next;
+	}	
 }
