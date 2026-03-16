@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:43:06 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/16 15:12:26 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:18:13 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,47 @@
 #include <readline/readline.h>
 #include <readline/history.h> //cc main.c -lreadline
 
-int	minishell(char *input)
+void	minishell(char *input, t_shell shell)
 {
 	int		error_input;
 	t_token	*tokens;
 	t_ast	*root;
 
 	error_input = check_specialchars(input);
-	if (error_input == 1 || 2)
-		return (1);
+	if (error_input == 1)
+		return (ft_printf("Invalid character\n"), 1);
+	if (error_input == 2)
+		return (ft_printf("Unclosed quotes\n"), 1);
 	tokens = lexer(input);
 	if (!tokens)
-		return (1);
+		return (ft_printf("Lexer error\n"), 1);
 	root = parse_tokens(tokens);
 	if (!root)
-		return (1);
-	return (runner(root));
+		return (free_tokens(tokens), ft_printf("Parser error\n"), 1);
+	if (!runner(root))
+		return (free_tokens(tokens), free_ast(root), ft_printf("Runner error\n"), 1);
+	return (0);
 }
 
-int	main()
+int	main(void)
 {
 	char	*input;
-	int		return_code;
+	t_shell	shell;
 
+	// init shell struct and signals
 	while (1)
 	{
 		input = readline("minishell$ ");
 		if (!input)
 			return (exit_with_error("Error", 1), 1);
-		return_code = minishell(input);
-		if (return_code == 1)
-			return (free(input), exit_with_error("Error", 1), 1);
+		if (ft_strlen(input) == 0)
+		{
+			free(input);
+			continue ;
+		}
+		add_history(input);
+		minishell(input, shell);
+		free(input);
 	}
-	free(input);
-	return (0);
+	return (shell.exit_status);
 }
