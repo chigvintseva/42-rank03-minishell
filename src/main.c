@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:43:06 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/11 16:43:06 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/16 15:12:26 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,38 @@
 #include <readline/readline.h>
 #include <readline/history.h> //cc main.c -lreadline
 
-void	print_tokens(t_token *lst)
+int	minishell(char *input)
 {
-	while (lst)
-	{
-		printf("type: %d valuse: %s\n", lst->type, lst->value);
-		lst = lst->next;
-	}	
-}
+	int		error_input;
+	t_token	*tokens;
+	t_ast	*root;
 
-void	exit_with_error(char *msg, int code)
-{
-	if (errno)
-		perror(msg);
-	else
-		printf("Error: %s\n", msg);
-	exit(code);
+	error_input = check_specialchars(input);
+	if (error_input == 1 || 2)
+		return (1);
+	tokens = lexer(input);
+	if (!tokens)
+		return (1);
+	root = parse_tokens(tokens);
+	if (!root)
+		return (1);
+	return (runner(root));
 }
 
 int	main()
 {
 	char	*input;
-	int		error;
-	t_token	*tokens;
+	int		return_code;
 
-	input = readline("minishell$ "); // will be inside while(1) in amin nof minishell to get user's input
-	if (!input)
-		return (exit_with_error("Error", 1), 1);
-	error = check_specialchars(input); // syntax check for uncloased " and symbols like ; && 
-	if (error == 1)
-		return (free(input), exit_with_error("Invalid character", 1), 1);
-	if (error == 2)
-		return (free(input), exit_with_error("Unclosed quotes", 1), 1);
-	tokens = lexer(input);
-	if (!tokens)
-		return (free(input), exit_with_error("Error", 1), 1);
-	print_tokens(tokens);
-	free_tokens(tokens);
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+			return (exit_with_error("Error", 1), 1);
+		return_code = minishell(input);
+		if (return_code == 1)
+			return (free(input), exit_with_error("Error", 1), 1);
+	}
 	free(input);
 	return (0);
 }
