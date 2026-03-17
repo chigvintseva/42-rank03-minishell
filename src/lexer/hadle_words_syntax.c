@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   hadle_words_syntax.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/16 14:46:54 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:44:52 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ t_token	*handle_operator(t_lexer *input)
 	if (!input || !input->s)
 		return (NULL);
 	if (input->s[input->i] == '|')
-		return (create_token("|", PIPE)); //create token
+		return (create_token("|", PIPE));
 	else if (input->s[input->i] == '<')
 	{
 		if (input->s[input->i + 1] == '<')
 		{
 			input->i++;
-			return (create_token("<<", HEREDOC)); //create token
+			return (create_token("<<", HEREDOC));
 		}
 		else
-			return (create_token("<", REDIR_IN)); //create token
+			return (create_token("<", REDIR_IN));
 	}
 	else if (input->s[input->i]  == '>')
 	{
 		if (input->s[input->i + 1] == '>')
 		{
 			input->i++;
-			return (create_token(">>", REDIR_APPEND));  //create token
+			return (create_token(">>", REDIR_APPEND));
 		}
 		else
-			return (create_token(">", REDIR_OUT));  //create token
+			return (create_token(">", REDIR_OUT));
 	}
 	return (NULL);
 }
@@ -59,7 +59,7 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 		(*i)++;
 }
 
-void	count_len(t_lexer *input, int *len)
+static void	count_len(t_lexer *input, int *len)
 {
 	int	tmp_i;
 

@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 18:34:33 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:47:26 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	only_space(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != NULL)
+	while (str[i] != '\0')
 	{
 		if (is_space((const char)str[i]) == 0)
-			reutrn (0);
+			return (0);
 		i++;
 	}
-	reutrn (1);
+	return (1);
 }
 
 int	check_specialchars(char *s)

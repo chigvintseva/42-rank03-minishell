@@ -6,14 +6,11 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:16:19 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:34:24 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h> //cc main.c -lreadline
-#include <signal.h>
 
 static volatile sig_atomic_t	g_signal;
 

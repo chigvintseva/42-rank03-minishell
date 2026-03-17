@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:32:37 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:35:24 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <string.h>
 # include <errno.h>
 # include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h> //cc main.c -lreadline
+# include <signal.h>
 # include "libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
