@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:00:40 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:16:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static volatile sig_atomic_t	g_signal;
 
-void	signal_handler(int signal)
+static void	signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -29,7 +29,7 @@ void	signal_handler(int signal)
 	}
 }
 
-void	set_signals(void)
+static void	set_signals(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
@@ -44,28 +44,13 @@ void	set_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-int	minishell(t_shell *shell, char *input)
+static void	update_sigint_status(t_shell *shell)
 {
-	t_token	*tokens;
-	int		check_ret;
-	t_ast	*root;
-
-	check_ret = check_specialchars(input);
-	if (check_ret == 1)
-		return (case_error("Invalid character", 2), 2);
-	if (check_ret == 2)
-		return (case_error("Unclosed quotes", 2), 2);
-	tokens = lexer(input);
-	if (!tokens)
-		return (ft_printf("Lexer error"), 2);
-	root = parse_tokens(tokens);
-	if (!root)
-		return (free_tokens(tokens), case_error("Parser error", 2), 2);
-	if (runner(root, shell))
-		return (free_tokens(tokens), free_ast(root), case_error("Runner error", 2), 2);
-	free_tokens(tokens);
-	free_ast(root);
-	return (0);
+	if (g_signal == SIGINT)
+	{
+		shell->exit_status = 130;
+		g_signal = 0;
+	}
 }
 
 void	shell_loop(t_shell *shell)
@@ -74,11 +59,7 @@ void	shell_loop(t_shell *shell)
 
 	while (shell->run_further == 1)
 	{
-		if (g_signal == SIGINT)
-		{
-			shell->exit_status = 130;
-			g_signal = 0;
-		}
+		update_sigint_status(shell);
 		input = readline("minishell$ ");
 		if (input == NULL)
 		{
@@ -106,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 	errno = 0;
 	if (init_shell(&shell, envp) != 0)
 	{
-		case_error("Error ", 1);
+		case_error("Shell Initialisation Error ");
 		return (1);
 	}
 	set_signals();
