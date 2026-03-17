@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/11 16:43:06 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/16 17:18:13 by achigvin         ###   ########.fr       */
+/*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
+/*   Updated: 2026/03/17 16:23:21 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,46 @@
 #include <readline/readline.h>
 #include <readline/history.h> //cc main.c -lreadline
 
-void	minishell(char *input, t_shell shell)
-{
-	int		error_input;
-	t_token	*tokens;
-	t_ast	*root;
+volatile sig_atomic_t	g_signal;
 
-	error_input = check_specialchars(input);
-	if (error_input == 1)
-		return (ft_printf("Invalid character\n"), 1);
-	if (error_input == 2)
-		return (ft_printf("Unclosed quotes\n"), 1);
-	tokens = lexer(input);
-	if (!tokens)
-		return (ft_printf("Lexer error\n"), 1);
-	root = parse_tokens(tokens);
-	if (!root)
-		return (free_tokens(tokens), ft_printf("Parser error\n"), 1);
-	if (!runner(root))
-		return (free_tokens(tokens), free_ast(root), ft_printf("Runner error\n"), 1);
+int init_shell(t_shell *shell, char **envp)
+{
+	char	**envp_copy;
+	size_t	i;
+	
+	while (envp[i] != NULL)
+		i++;
+	envp_copy = (char **)malloc(sizeof(char *) * i);
+	if (!envp_copy)
+		return (1);
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		envp_copy[i] = ft_strdup(envp[i]);
+		if (!envp_copy[i])
+			return (1);
+		i++;
+	}
+	envp_copy[i] = NULL;
+	shell->exit_status = 0;
+	shell->run_further = 1;
 	return (0);
 }
 
-int	main(void)
+void	shell_loop(t_shell *shell)
 {
-	char	*input;
-	t_shell	shell;
 
-	// init shell struct and signals
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			return (exit_with_error("Error", 1), 1);
-		if (ft_strlen(input) == 0)
-		{
-			free(input);
-			continue ;
-		}
-		add_history(input);
-		minishell(input, shell);
-		free(input);
-	}
+	
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell				shell;
+
+	if (init_shell(&shell, envp) == 1)
+		return (exit_with_error("Error", 1), 1);
+	set_signals();
+	shell_loop(&shell);
+	free_shell(&shell);
 	return (shell.exit_status);
 }
