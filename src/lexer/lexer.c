@@ -6,13 +6,11 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 14:46:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/16 14:55:02 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 18:34:23 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-
 
 t_token *lexer(char *str)
 {
