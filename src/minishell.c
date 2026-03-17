@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:17:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:26:23 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:30:54 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	input_precheck(char *input)
 	return (0);
 }
 
-int	minishell(t_shell *shell, char *input)
+int	minishell(char *input, t_shell *shell)
 {
 	t_token	*tokens;
 	t_ast	*root;

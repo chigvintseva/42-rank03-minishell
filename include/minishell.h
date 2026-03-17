@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:11:26 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:32:37 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ typedef struct	s_shell
 
 int		case_error(char *msg);
 int		init_shell(t_shell *shell, char **envp);
-void	set_signals(void);
-void	signal_handler(int signal);
 void	shell_loop(t_shell *shell);
-int		minishell(t_shell *shell, char *input);
+int		minishell(char *input, t_shell *shell);
 void	free_shell(t_shell *shell);
 int		only_space(char *str);
+// temp:
+int	runner(t_ast *root, t_shell *shell);
 
 #endif
