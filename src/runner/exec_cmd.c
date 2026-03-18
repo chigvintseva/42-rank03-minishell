@@ -3,22 +3,22 @@
 static int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "echo"))
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "cd"))
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "pwd"))
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "export"))
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "unset"))
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "env"))
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "exit"))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 static int	execute_builtin(char **cmd_arg)
@@ -37,7 +37,7 @@ static int	execute_builtin(char **cmd_arg)
 		return (builtin_env());
 	if (!ft_strcmp(cmd_arg[0], "exit"))
 		return (builtin_exit());
-	return (0);
+	return (1);
 }
 
 static void	execute_external(t_cmd *cmd, char **env)
@@ -51,7 +51,7 @@ static void	execute_external(t_cmd *cmd, char **env)
 		cmd_path = parsing(cmd->argv[0], env, &perm_error);
 		if (!cmd_path)
 		{
-			if (perm_error)
+			if (!perm_error)
 			{
 				ft_putstr_fd("minishell: command not found: ", 2);
 				ft_putendl_fd(cmd->argv[0], 2);
@@ -67,13 +67,13 @@ static void	execute_external(t_cmd *cmd, char **env)
 		if (execve(cmd_path, cmd->argv, env) == -1)
 		{
 			free(cmd_path);
-			exit_with_error("execve", 126);
+			exit_with_error("execve", 126); // Check errno: EACCES/EISDIR → 126; ENOENT/ENOTDIR → 127
 		}
 	}
 	else
 	{
 		if (execve(cmd->argv[0], cmd->argv, env) == -1)
-			exit_with_error("execve", EXIT_FAILURE); // exit code 126/127 ???
+			exit_with_error("execve", EXIT_FAILURE); // Check errno: EACCES/EISDIR → 126; ENOENT/ENOTDIR → 127
 	}
 }
 
@@ -83,12 +83,12 @@ int	execute_cmd(t_cmd *cmd, t_shell	*shell)
 	int		status;
 
 	if (!cmd || !cmd->argv)
-		return (0);
+		return (1);
 	if (is_builtin(cmd->argv[0]))
 		return (execute_builtin(cmd->argv));
 	pid = fork();
 	if (pid == -1)
-		return (0);
+		return (1);
 	if (pid == 0)
 		execute_external(cmd, shell->env);
 	waitpid(pid, &status, 0);
@@ -96,5 +96,5 @@ int	execute_cmd(t_cmd *cmd, t_shell	*shell)
             shell->exit_status = WEXITSTATUS(status);
     else if (WIFSIGNALED(status))
             shell->exit_status = 128 + WTERMSIG(status);
-	return (1);
+	return (0);
 }

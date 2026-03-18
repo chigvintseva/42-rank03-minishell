@@ -20,7 +20,7 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 	char	**envp_path;
 	char	*path;
 	char	*cmd_path;
-	int		i;
+	size_t	i;
 
 	envp_path = ft_split(find_path_env(envp), ':');
 	if (!envp_path)
