@@ -3,6 +3,7 @@
 
 # include "minishell.h"
 # include <sys/wait.h>
+# include <fcntl.h>
 
 
 typedef struct s_shell
