@@ -18,8 +18,6 @@
 # include <string.h>
 # include <errno.h>
 # include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h> //cc main.c -lreadline
 # include <signal.h>
 # include "libft/libft.h"
 # include "lexer.h"

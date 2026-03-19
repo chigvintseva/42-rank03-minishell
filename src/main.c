@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+# include <readline/readline.h>
+# include <readline/history.h> //cc main.c -lreadline
 
 static volatile sig_atomic_t	g_signal;
 

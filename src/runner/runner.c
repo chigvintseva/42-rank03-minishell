@@ -25,21 +25,12 @@ int	run_cmd_node(t_ast *node, t_shell *shell)
 
 int	run_pipe_node(t_ast *root, t_shell *shell)
 {
-	int	left_status;
-	int	right_status;
-
 	if (!root || !root->left || !root->right)
 	{
 		shell->exit_status = 1;
 		return (shell->exit_status);
 	}
-	left_status = runner(root->left, shell); // recursive, save status not output
-	if (!shell->run_further)
-		return (shell->exit_status);
-	right_status = runner(root->right, shell); // recursive, save status not output
-	if (!shell->run_further)
-		return (shell->exit_status);
-	shell->exit_status = run_pipe(root, shell, left_status, right_status); // sasha's pipe executer
+	shell->exit_status = run_pipe(root, shell); // sasha's pipe executer
 	return (shell->exit_status);
 }
 
