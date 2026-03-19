@@ -25,7 +25,10 @@ t_token *lexer(char *str)
 	while (input.s[input.i])
 	{
 		if (is_space(input.s[input.i]))
+		{
 			input.i++;
+			continue;
+		}
 		if (is_operator(input.s[input.i]))
 		{
 			new_token = handle_operator(&input);
