@@ -22,6 +22,7 @@
 # include "libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
+# include "runner.h"
 
 typedef struct	s_shell
 {
@@ -36,7 +37,5 @@ void	shell_loop(t_shell *shell);
 int		minishell(char *input, t_shell *shell);
 void	free_shell(t_shell *shell);
 int		only_space(char *str);
-// temp:
-int	runner(t_ast *root, t_shell *shell);
 
 #endif
