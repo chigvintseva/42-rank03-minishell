@@ -46,7 +46,6 @@ t_ast	*build_ast(t_token *start, t_token *end);
 // cmd_builder_utils
 t_redir_type	token_to_redir_type(t_token_type type);
 void	redir_add_back(t_redir **head, t_redir *new_node);
-t_redir	*redir_error(t_redir *head, int *error);
 
 // cmd_argv
 int	add_or_free_argv(char **argv, int i, t_token *c);

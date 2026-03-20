@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/09 14:19:59 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 20:49:29 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ int	count_cmd_words(t_token *start, t_token *end)
 	while (cur)
 	{
 		if (is_redir_token(cur->type))
-		{
-			if (cur == end || !cur->next)
-				return (-1);
-			cur = cur->next;
-		}
+			break ;
 		else if (cur->type == WORD)
 			count++;
 		if (cur == end)
@@ -39,33 +35,30 @@ int	count_cmd_words(t_token *start, t_token *end)
 }
 
 t_redir	*process_single_redir(t_token *cur, t_token *end,
-		t_redir *head, int *error)
+		t_redir *head)
 {
 	t_redir	*new_node;
 
-	if (cur == end || !cur->next)
-		return (redir_error(head, error));
 	new_node = new_redir(token_to_redir_type(cur->type), cur->next->value);
 	if (!new_node)
-		return (redir_error(head, error));
+		return (NULL);
 	redir_add_back(&head, new_node);
 	return (head);
 }
 
-t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
+t_redir	*extract_redirs(t_token *start, t_token *end)
 {
 	t_token	*cur;
 	t_redir	*head;
 
-	*error = 0;
 	cur = start;
 	head = NULL;
 	while (cur)
 	{
 		if (is_redir_token(cur->type))
 		{
-			head = process_single_redir(cur, end, head, error);
-			if (*error)
+			head = process_single_redir(cur, end, head);
+			if (!head)
 				return (NULL);
 			cur = cur->next;
 		}
@@ -80,8 +73,8 @@ char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **red
 	int		error;
 	char	**argv;
 
-	*redirs = extract_redirs(start, end, &error);
-	if (error != 0)
+	*redirs = extract_redirs(start, end);
+	if (!(*redirs))
 		return (NULL);
 	argv = extract_argv(start, end, argc);
 	if (!argv)
@@ -99,7 +92,7 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 		return (NULL);
 	argc = count_cmd_words(start, end);
-	if (argc < 0)
+	if (argc <= 0)
 		return (NULL);
 	argv = get_argv_and_redirs(start, end, argc, &redirs);
 	if (!argv)

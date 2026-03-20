@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:44:52 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 19:43:48 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 		(*i)++;
 		while (s[*i] && s[*i] != quote)
 		{
-			if(word) // null or 0 or why pointer 
+			if (word) 
 				*(*word)++ = s[(*i)++];
 			else
 			{
@@ -54,8 +54,6 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 				(*i)++;
 			}
 		}
-		// if (s[*i] != quote) // impossible to get in here, maybe the check not needed at all
-		// 	exit_with_error("quotes", 1); // return error
 		(*i)++;
 }
 
@@ -74,9 +72,9 @@ static void	count_len(t_lexer *input, int *len)
 			tmp_i++;
 		}
 		if (input->s[tmp_i] == '"')
-			handle_quotes('"', len, 0, input->s, &tmp_i); //NULL
+			handle_quotes('"', len, NULL, input->s, &tmp_i);
 		if (input->s[tmp_i] == '\'')
-			handle_quotes('\'', len, 0, input->s, &tmp_i); //NULL
+			handle_quotes('\'', len, NULL, input->s, &tmp_i);
 	}
 }
 
@@ -87,7 +85,7 @@ t_token	*handle_word(t_lexer *input)
 	char	*tmp;
 	t_token	*token_word;
 
-	count_len(input, &len);	
+	count_len(input, &len);
 	word = malloc((len * sizeof(char)) + 1);
 	if (!word)
 		return (NULL);
@@ -104,5 +102,7 @@ t_token	*handle_word(t_lexer *input)
 	}
 	*word = '\0';
 	token_word = create_token(tmp, WORD);
+	if (!token_word)
+		return (free(tmp), NULL);
 	return (free(tmp), token_word);
 }

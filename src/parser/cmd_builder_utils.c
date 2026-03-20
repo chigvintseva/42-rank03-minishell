@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:20:41 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 18:20:41 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 20:12:13 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,4 @@ void	redir_add_back(t_redir **head, t_redir *new_node)
 	while (last->next != NULL)
 		last = last->next;
 	last->next = new_node;
-}
-
-t_redir	*redir_error(t_redir *head, int *error)
-{
-	*error = 1;
-	free_redirs(head);
-	return (NULL);
 }

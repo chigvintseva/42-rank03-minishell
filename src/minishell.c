@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:17:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:30:54 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 19:50:42 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static int	input_precheck(char *input)
 
 	ret = check_specialchars(input);
 	if (ret == 1)
-		return (case_error("Invalid character"));
+		return (case_error("Invalid character", 1));
 	if (ret == 2)
-		return (case_error("Unclosed quotation"));
+		return (case_error("Unclosed quotation", 1));
 	return (0);
 }
 
@@ -36,10 +36,10 @@ int	minishell(char *input, t_shell *shell)
 	errno = 0;
 	tokens = lexer(input);
 	if (!tokens)
-		return (case_error("Lexer error"));
+		return (case_error("Lexer error", 1));
 	root = parse_tokens(tokens);
 	if (!root)
-		return (free_tokens(tokens), case_error("Parser error"));
+		return (free_tokens(tokens), case_error("Parser error", 1));
 	status = runner(root, shell);
 	free_tokens(tokens);
 	free_ast(root);

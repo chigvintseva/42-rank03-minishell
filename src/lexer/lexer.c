@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 14:46:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 18:34:23 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 19:33:32 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_token *lexer(char *str)
 		if (is_space(input.s[input.i]))
 		{
 			input.i++;
-			continue;
+			continue ;
 		}
 		if (is_operator(input.s[input.i]))
 		{
 			new_token = handle_operator(&input);
-			if (!new_token) 
+			if (!new_token)
 				return (free_tokens(input.tokens), NULL);
-			if (tokenadd_back(&input.tokens, new_token) == -1)
+			if (tokenadd_back(&input.tokens, new_token))
 				return (free_tokens(input.tokens), NULL);
 			input.i++;
 		}
@@ -43,7 +43,7 @@ t_token *lexer(char *str)
 			new_token = handle_word(&input);
 			if (!new_token)
 				return (free_tokens(input.tokens), NULL);
-			if (tokenadd_back(&input.tokens, new_token) == -1)
+			if (tokenadd_back(&input.tokens, new_token))
 				return (free_tokens(input.tokens), NULL);
 		}
 	}
