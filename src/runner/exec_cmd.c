@@ -77,13 +77,15 @@ static void	execute_external(t_cmd *cmd, char **env)
 	}
 }
 
-int	execute_cmd(t_cmd *cmd, t_shell	*shell)
+int	run_cmd(t_cmd *cmd, t_shell	*shell)
 {
 	pid_t	pid;
 	int		status;
 
 	if (!cmd || !cmd->argv)
-		return (1);
+		return (1); //exit_status
+	if (apply_redirs(cmd->redirs))
+		return (1); //exit_status
 	if (!is_builtin(cmd->argv[0]))
 		return (execute_builtin(cmd->argv));
 	pid = fork();
