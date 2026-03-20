@@ -11,18 +11,18 @@ static void	child_left(int *pfd, t_ast *root, t_shell *shell)
 {
 	close(pfd[0]);
 	if (dup2(pfd[1], 1) == -1)
-		exit_with_error(("dup2 (pipe write end)"), 1); //save error to shell->exit_code and close second fd
+		exit_with_error(); //close second fd
 	close(pfd[1]);
-	exit(runner(root->left, shell)); //not sure about the args 
+	exit(runner(root->left, shell));
 }
 
 static void	child_right(int *pfd, t_ast *root, t_shell *shell)
 {
 	close(pfd[1]);
 	if (dup2(pfd[0], 0) == -1)
-		exit_with_error("dup2 (pipe read end)", 1); //save error to shell->exit_code and close second fd
+		exit_with_error(); //close second fd
 	close(pfd[0]);
-	exit(runner(root->right, shell)); //not sure about the args
+	exit(runner(root->right, shell));
 }
 
 static int	parent_process(int *pfd, pid_t pid1, t_ast *root, t_shell *shell)
@@ -36,7 +36,7 @@ static int	parent_process(int *pfd, pid_t pid1, t_ast *root, t_shell *shell)
 	{
 		close(pfd[1]);
 		close(pfd[0]);
-		return (perror("fork"), 1);
+		return (case_error("Fork", 1));
 	}
 	if (pid2 == 0)
 		child_right(pfd, root, shell);
@@ -48,7 +48,7 @@ static int	parent_process(int *pfd, pid_t pid1, t_ast *root, t_shell *shell)
 		return (WEXITSTATUS(status2));
 	if (WIFSIGNALED(status2))
 		return (128 + WTERMSIG(status2));
-	return (1); // not sure what the case might it be
+	return (-1); // not sure what the case might it be
 }
 
 int	run_pipe(t_ast *root, t_shell *shell)
@@ -57,13 +57,13 @@ int	run_pipe(t_ast *root, t_shell *shell)
 	pid_t	pid1;
 
 	if (pipe(pfd) == -1)
-		return (perror("pipe"), 1);
+		return (case_error("Pipe", 1));
 	pid1 = fork();
 	if (pid1 == -1)
 	{
 		close(pfd[1]);
 		close(pfd[0]);
-		return (perror("fork"), 1);
+		return (case_error("Fork", 1));
 	}
 	if (pid1 == 0)
 		child_left(pfd, root, shell);

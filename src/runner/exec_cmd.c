@@ -1,24 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
+/*   Updated: 2026/03/20 22:55:58 by achigvin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (1);
+		return (0);
 	if (!ft_strcmp(cmd, "echo"))
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "cd"))
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "pwd"))
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "export"))
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "unset"))
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "env"))
-		return (0);
+		return (1);
 	if (!ft_strcmp(cmd, "exit"))
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 static int	execute_builtin(char **cmd_arg)
@@ -83,14 +95,15 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 	int		status;
 
 	if (!cmd || !cmd->argv)
-		return (1); //exit_status
-	if (apply_redirs(cmd->redirs))
-		return (1); //exit_status
-	if (!is_builtin(cmd->argv[0]))
+		return (1);
+	shell->exit_status = apply_redirs(cmd->redirs);
+	if (shell->exit_status != 0)
+		return (shell->exit_status);
+	if (is_builtin(cmd->argv[0]))
 		return (execute_builtin(cmd->argv));
 	pid = fork();
 	if (pid == -1)
-		return (1);
+		return (case_error("Fork", 1));
 	if (pid == 0)
 		execute_external(cmd, shell->env);
 	waitpid(pid, &status, 0);

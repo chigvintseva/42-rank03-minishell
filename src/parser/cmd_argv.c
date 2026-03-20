@@ -6,16 +6,16 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 13:06:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:24:01 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:32:56 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	redir_issue(t_token *cur)
+static int	redir_issue(t_token *cur, t_token *end)
 {
 	cur = cur->next->next;
-	while (cur != NULL)
+	while (cur != end)
 	{
 		if (is_redir_token(cur))
 			cur = cur->next->next;
@@ -34,7 +34,7 @@ char	**extract_argv(t_token *cur, t_token *end, int argc)
 	if (!argv)
 		return (NULL);
 	i = 0;
-	while (cur)
+	while (cur != end)
 	{
 		if (is_word_token(cur->type))
 		{
@@ -46,7 +46,7 @@ char	**extract_argv(t_token *cur, t_token *end, int argc)
 		}
 		else if (is_redir_token(cur->type))
 		{
-			if (redir_issue(cur))
+			if (redir_issue(cur, end))
 				return (free_part_argv(argv, i), NULL);
 			break ;
 		}

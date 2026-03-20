@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 16:06:13 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 18:30:32 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:12:05 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,10 @@ int	case_error(char *msg, int code)
 	else
 		ft_putendl_fd(msg, 2);
 	return (code);
+}
+
+void	exit_with_error()
+{
+	perror("Error");
+	exit(errno);
 }
