@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   hadle_words_syntax.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/11 16:42:29 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:44:52 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ t_token	*handle_operator(t_lexer *input)
 	if (!input || !input->s)
 		return (NULL);
 	if (input->s[input->i] == '|')
-		return (create_token("|", PIPE)); //create token
+		return (create_token("|", PIPE));
 	else if (input->s[input->i] == '<')
 	{
 		if (input->s[input->i + 1] == '<')
 		{
 			input->i++;
-			return (create_token("<<", HEREDOC)); //create token
+			return (create_token("<<", HEREDOC));
 		}
 		else
-			return (create_token("<", REDIR_IN)); //create token
+			return (create_token("<", REDIR_IN));
 	}
 	else if (input->s[input->i]  == '>')
 	{
 		if (input->s[input->i + 1] == '>')
 		{
 			input->i++;
-			return (create_token(">>", REDIR_APPEND));  //create token
+			return (create_token(">>", REDIR_APPEND));
 		}
 		else
-			return (create_token(">", REDIR_OUT));  //create token
+			return (create_token(">", REDIR_OUT));
 	}
 	return (NULL);
 }
@@ -59,7 +59,7 @@ void handle_quotes(char quote, int *len, char **word, char *s, int *i)
 		(*i)++;
 }
 
-void	count_len(t_lexer *input, int *len)
+static void	count_len(t_lexer *input, int *len)
 {
 	int	tmp_i;
 
@@ -105,39 +105,4 @@ t_token	*handle_word(t_lexer *input)
 	*word = '\0';
 	token_word = create_token(tmp, WORD);
 	return (free(tmp), token_word);
-}
-
-t_token *lexer(char *str)
-{
-	t_lexer	input;
-	t_token	*new_token;
-
-	if (!str)
-		return (NULL);
-	input.s = str;
-	input.i = 0;
-	input.tokens = NULL;
-	while (input.s[input.i])
-	{
-		if (is_space(input.s[input.i]))
-			input.i++;
-		if (is_operator(input.s[input.i]))
-		{
-			new_token = handle_operator(&input);
-			if (!new_token) 
-				return (free_tokens(input.tokens), NULL);
-			if (tokenadd_back(&input.tokens, new_token) == -1)
-				return (free_tokens(input.tokens), NULL);
-			input.i++;
-		}
-		else
-		{
-			new_token = handle_word(&input);
-			if (!new_token)
-				return (free_tokens(input.tokens), NULL);
-			if (tokenadd_back(&input.tokens, new_token) == -1)
-				return (free_tokens(input.tokens), NULL);
-		}
-	}
-	return (input.tokens);
 }

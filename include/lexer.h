@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:41:51 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/11 16:41:51 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/17 19:44:45 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ typedef struct s_lexer
 }	t_lexer;
 
 t_token *lexer(char *str);
+t_token	*handle_operator(t_lexer *input);
+void handle_quotes(char quote, int *len, char **word, char *s, int *i);
+t_token	*handle_word(t_lexer *input);
 int 	is_operator(char c);
 int 	is_space(const char c);
 int		check_specialchars(char *s);

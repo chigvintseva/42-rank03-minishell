@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 13:06:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/09 13:11:20 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/18 18:07:03 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**extract_argv(t_token *start, t_token *end, int argc)
 	t_token	*c;
 	int		i;
 	int		temp;
+
 	argv = malloc(sizeof(char *) * (argc + 1));
 	if (!argv)
 		return (NULL);
@@ -45,5 +46,5 @@ char	**extract_argv(t_token *start, t_token *end, int argc)
 			return (argv[i] = NULL, argv);
 		c = c->next;
 	}
-	return (argv);
+	return (argv[i] = NULL, argv);
 }

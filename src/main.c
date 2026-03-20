@@ -5,52 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/11 16:43:06 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/11 16:43:06 by achigvin         ###   ########.fr       */
+/*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
+/*   Updated: 2026/03/17 19:34:24 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h> //cc main.c -lreadline
+# include <readline/readline.h>
+# include <readline/history.h> //cc main.c -lreadline
 
-void	print_tokens(t_token *lst)
+static volatile sig_atomic_t	g_signal;
+
+static void	signal_handler(int signal)
 {
-	while (lst)
+	if (signal == SIGINT)
 	{
-		printf("type: %d valuse: %s\n", lst->type, lst->value);
-		lst = lst->next;
+		g_signal = SIGINT;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+static void	set_signals(void)
+{
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
+
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_handler = signal_handler;
+	sa_int.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa_int, NULL);
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_handler = SIG_IGN;
+	sa_quit.sa_flags = SA_RESTART;
+	sigaction(SIGQUIT, &sa_quit, NULL);
+}
+
+static void	update_sigint_status(t_shell *shell)
+{
+	if (g_signal == SIGINT)
+	{
+		shell->exit_status = 130;
+		g_signal = 0;
+	}
+}
+
+void	shell_loop(t_shell *shell)
+{
+	char	*input;
+
+	while (shell->run_further == 1)
+	{
+		update_sigint_status(shell);
+		input = readline("minishell$ ");
+		if (input == NULL)
+		{
+			write(1, "exit\n", 5);
+			shell->run_further = 0;
+		}
+		else if (ft_strlen(input) == 0 || only_space(input))
+			free(input);
+		else
+		{
+			add_history(input);
+			shell->exit_status = minishell(input, shell);
+			free(input);
+		}
 	}	
 }
 
-void	exit_with_error(char *msg, int code)
+int	main(int argc, char **argv, char **envp)
 {
-	if (errno)
-		perror(msg);
-	else
-		printf("Error: %s\n", msg);
-	exit(code);
-}
+	t_shell	shell;
 
-int	main()
-{
-	char	*input;
-	int		error;
-	t_token	*tokens;
-
-	input = readline("minishell$ "); // will be inside while(1) in amin nof minishell to get user's input
-	if (!input)
-		return (exit_with_error("Error", 1), 1);
-	error = check_specialchars(input); // syntax check for uncloased " and symbols like ; && 
-	if (error == 1)
-		return (free(input), exit_with_error("Invalid character", 1), 1);
-	if (error == 2)
-		return (free(input), exit_with_error("Unclosed quotes", 1), 1);
-	tokens = lexer(input);
-	if (!tokens)
-		return (free(input), exit_with_error("Error", 1), 1);
-	print_tokens(tokens);
-	free_tokens(tokens);
-	free(input);
-	return (0);
+	(void)argc;
+	(void)argv;
+	g_signal = 0;
+	errno = 0;
+	if (init_shell(&shell, envp) != 0)
+	{
+		case_error("Shell Initialisation Error ");
+		return (1);
+	}
+	set_signals();
+	shell_loop(&shell);
+	free_shell(&shell);
+	return (shell.exit_status);
 }
