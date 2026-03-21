@@ -48,7 +48,7 @@ static int	parent_process(int *pfd, pid_t pid1, t_ast *root, t_shell *shell)
 		return (WEXITSTATUS(status2));
 	if (WIFSIGNALED(status2))
 		return (128 + WTERMSIG(status2));
-	return (-1); // not sure what the case might it be
+	return (-1);
 }
 
 int	run_pipe(t_ast *root, t_shell *shell)

@@ -6,7 +6,7 @@
 #    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/13 19:20:27 by achigvin          #+#    #+#              #
-#    Updated: 2025/11/16 23:57:01 by achigvin         ###   ########.fr        #
+#    Updated: 2026/03/21 16:34:54 by achigvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_LIBFT = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
             ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c \
             ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c \
             ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-			ft_atol.c
+			ft_atol.c \ ft_realloc.c
 
 SRC_PRINTF = ft_printf/ft_printf.c ft_printf/ft_charinput.c \
              ft_printf/ft_strinput.c ft_printf/ft_intinput.c \

@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 22:55:58 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 16:42:53 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ static void	execute_external(t_cmd *cmd, char **env)
 	char	*cmd_path;
 	int		perm_error;
 
-	perm_error = 0;
+	errno = 0;
 	if (!ft_strchr(cmd->argv[0], '/'))
 	{
+		perm_error = 0;
 		cmd_path = parsing(cmd->argv[0], env, &perm_error);
 		if (!cmd_path)
 		{
-			if (!perm_error)
+			if (errno)
+				exit_with_error();
+			else if (!perm_error)
 			{
 				ft_putstr_fd("minishell: command not found: ", 2);
 				ft_putendl_fd(cmd->argv[0], 2);
@@ -79,13 +82,13 @@ static void	execute_external(t_cmd *cmd, char **env)
 		if (execve(cmd_path, cmd->argv, env) == -1)
 		{
 			free(cmd_path);
-			exit_with_error("execve", 126); // Check errno: EACCES/EISDIR → 126; ENOENT/ENOTDIR → 127
+			exit_with_error();
 		}
 	}
 	else
 	{
 		if (execve(cmd->argv[0], cmd->argv, env) == -1)
-			exit_with_error("execve", EXIT_FAILURE); // Check errno: EACCES/EISDIR → 126; ENOENT/ENOTDIR → 127
+			exit_with_error();
 	}
 }
 
@@ -111,5 +114,5 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
             shell->exit_status = WEXITSTATUS(status);
     else if (WIFSIGNALED(status))
             shell->exit_status = 128 + WTERMSIG(status);
-	return (0);
+	return (-1);
 }

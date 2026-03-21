@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-static char	*find_path_env(char **envp)
+static char	const *find_path_env(char **envp)
 {
 	int	i;
 
@@ -11,14 +11,12 @@ static char	*find_path_env(char **envp)
 			return (envp[i] + 5);
 		i++;
 	}
-	exit_with_error("inappropriate environment", EXIT_FAILURE);
 	return (NULL);
 }
 
 char	*parsing(char *cmd, char **envp, int *perm_error)
 {
 	char	**envp_path;
-	char	*path;
 	char	*cmd_path;
 	size_t	i;
 
@@ -28,11 +26,10 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 	i = 0;
 	while (envp_path[i])
 	{
-		path = ft_strjoin(envp_path[i], "/");
-		if (!path)
+		cmd_path = ft_strjoin(envp_path[i], "/");
+		if (!cmd_path)
 			return (free_return(envp_path, NULL));
-		cmd_path = ft_strjoin(path, cmd);
-		free(path);
+		cmd_path = ft_realloc_join(cmd_path, cmd);
 		if (!cmd_path)
 			return (free_return(envp_path, NULL));
 		if (access(cmd_path, F_OK) == 0)
@@ -40,7 +37,7 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 			if (access(cmd_path, X_OK) == 0)
 				return (free_return(envp_path, cmd_path));
 			else
-				*perm_error = 1; //means that it is Permission denied
+				*perm_error = 1;
 		}
 		free(cmd_path);
 		i++;
