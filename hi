@@ -1,0 +1,14 @@
+total 76
+-rw-r--r-- 1 aleksandra aleksandra    82 Mar 21 22:07 1
+-rw-r--r-- 1 aleksandra aleksandra     0 Mar 21 22:10 hi
+drwxrwxr-x 3 aleksandra aleksandra  4096 Mar 21 20:32 include
+-rw-r--r-- 1 aleksandra aleksandra    85 Mar 21 22:07 ls
+-rw-rw-r-- 1 aleksandra aleksandra  4584 Mar 21 19:56 Makefile
+-rwxrwxr-x 1 aleksandra aleksandra 42288 Mar 21 22:07 minishell
+-rw-rw-r-- 1 aleksandra aleksandra   309 Mar 21 19:56 minishell.txt
+drwxrwxr-x 6 aleksandra aleksandra  4096 Mar 21 22:04 src
+drwxrwxr-x 2 aleksandra aleksandra  4096 Mar 21 19:56 tests
+[?2004hminishell$ 
+[?2004l[?2004hminishell$ 
+[?2004l[?2004hminishell$ 
+[?2004l[?2004hminishell$ [?2004l
