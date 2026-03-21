@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 20:30:52 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/21 21:03:38 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static void	execute_external(t_cmd *cmd, char **env)
 	if (!ft_strchr(cmd->argv[0], '/'))
 	{
 		perm_error = 0;
-	
 		cmd_path = parsing(cmd->argv[0], env, &perm_error);
 		if (!cmd_path)
 		{
@@ -112,8 +111,8 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 		execute_external(cmd, shell->env);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-            shell->exit_status = WEXITSTATUS(status);
-    else if (WIFSIGNALED(status))
-            shell->exit_status = 128 + WTERMSIG(status);
+		return (shell->exit_status = WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (shell->exit_status = 128 + WTERMSIG(status));
 	return (-1);
 }
