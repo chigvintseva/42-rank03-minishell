@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 16:42:53 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 20:30:52 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	execute_external(t_cmd *cmd, char **env)
 	if (!ft_strchr(cmd->argv[0], '/'))
 	{
 		perm_error = 0;
+	
 		cmd_path = parsing(cmd->argv[0], env, &perm_error);
 		if (!cmd_path)
 		{
