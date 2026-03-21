@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 20:11:21 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/21 20:43:09 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	count_cmd_words(t_token *start, t_token *end)
 		{
 			if (cur == end || !cur->next)
 				return (-1);
-			cur = cur->next;
+			return (count);
 		}
 		else if (cur->type == WORD)
 			count++;
