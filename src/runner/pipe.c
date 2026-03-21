@@ -1,11 +1,16 @@
-#include "../../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/21 16:57:30 by achigvin          #+#    #+#             */
+/*   Updated: 2026/03/21 16:57:38 by achigvin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// typedef struct	s_fds
-// {
-// 	int	infd;
-// 	int	outfd;
-// 	int	pipefd[2];
-// }	t_fds;
+#include "../../include/minishell.h"
 
 static void	child_left(int *pfd, t_ast *root, t_shell *shell)
 {

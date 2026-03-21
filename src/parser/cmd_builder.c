@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:30:45 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 17:14:12 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	count_cmd_words(t_token *start, t_token *end)
 	return (count);
 }
 
-t_redir	*process_single_redir(t_token *cur, t_token *end,
-		t_redir *head)
+t_redir	*process_single_redir(t_token *cur,	t_redir *head)
 {
 	t_redir	*new_node;
 
@@ -57,7 +56,7 @@ t_redir	*extract_redirs(t_token *start, t_token *end)
 	{
 		if (is_redir_token(cur->type))
 		{
-			head = process_single_redir(cur, end, head);
+			head = process_single_redir(cur, head);
 			if (!head)
 				return (NULL);
 			cur = cur->next;
@@ -70,7 +69,6 @@ t_redir	*extract_redirs(t_token *start, t_token *end)
 }
 char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
-	int		error;
 	char	**argv;
 
 	*redirs = extract_redirs(start, end);

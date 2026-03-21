@@ -1,4 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   external.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/21 16:57:25 by achigvin          #+#    #+#             */
+/*   Updated: 2026/03/21 17:05:43 by achigvin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
+
+static void	free_matrix(char **matrix)
+{
+	int	i;
+
+	if (!matrix)
+		return ;
+	i = 0;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
 
 static char	const *find_path_env(char **envp)
 {
@@ -28,19 +55,19 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 	{
 		cmd_path = ft_strjoin(envp_path[i], "/");
 		if (!cmd_path)
-			return (free_return(envp_path, NULL));
+			return (free_matrix(envp_path), NULL);
 		cmd_path = ft_realloc_join(cmd_path, cmd);
 		if (!cmd_path)
-			return (free_return(envp_path, NULL));
+			return (free_matrix(envp_path), NULL);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
-				return (free_return(envp_path, cmd_path));
+				return (free_matrix(envp_path), cmd_path);
 			else
 				*perm_error = 1;
 		}
 		free(cmd_path);
 		i++;
 	}
-	return (free_return(envp_path, NULL));
+	return (free_matrix(envp_path), NULL);
 }

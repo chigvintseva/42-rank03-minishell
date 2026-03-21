@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 13:06:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:32:56 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 17:15:11 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	redir_issue(t_token *cur, t_token *end)
 	cur = cur->next->next;
 	while (cur != end)
 	{
-		if (is_redir_token(cur))
+		if (is_redir_token(cur->type))
 			cur = cur->next->next;
 		else 
 			return (1);

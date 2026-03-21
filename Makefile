@@ -6,7 +6,7 @@
 #    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/17 19:30:12 by achigvin         ###   ########.fr        #
+#    Updated: 2026/03/21 17:18:41 by achigvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,13 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parser/free_functions.c \
 	$(SRC_DIR)/parser/syntax_rules.c \
 	$(SRC_DIR)/parser/utils.c \
-	$(SRC_DIR)/runner/runner.c
+	$(SRC_DIR)/runner/runner.c \
+	$(SRC_DIR)/runner/pipe.c \
+	$(SRC_DIR)/runner/exec_cmd.c \
+	$(SRC_DIR)/runner/external.c \
+	$(SRC_DIR)/runner/redir.c \
+	$(SRC_DIR)/runner/builtins/builtin.c \
+	
 
 # Creating objects
 OBJ_DIR = $(SRC_DIR)/obj
@@ -72,6 +78,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)/lexer
 	mkdir -p $(OBJ_DIR)/parser
 	mkdir -p $(OBJ_DIR)/runner
+	mkdir -p $(OBJ_DIR)/runner/builtins
 
 # Compile source files to objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)

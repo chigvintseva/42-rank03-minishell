@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:32:02 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 16:34:16 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 17:08:21 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ char	*ft_realloc_join(char const *s1, char const *s2)
 	while (s2[i] != 0)
 		str[j++] = s2[i++];
 	str[j] = '\0';
-	free(s1);
+	free((void *)s1);
 	return (str);
 }
