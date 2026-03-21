@@ -25,7 +25,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char	**argv;
-	int		argc; // why needed?
+	int		argc;
 	t_redir	*redirs;
 }	t_cmd;
 

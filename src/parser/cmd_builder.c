@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 20:43:09 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 21:01:37 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ int	count_cmd_words(t_token *start, t_token *end)
 	while (cur)
 	{
 		if (is_redir_token(cur->type))
-		{
-			if (cur == end || !cur->next)
-				return (-1);
-			return (count);
-		}
+			break ;
 		else if (cur->type == WORD)
 			count++;
 		if (cur == end)
@@ -86,7 +82,10 @@ char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **red
 		return (NULL);
 	argv = extract_argv(start, end, argc);
 	if (!argv)
-		free_redirs(*redirs);
+	{
+		if (*redirs)
+			free_redirs(*redirs);
+	}
 	return (argv);
 }
 
@@ -100,7 +99,7 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 		return (NULL);
 	argc = count_cmd_words(start, end);
-	if (argc < 0)
+	if (argc <= 0)
 		return (NULL);
 	argv = get_argv_and_redirs(start, end, argc, &redirs);
 	if (!argv)
