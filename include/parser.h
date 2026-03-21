@@ -52,9 +52,11 @@ int	add_or_free_argv(char **argv, int i, t_token *c);
 char	**extract_argv(t_token *start, t_token *end, int argc);
 
 // cmd_builder
+t_redir	*redir_error(t_redir *head, int *error);
 int	count_cmd_words(t_token *start, t_token *end);
-t_redir	*process_single_redir(t_token *cur,	t_redir *head);
-t_redir	*extract_redirs(t_token *start, t_token *end);
+
+t_redir	*process_single_redir(t_token *cur, t_token *end, t_redir *head, int *error);
+t_redir	*extract_redirs(t_token *start, t_token *end, int *error);
 char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs);
 t_cmd	*build_cmd(t_token *start, t_token *end);
 

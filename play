@@ -1,0 +1,14 @@
+[?2004hminishell$ herek
+[?2004l=== AST STRUCTURE ===
+CMD: herek
+=== END AST ===
+[?2004hminishell$ fsd
+[?2004l=== AST STRUCTURE ===
+CMD: fsd
+=== END AST ===
+[?2004hminishell$ ^C[?2004l
+minishell$ [?2004h^C[?2004l
+minishell$ [?2004h^C[?2004l
+minishell$ [?2004h^C[?2004l
+minishell$ [?2004h^C[?2004l
+minishell$ [?2004h[?2004l
