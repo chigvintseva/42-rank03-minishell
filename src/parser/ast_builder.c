@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 14:01:18 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 17:56:17 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ t_ast	*build_ast(t_token *start, t_token *end)
 {
 	t_token	*pipe;
 
-	if (start == NULL || end == NULL 
-		|| token_in_range(start, end, end) == 0)
+	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 		return (NULL);
 	pipe = find_last_pipe(start, end);
 	if (!pipe)

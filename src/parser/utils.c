@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:15 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 14:00:15 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 17:45:29 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ int	token_in_range(t_token *start, t_token *end, t_token *target)
 	}
 	if (start == target)
 		return (1);
-	return (0);
+	return (printf("here\n"), 0);
 }

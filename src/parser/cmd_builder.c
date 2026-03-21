@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 17:14:12 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 18:06:10 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,37 @@ t_redir	*extract_redirs(t_token *start, t_token *end)
 	}
 	return (head);
 }
+
+static int have_redirs(t_token *start, t_token *end)
+{
+	t_token *cur;
+
+	cur = start;
+	while (cur != end)
+	{
+		if (is_redir_token(cur->type))
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
+}
+
 char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
 	char	**argv;
 
-	*redirs = extract_redirs(start, end);
-	if (!(*redirs))
-		return (NULL);
+	if (have_redirs(start, end))
+	{
+		*redirs = extract_redirs(start, end);
+		if (!(*redirs))
+			return (NULL);	
+	}
 	argv = extract_argv(start, end, argc);
 	if (!argv)
-		free_redirs(*redirs);
+	{
+		if (*redirs)
+			free_redirs(*redirs);
+	}
 	return (argv);
 }
 
@@ -94,7 +115,7 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 		return (NULL);
 	argv = get_argv_and_redirs(start, end, argc, &redirs);
 	if (!argv)
-		return (NULL);
+		return (printf("----------failed argv\n\n"), NULL);
 	cmd = new_cmd(argv, argc, redirs);
 	if (!cmd)
 	{
