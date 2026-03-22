@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 21:03:38 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/22 14:50:51 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,23 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 
 	if (!cmd || !cmd->argv)
 		return (1);
-	shell->exit_status = apply_redirs(cmd->redirs);
-	if (shell->exit_status != 0)
-		return (shell->exit_status);
 	if (is_builtin(cmd->argv[0]))
+	{
+		shell->exit_status = apply_redirs(cmd->redirs);
+		if (shell->exit_status != 0)
+			return (shell->exit_status);
 		return (execute_builtin(cmd->argv));
+	}
 	pid = fork();
 	if (pid == -1)
 		return (case_error("Fork", 1));
 	if (pid == 0)
+	{
+		shell->exit_status = apply_redirs(cmd->redirs);
+		if (shell->exit_status != 0)
+			exit(shell->exit_status);
 		execute_external(cmd, shell->env);
+	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (shell->exit_status = WEXITSTATUS(status));

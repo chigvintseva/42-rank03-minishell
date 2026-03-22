@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:28:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 22:44:29 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/22 14:56:29 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static int	redir_heredoc(t_redir *redirs)
 
 int	apply_redirs(t_redir *redirs)
 {
+	
 	if (!redirs)
 		return (0);
 	if (redirs->type == R_IN)
@@ -107,5 +108,5 @@ int	apply_redirs(t_redir *redirs)
 		return (redir_append(redirs));
 	if (redirs->type == R_HEREDOC)
 		return (redir_heredoc(redirs));
-	return (0);
+	return (-1);
 }
