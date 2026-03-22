@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_argv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 13:06:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 21:53:42 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/22 15:07:21 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**extract_argv(t_token *cur, t_token *end, int argc)
 	if (!argv)
 		return (NULL);
 	i = 0;
-	while (cur != end)
+	while (cur)
 	{
 		if (is_word_token(cur->type))
 		{
@@ -45,7 +45,6 @@ char	**extract_argv(t_token *cur, t_token *end, int argc)
 			if (!argv[i])
 				return (free_part_argv(argv, i), NULL);
 			i++;
-			cur = cur->next;
 		}
 		else if (is_redir_token(cur->type))
 		{
@@ -53,6 +52,9 @@ char	**extract_argv(t_token *cur, t_token *end, int argc)
 				return (free_part_argv(argv, i), NULL);
 			break ;
 		}
+		if (cur == end)
+			break ;
+		cur = cur->next;
 	}
 	return (argv[i] = NULL, argv);
 }
