@@ -35,7 +35,8 @@ int	redir_rules(t_token *lst)
 		return (0);
 	while (lst->next != NULL)
 	{
-		if (is_redir_token(lst->type) == 1 && is_word_token(lst->next->type) == 0)
+		if (is_redir_token(lst->type) == 1 
+			&& is_word_token(lst->next->type) == 0)
 			return (0);
 		lst = lst->next;
 	}
