@@ -6,13 +6,11 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:34:24 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 18:11:24 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-# include <readline/readline.h>
-# include <readline/history.h> //cc main.c -lreadline
 
 static volatile sig_atomic_t	g_signal;
 
@@ -61,10 +59,7 @@ void	shell_loop(t_shell *shell)
 		update_sigint_status(shell);
 		input = readline("minishell$ ");
 		if (input == NULL)
-		{
-			write(1, "exit\n", 5);
 			shell->run_further = 0;
-		}
 		else if (ft_strlen(input) == 0 || only_space(input))
 			free(input);
 		else
@@ -86,8 +81,8 @@ int	main(int argc, char **argv, char **envp)
 	errno = 0;
 	if (init_shell(&shell, envp) != 0)
 	{
-		case_error("Shell Initialisation Error ");
-		return (1);
+		shell.exit_status = case_error("Shell Initialisation Error ", 1);
+		return (shell.exit_status);
 	}
 	set_signals();
 	shell_loop(&shell);

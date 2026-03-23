@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:20:41 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 18:20:41 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 20:02:49 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:33 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 18:35:45 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 19:43:07 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*create_token(const char *value, t_token_type type)
 
 	if (!value)
 		return (NULL);
-	token = malloc(sizeof(t_token));
+	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	dup_value = ft_strdup(value);
@@ -37,7 +37,7 @@ int	tokenadd_back(t_token **lst, t_token *new)
 	t_token	*tmp;
 
 	if (!lst || !new)
-		return (-1);
+		return (1);
 	if (!*lst)
 	{
 		*lst = new;

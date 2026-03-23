@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:41:51 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:44:45 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/20 19:58:52 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_token
 
 typedef struct s_lexer
 {
-	int		i; // index in a str form input
-	char 	*s; // string form input
+	int		i;
+	char 	*s;
 	t_token	*tokens;
 }	t_lexer;
 

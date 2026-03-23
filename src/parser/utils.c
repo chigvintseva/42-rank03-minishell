@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:15 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 14:00:15 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/21 20:02:47 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ int	token_in_range(t_token *start, t_token *end, t_token *target)
 	}
 	if (start == target)
 		return (1);
-	return (0);
+	return (printf("here\n"), 0);
 }
