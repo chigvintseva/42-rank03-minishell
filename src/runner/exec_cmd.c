@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 20:30:52 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/22 17:25:05 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static void	execute_external(t_cmd *cmd, char **env)
 	if (!ft_strchr(cmd->argv[0], '/'))
 	{
 		perm_error = 0;
-	
 		cmd_path = parsing(cmd->argv[0], env, &perm_error);
 		if (!cmd_path)
 		{
@@ -100,20 +99,27 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 
 	if (!cmd || !cmd->argv)
 		return (1);
-	shell->exit_status = apply_redirs(cmd->redirs);
-	if (shell->exit_status != 0)
-		return (shell->exit_status);
 	if (is_builtin(cmd->argv[0]))
+	{
+		shell->exit_status = apply_redirs(cmd->redirs);
+		if (shell->exit_status != 0)
+			return (shell->exit_status);
 		return (execute_builtin(cmd->argv));
+	}
 	pid = fork();
 	if (pid == -1)
 		return (case_error("Fork", 1));
 	if (pid == 0)
+	{
+		shell->exit_status = apply_redirs(cmd->redirs);
+		if (shell->exit_status != 0)
+			exit(shell->exit_status);
 		execute_external(cmd, shell->env);
+	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-            shell->exit_status = WEXITSTATUS(status);
-    else if (WIFSIGNALED(status))
-            shell->exit_status = 128 + WTERMSIG(status);
+		return (shell->exit_status = WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (shell->exit_status = 128 + WTERMSIG(status));
 	return (-1);
 }
