@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runner.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 17:11:44 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/24 16:50:50 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ int		run_pipe(t_ast *root, t_shell *shell);
 
 int		run_cmd(t_cmd *cmd, t_shell	*shell);
 char	*parsing(char *cmd, char **envp, int *perm_error);
+void	free_matrix(char **matrix);
 int		apply_redirs(t_redir *redirs);
 
-int		builtin_echo();
+int		builtin_echo(char **argv);
 int		builtin_cd();
-int		builtin_pwd();
+int		builtin_pwd(char **argv, char **env);
 int		builtin_export();
-int		builtin_unset();
+int		builtin_unset(char **argv, char ***env);
 int		builtin_env();
-int		builtin_exit();
+int		builtin_exit(char **argv);
 
 #endif
