@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/24 15:46:20 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/24 18:18:30 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	execute_external(char **cmd_argv, char **env)
 				exit_with_error();
 			else if (!perm_error)
 			{
-				ft_putstr_fd("minishell: command not found: ", 2);
-				ft_putendl_fd(cmd_argv[0], 2);
+				ft_putstr_fd(cmd_argv[0], 2);
+				ft_putendl_fd(": command not found", 2);
 				exit(127);
 			}
 			else

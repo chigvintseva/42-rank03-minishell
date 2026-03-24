@@ -19,6 +19,51 @@ minishell$ minishell$ "
 
 
 
-
+----------------
 COMMANDS:
 
+1.  cat tests/test_runner.c didnt give new line at the END - execve command cat exactly, ls gives it which else
+
+in exec cmd waitpid then we should check whether the previous output finished with the new line if now we must move the cursor
+
+
+-----------------
+2.  achigvin@c3a1c1:~/Desktop/cc/3rank/minishell-github$ ../minishell
+bash: ../minishell: No such file or directory
+
+our: minishell$ ../minishell
+Error: No such file or directory
+
+maybe in command we need to add work with directories separately not only files
+
+
+------------
+3. achigvin@c3a1c1:~/Desktop/cc/3rank/minishell-github$ .
+bash: .: filename argument required
+.: usage: . filename [arguments]
+achigvin@c3a1c1:~/Desktop/cc/3rank/minishell-github$ ..
+..: command not found
+achigvin@c3a1c1:~/Desktop/cc/3rank/minishell-github$ /
+bash: /: Is a directory
+achigvin@c3a1c1:~/Desktop/cc/3rank/minishell-github$ 
+
+our:
+minishell$ .
+Error: Permission denied
+minishell$ ..
+Error: Permission denied
+minishell$ /
+Error: Permission denied
+minishell$ 
+
+
+-------------
+4. global variables env e.g. "echo $USER"
+
+
+
+-----------------------
+
+COMMANDS AND REDIRS
+
+1.
