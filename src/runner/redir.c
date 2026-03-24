@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:28:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/22 18:01:04 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/24 19:12:18 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ static int	redir_heredoc(t_redir *redirs)
 		return (case_error("Pipe", 1));
 	while (1)
 	{
-		line = readline("heredoc> ");
+		line = readline("> ");
 		if (!line)
 		{
 			close(pfd[1]);
 			close(pfd[0]);
-			return (case_error("Readline", 1));
+			return (case_error("minishell: warning: here-document at line 133 delimited by end-of-file", 1));
 		}
 		if (!ft_strcmp(redirs->target, line))
 		{

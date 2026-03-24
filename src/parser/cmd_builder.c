@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 22:06:20 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/24 19:00:12 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,12 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 		return (NULL);
 	argc = count_cmd_words(start, end);
-	if (argc <= 0)
+	if (argc < 0)
 		return (NULL);
+	// if (argv == 0)
+	// {
+	// 	// case "> 1" argv still to NULL argc 0 but redir will be build and valid
+	// }
 	argv = get_argv_and_redirs(start, end, argc, &redirs);
 	if (!argv)
 		return (NULL);

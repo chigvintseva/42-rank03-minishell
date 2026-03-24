@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:17:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/24 17:38:07 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/24 19:18:03 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	minishell(char *input, t_shell *shell)
 		return (case_error("Lexer error", 1));
 	root = parse_tokens(tokens);
 	if (!root)
-		return (free_tokens(tokens), case_error("Parser error", 1));
+		return (free_tokens(tokens), case_error("minishell: syntax error near unexpected token", 1));
 	status = runner(root, shell);
 	free_tokens(tokens);
 	free_ast(root);
