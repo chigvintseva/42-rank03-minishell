@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:06 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/24 14:57:51 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/24 17:40:58 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtin_pwd(char **argv, char **env)
 	pwd = find_pwd_env(env);
 	if (pwd)
 	{
-		printf("%s/n", pwd);
+		printf("%s\n", pwd);
 		return (EXIT_SUCCESS);
 	}
 	return (1);
