@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/21 17:18:41 by achigvin         ###   ########.fr        #
+#    Updated: 2026/03/24 16:51:15 by aleksandra       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,13 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/exec_cmd.c \
 	$(SRC_DIR)/runner/external.c \
 	$(SRC_DIR)/runner/redir.c \
-	$(SRC_DIR)/runner/builtins/builtin.c \
-	
+	$(SRC_DIR)/runner/builtins/echo.c \
+	$(SRC_DIR)/runner/builtins/cd.c \
+	$(SRC_DIR)/runner/builtins/pwd.c \
+	$(SRC_DIR)/runner/builtins/env.c \
+	$(SRC_DIR)/runner/builtins/export.c \
+	$(SRC_DIR)/runner/builtins/unset.c \
+	$(SRC_DIR)/runner/builtins/exit.c \
 
 # Creating objects
 OBJ_DIR = $(SRC_DIR)/obj

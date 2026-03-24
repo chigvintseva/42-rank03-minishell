@@ -6,13 +6,13 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 21:28:25 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/24 16:53:38 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	free_matrix(char **matrix)
+void	free_matrix(char **matrix)
 {
 	int	i;
 
