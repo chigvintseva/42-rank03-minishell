@@ -1,0 +1,24 @@
+TO BE FIXED:
+
+1. double minishell print after ctrl+c when the previous runner died like infiinite and killed or cat no agrs
+"✓ minishell compiled successfully
+c3a1c1% ./minishell
+minishell$ cat
+=== AST STRUCTURE ===
+CMD: cat
+=== END AST ===
+
+
+
+
+^C
+minishell$ minishell$ "
+
+
+2. tabs give ls instead of tabs - check for other spaces
+
+
+
+
+COMMANDS:
+
