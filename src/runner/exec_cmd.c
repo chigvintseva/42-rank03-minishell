@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/22 17:25:05 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/24 15:46:20 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,36 @@ static int	is_builtin(char *cmd)
 	return (0);
 }
 
-static int	execute_builtin(char **cmd_arg)
+static int	execute_builtin(char **cmd_argv, char **env)
 {
-	if (!ft_strcmp(cmd_arg[0], "echo"))
-		return (builtin_echo());
-	if (!ft_strcmp(cmd_arg[0], "cd"))
+	(void)env;
+	if (!ft_strcmp(cmd_argv[0], "echo"))
+		return (builtin_echo(cmd_argv));
+	if (!ft_strcmp(cmd_argv[0], "cd"))
 		return (builtin_cd());
-	if (!ft_strcmp(cmd_arg[0], "pwd"))
-		return (builtin_pwd());
-	if (!ft_strcmp(cmd_arg[0], "export"))
+	if (!ft_strcmp(cmd_argv[0], "pwd"))
+		return (builtin_pwd(cmd_argv, env));
+	if (!ft_strcmp(cmd_argv[0], "export"))
 		return (builtin_export());
-	if (!ft_strcmp(cmd_arg[0], "unset"))
-		return (builtin_unset());
-	if (!ft_strcmp(cmd_arg[0], "env"))
+	if (!ft_strcmp(cmd_argv[0], "unset"))
+		return (builtin_unset(cmd_argv, &env));
+	if (!ft_strcmp(cmd_argv[0], "env"))
 		return (builtin_env());
-	if (!ft_strcmp(cmd_arg[0], "exit"))
-		return (builtin_exit());
+	if (!ft_strcmp(cmd_argv[0], "exit"))
+		return (builtin_exit(cmd_argv));
 	return (1);
 }
 
-static void	execute_external(t_cmd *cmd, char **env)
+static void	execute_external(char **cmd_argv, char **env)
 {
 	char	*cmd_path;
 	int		perm_error;
 
 	errno = 0;
-	if (!ft_strchr(cmd->argv[0], '/'))
+	if (!ft_strchr(cmd_argv[0], '/'))
 	{
 		perm_error = 0;
-		cmd_path = parsing(cmd->argv[0], env, &perm_error);
+		cmd_path = parsing(cmd_argv[0], env, &perm_error);
 		if (!cmd_path)
 		{
 			if (errno)
@@ -69,17 +70,17 @@ static void	execute_external(t_cmd *cmd, char **env)
 			else if (!perm_error)
 			{
 				ft_putstr_fd("minishell: command not found: ", 2);
-				ft_putendl_fd(cmd->argv[0], 2);
+				ft_putendl_fd(cmd_argv[0], 2);
 				exit(127);
 			}
 			else
 			{
 				ft_putstr_fd("minishell: Permission denied: ", 2);
-				ft_putendl_fd(cmd->argv[0], 2);
+				ft_putendl_fd(cmd_argv[0], 2);
 				exit(126);
 			}
 		}
-		if (execve(cmd_path, cmd->argv, env) == -1)
+		if (execve(cmd_path, cmd_argv, env) == -1)
 		{
 			free(cmd_path);
 			exit_with_error();
@@ -87,7 +88,7 @@ static void	execute_external(t_cmd *cmd, char **env)
 	}
 	else
 	{
-		if (execve(cmd->argv[0], cmd->argv, env) == -1)
+		if (execve(cmd_argv[0], cmd_argv, env) == -1)
 			exit_with_error();
 	}
 }
@@ -97,14 +98,14 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 	pid_t	pid;
 	int		status;
 
-	if (!cmd || !cmd->argv)
+	if (!cmd || !cmd->argv )
 		return (1);
 	if (is_builtin(cmd->argv[0]))
 	{
 		shell->exit_status = apply_redirs(cmd->redirs);
 		if (shell->exit_status != 0)
 			return (shell->exit_status);
-		return (execute_builtin(cmd->argv));
+		return (execute_builtin(cmd->argv, shell->env));
 	}
 	pid = fork();
 	if (pid == -1)
@@ -114,7 +115,7 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 		shell->exit_status = apply_redirs(cmd->redirs);
 		if (shell->exit_status != 0)
 			exit(shell->exit_status);
-		execute_external(cmd, shell->env);
+		execute_external(cmd->argv, shell->env);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
