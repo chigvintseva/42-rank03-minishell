@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:30 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 16:57:38 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:35:29 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	child_left(int *pfd, t_ast *root, t_shell *shell)
 {
 	close(pfd[0]);
 	if (dup2(pfd[1], 1) == -1)
-		exit_with_error(); //close second fd
+		exit_with_error();
 	close(pfd[1]);
 	exit(runner(root->left, shell));
 }
@@ -25,7 +25,7 @@ static void	child_right(int *pfd, t_ast *root, t_shell *shell)
 {
 	close(pfd[1]);
 	if (dup2(pfd[0], 0) == -1)
-		exit_with_error(); //close second fd
+		exit_with_error();
 	close(pfd[0]);
 	exit(runner(root->right, shell));
 }
@@ -41,7 +41,7 @@ static int	parent_process(int *pfd, pid_t pid1, t_ast *root, t_shell *shell)
 	{
 		close(pfd[1]);
 		close(pfd[0]);
-		return (case_error("Fork", 1));
+		return (case_error("Fork", EXIT_FAILURE));
 	}
 	if (pid2 == 0)
 		child_right(pfd, root, shell);
@@ -62,13 +62,13 @@ int	run_pipe(t_ast *root, t_shell *shell)
 	pid_t	pid1;
 
 	if (pipe(pfd) == -1)
-		return (case_error("Pipe", 1));
+		return (case_error("Pipe", EXIT_FAILURE));
 	pid1 = fork();
 	if (pid1 == -1)
 	{
 		close(pfd[1]);
 		close(pfd[0]);
-		return (case_error("Fork", 1));
+		return (case_error("Fork", EXIT_FAILURE));
 	}
 	if (pid1 == 0)
 		child_left(pfd, root, shell);
