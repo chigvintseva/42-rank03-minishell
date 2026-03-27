@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/24 15:49:44 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/25 17:38:21 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ int	builtin_unset(char **argv, char ***env)
 	int		to_rem;
 	size_t	i;
 
-	if (!argv[1])
-		return(1); // or with error
 	i = 1;
 	while (argv[i])
 	{

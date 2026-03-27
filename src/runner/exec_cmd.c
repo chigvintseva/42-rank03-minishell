@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/24 18:18:30 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:49:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ static int	execute_builtin(char **cmd_argv, char **env)
 	if (!ft_strcmp(cmd_argv[0], "echo"))
 		return (builtin_echo(cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "cd"))
-		return (builtin_cd());
+		return (builtin_cd(cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "pwd"))
-		return (builtin_pwd(cmd_argv, env));
+		return (builtin_pwd());
 	if (!ft_strcmp(cmd_argv[0], "export"))
 		return (builtin_export());
 	if (!ft_strcmp(cmd_argv[0], "unset"))
 		return (builtin_unset(cmd_argv, &env));
 	if (!ft_strcmp(cmd_argv[0], "env"))
-		return (builtin_env());
+		return (builtin_env(env, cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "exit"))
 		return (builtin_exit(cmd_argv));
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 static void	execute_external(char **cmd_argv, char **env)

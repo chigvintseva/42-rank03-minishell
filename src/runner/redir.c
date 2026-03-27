@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:28:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/24 19:12:18 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/25 17:34:18 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static int	redir_input(t_redir *redirs)
 
 	fd = open(redirs->target, O_RDONLY);
 	if (fd == -1)
-		return (case_error("Open", 1));
+		return (case_error("Open", EXIT_FAILURE));
 	if (dup2(fd, 0) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	redir_output(t_redir *redirs)
@@ -34,14 +34,14 @@ static int	redir_output(t_redir *redirs)
 
 	fd = open(redirs->target, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
-		return (case_error("Open", 1));
+		return (case_error("Open", EXIT_FAILURE));
 	if (dup2(fd, 1) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	redir_append(t_redir *redirs)
@@ -50,14 +50,14 @@ static int	redir_append(t_redir *redirs)
 
 	fd = open(redirs->target, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		return (case_error("Open", 1));
+		return (case_error("Open", EXIT_FAILURE));
 	if (dup2(fd, 1) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	redir_heredoc(t_redir *redirs)
@@ -66,7 +66,7 @@ static int	redir_heredoc(t_redir *redirs)
 	int		pfd[2];
 
 	if (pipe(pfd) == -1)
-		return (case_error("Pipe", 1));
+		return (case_error("Pipe", EXIT_FAILURE));
 	while (1)
 	{
 		line = readline("> ");
@@ -92,7 +92,7 @@ static int	redir_heredoc(t_redir *redirs)
 		return (case_error("Dup2", 1));
 	}
 	close(pfd[0]);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	apply_redirs(t_redir *redirs)
@@ -115,5 +115,5 @@ int	apply_redirs(t_redir *redirs)
 			return (result);
 		redirs = redirs->next;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

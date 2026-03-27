@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runner.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/24 16:50:50 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/25 18:07:04 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int		apply_redirs(t_redir *redirs);
 
 int		builtin_echo(char **argv);
 int		builtin_cd();
-int		builtin_pwd(char **argv, char **env);
+int		builtin_pwd(void);
 int		builtin_export();
 int		builtin_unset(char **argv, char ***env);
-int		builtin_env();
+int		builtin_env(char **envp, char **argv);
 int		builtin_exit(char **argv);
 
 #endif
