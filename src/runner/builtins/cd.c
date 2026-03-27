@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/25 19:12:34 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/27 17:38:37 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	builtin_cd(char **argv)
 	char	*cur_dir;
 	
 	if (!argv[1])
-		return (TO THE HOME DIR);
+	{
+		return(EXIT_SUCCESS);
+		//return (TO THE HOME DIR);
+	}
 	if (!ft_strcmp(argv[1], "."))
 		return (EXIT_SUCCESS);
 	if (invalid_args(argv))

@@ -6,13 +6,13 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 14:46:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 19:33:32 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:42:34 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token *lexer(char *str)
+t_token *lexer(char *str, t_shell *shell)
 {
 	t_lexer	input;
 	t_token	*new_token;
@@ -40,7 +40,7 @@ t_token *lexer(char *str)
 		}
 		else
 		{
-			new_token = handle_word(&input);
+			new_token = handle_word(&input, shell);
 			if (!new_token)
 				return (free_tokens(input.tokens), NULL);
 			if (tokenadd_back(&input.tokens, new_token))
