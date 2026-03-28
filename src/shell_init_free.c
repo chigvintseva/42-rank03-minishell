@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_init_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 17:59:53 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/17 19:18:14 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/26 22:41:14 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int init_shell(t_shell *shell, char **envp)
 	shell->env = NULL;
 	shell->exit_status = 0;
 	shell->run_further = 1;
+	shell->heredoc_id = 0;
 	i = 0;
 	while (envp[i] != NULL)
 		i++;

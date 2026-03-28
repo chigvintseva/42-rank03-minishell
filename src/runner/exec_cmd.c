@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/25 19:21:32 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/28 22:32:43 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	execute_builtin(char **cmd_argv, char **env)
 static int	run_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	backup[2];
-	int	result;
+	int	status;
 
 	backup[0] = dup(STDIN_FILENO);
 	if (backup[0] == -1)
@@ -66,9 +66,9 @@ static int	run_builtin(t_cmd *cmd, t_shell *shell)
 		close(backup[0]);
 		return (case_error("Dup", 1));
 	}
-	result = apply_redirs(cmd->redirs);
-	if (result == 0)
-		result = execute_builtin(cmd->argv, shell->env);
+	status = apply_redirs(cmd->redirs);
+	if (status == 0)
+		status = execute_builtin(cmd->argv, shell->env);
 	if (dup2(backup[0], STDIN_FILENO) == -1
 		|| dup2(backup[1], STDOUT_FILENO) == -1)
 	{
@@ -78,7 +78,7 @@ static int	run_builtin(t_cmd *cmd, t_shell *shell)
 	}
 	close(backup[0]);
 	close(backup[1]);
-	return (result);
+	return (status);
 }
 
 static void	execute_external(char **cmd_argv, char **env)
@@ -129,13 +129,7 @@ int	run_cmd(t_cmd *cmd, t_shell	*shell)
 	if (!cmd || !cmd->argv )
 		return (1);
 	if (is_builtin(cmd->argv[0]))
-	{
-		if (!cmd->redirs)
-			shell->exit_status = execute_builtin(cmd->argv, shell->env);
-		else
-			shell->exit_status = run_builtin(cmd, shell);
-		return (shell->exit_status);
-	}
+		return (run_builtin(cmd, shell));
 	pid = fork();
 	if (pid == -1)
 		return (case_error("Fork", 1));
