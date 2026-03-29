@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:28:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 18:03:06 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/29 23:09:40 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,20 @@ static int	redir_heredoc(t_redir *redirs)
 
 int	apply_redirs(t_redir *redirs)
 {
-	int	result;
+	int	status;
 
 	while (redirs)
 	{
 		if (redirs->type == R_IN)
-			result = redir_input(redirs);
+			status = redir_input(redirs);
 		else if (redirs->type == R_OUT)
-			result = redir_output(redirs);
+			status = redir_output(redirs);
 		else if (redirs->type == R_APPEND)
-			result = redir_append(redirs);
+			status = redir_append(redirs);
 		else if (redirs->type == R_HEREDOC)
-			result = redir_heredoc(redirs);
-		if (result != 0)
-			return (result);
+			status = redir_heredoc(redirs);
+		if (status != 0)
+			return (status);
 		redirs = redirs->next;
 	}
 	return (0);

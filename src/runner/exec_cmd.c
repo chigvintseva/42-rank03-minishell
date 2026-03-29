@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/28 22:32:43 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/29 23:22:15 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static int	run_builtin(t_cmd *cmd, t_shell *shell)
 	int	backup[2];
 	int	status;
 
-	backup[0] = dup(STDIN_FILENO);
+	backup[0] = dup(0);
 	if (backup[0] == -1)
 		return (case_error("Dup", 1));
-	backup[1] = dup(STDOUT_FILENO);
+	backup[1] = dup(1);
 	if (backup[1] == -1)
 	{
 		close(backup[0]);
@@ -69,8 +69,7 @@ static int	run_builtin(t_cmd *cmd, t_shell *shell)
 	status = apply_redirs(cmd->redirs);
 	if (status == 0)
 		status = execute_builtin(cmd->argv, shell->env);
-	if (dup2(backup[0], STDIN_FILENO) == -1
-		|| dup2(backup[1], STDOUT_FILENO) == -1)
+	if (dup2(backup[0], 0) == -1 || dup2(backup[1], 1) == -1)
 	{
 		close(backup[0]);
 		close(backup[1]);
@@ -121,13 +120,41 @@ static void	execute_external(char **cmd_argv, char **env)
 	}
 }
 
+static int	run_redirs(t_redir *redirs)
+{
+	int	status;
+	int	backup[2];
+
+	backup[0] = dup(0);
+	if (backup[0] == -1)
+		return (case_error("Dup", 1));
+	backup[1] = dup(1);
+	if (backup[1] == -1)
+	{
+		close(backup[0]);
+		return (case_error("Dup", 1));
+	}
+	status = apply_redirs(redirs);
+	if (dup2(backup[0], 0) == -1 || dup2(backup[1], 1) == -1)
+	{
+		close(backup[0]);
+		close(backup[1]);
+		return (case_error("Dup2", 1));
+	}
+	close(backup[0]);
+	close(backup[1]);
+	return (status);
+}
+
 int	run_cmd(t_cmd *cmd, t_shell	*shell)
 {
 	pid_t	pid;
 	int		status;
 
-	if (!cmd || !cmd->argv )
+	if (!cmd)
 		return (1);
+	if (!cmd->argv)
+		return (run_redirs(cmd->redirs)); //
 	if (is_builtin(cmd->argv[0]))
 		return (run_builtin(cmd, shell));
 	pid = fork();
