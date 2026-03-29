@@ -39,7 +39,7 @@ static int	execute_builtin(char **cmd_argv, char **env)
 	if (!ft_strcmp(cmd_argv[0], "echo"))
 		return (builtin_echo(cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "cd"))
-		return (builtin_cd(cmd_argv));
+		return (builtin_cd(cmd_argv, env));
 	if (!ft_strcmp(cmd_argv[0], "pwd"))
 		return (builtin_pwd());
 	if (!ft_strcmp(cmd_argv[0], "export"))

@@ -1,0 +1,14 @@
+1. redirections
+a. in
+
+
+b. out
+
+
+c. heredoc
+
+
+d. ??
+
+
+6. combinations

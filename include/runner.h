@@ -27,7 +27,7 @@ void	free_matrix(char **matrix);
 int		apply_redirs(t_redir *redirs);
 
 int		builtin_echo(char **argv);
-int		builtin_cd();
+int		builtin_cd(char **argv, char **env);
 int		builtin_pwd(void);
 int		builtin_export();
 int		builtin_unset(char **argv, char ***env);
