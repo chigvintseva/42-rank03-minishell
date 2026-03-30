@@ -59,6 +59,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/builtins/pwd.c \
 	$(SRC_DIR)/runner/builtins/env.c \
 	$(SRC_DIR)/runner/builtins/export.c \
+	$(SRC_DIR)/runner/builtins/export_one_utils.c \
+	$(SRC_DIR)/runner/builtins/export_utils.c \
 	$(SRC_DIR)/runner/builtins/unset.c \
 	$(SRC_DIR)/runner/builtins/exit.c \
 
