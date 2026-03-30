@@ -82,7 +82,7 @@ int	builtin_cd(char **argv, char **env)
 		return (update_env(env, "OLDPWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
 	if (chdir((const char *)path) != 0)
 		return (free(cur_dir), cd_error(argv[1]), case_error("", EXIT_FAILURE));
-	update_env_var(env, "OLDPWD", cur_dir);
+	update_env(env, "OLDPWD", cur_dir);
 	free(cur_dir);
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
