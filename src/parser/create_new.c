@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 14:01:03 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/29 18:50:07 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd	*new_cmd(char **argv, int argc, t_redir *redirs)
 {
 	t_cmd	*new;
 
-	if (argc < 0 || (argc > 0 && argv == NULL))
+	if (argc < 0 || (argc > 0 && argv == NULL) || (argc == 0 && redirs == NULL))
 		return (NULL);
 	new = malloc(sizeof(t_cmd));
 	if (!new)

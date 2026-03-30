@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 17:17:42 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/27 17:32:23 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 typedef struct	s_shell
 {
-	char	**env;
-	int		exit_status;
-	int		run_further;
+	char			**env;
+	int				exit_status;
+	int				run_further;
+	unsigned int	heredoc_id;
 } t_shell;
 
 # include <stdio.h>

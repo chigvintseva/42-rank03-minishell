@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:28:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/25 17:34:18 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/29 23:09:40 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	redir_input(t_redir *redirs)
 
 	fd = open(redirs->target, O_RDONLY);
 	if (fd == -1)
-		return (case_error("Open", EXIT_FAILURE));
+		return (case_error("Open", 1)); // print error: "minishell: <redirs->target>: No such file or directory"
 	if (dup2(fd, 0) == -1)
 	{
 		close(fd);
@@ -62,57 +62,37 @@ static int	redir_append(t_redir *redirs)
 
 static int	redir_heredoc(t_redir *redirs)
 {
-	char	*line;
-	int		pfd[2];
+	int	fd;
 
-	if (pipe(pfd) == -1)
-		return (case_error("Pipe", EXIT_FAILURE));
-	while (1)
+	fd = open(redirs->target, O_RDONLY);
+	if (fd == -1)
+		return (case_error("Open", 1));
+	if (dup2(fd, 0) == -1)
 	{
-		line = readline("> ");
-		if (!line)
-		{
-			close(pfd[1]);
-			close(pfd[0]);
-			return (case_error("minishell: warning: here-document at line 133 delimited by end-of-file", 1));
-		}
-		if (!ft_strcmp(redirs->target, line))
-		{
-			free(line);
-			break ;
-		}
-		write(pfd[1], line, ft_strlen(line));
-		write(pfd[1], "\n", 1);
-		free(line);
-	}
-	close(pfd[1]);
-	if (dup2(pfd[0], 0) == -1)
-	{
-		close(pfd[0]);
+		close(fd);
 		return (case_error("Dup2", 1));
 	}
-	close(pfd[0]);
-	return (EXIT_SUCCESS);
+	close(fd);
+	unlink(redirs->target);
+	return (0);
 }
 
 int	apply_redirs(t_redir *redirs)
 {
-	int	result;
+	int	status;
 
 	while (redirs)
 	{
 		if (redirs->type == R_IN)
-			result = redir_input(redirs);
+			status = redir_input(redirs);
 		else if (redirs->type == R_OUT)
-			result = redir_output(redirs);
+			status = redir_output(redirs);
 		else if (redirs->type == R_APPEND)
-			result = redir_append(redirs);
+			status = redir_append(redirs);
 		else if (redirs->type == R_HEREDOC)
-			result = redir_heredoc(redirs);
-		else
-			return (-1);
-		if (result != 0)
-			return (result);
+			status = redir_heredoc(redirs);
+		if (status != 0)
+			return (status);
 		redirs = redirs->next;
 	}
 	return (EXIT_SUCCESS);
