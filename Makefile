@@ -6,7 +6,11 @@
 #    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2026/03/27 17:38:02 by achigvin         ###   ########.fr        #
+=======
+#    Updated: 2026/03/30 19:21:17 by aleksandra       ###   ########.fr        #
+>>>>>>> a7f97dc (splited functions in minishell.c)
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +34,7 @@ NC = \033[0m
 SRC_DIR = src
 SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/minishell.c \
+	$(SRC_DIR)/heredoc_utils.c \
 	$(SRC_DIR)/shell_init_free.c \
 	$(SRC_DIR)/error_case.c \
 	$(SRC_DIR)/lexer/lexer.c \
