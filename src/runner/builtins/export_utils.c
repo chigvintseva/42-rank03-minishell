@@ -97,4 +97,3 @@ void	sorted_print(char **sorted)
 		i++;
 	}
 }
-

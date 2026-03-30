@@ -67,7 +67,11 @@ int	builtin_unset(char **argv, char ***env)
 	{
 		to_rem = find_to_rem(*env, argv[i]);
 		if (to_rem > 0)
+		{
 			*env = remove_env_var(*env, to_rem);
+			if (!(*env))
+				return (case_error("unset", EXIT_FAILURE));
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);

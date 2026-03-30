@@ -24,33 +24,6 @@ static int	input_precheck(char *input)
 	return (EXIT_SUCCESS);
 }
 
-// int	gen_file_open(t_shell *shell, char *hd_path)
-// {
-// 	char	*hd_id;
-// 	int		fd;
-
-// 	while (1)
-// 	{
-// 		hd_id = ft_itoa(shell->heredoc_id++);
-// 		if (!hd_id)
-// 			return (case_error("ft_itoa", 1));
-// 		hd_path = ft_strjoin("/tmp/minishell_hd_", hd_id);
-// 		free(hd_id);
-// 		if (!hd_path)
-// 			return (case_error("ft_strjoin", 1));
-// 		fd = open(hd_path, O_CREAT | O_EXCL | O_WRONLY, 0600);
-// 		if (fd == -1 && errno == EEXIST)
-// 		{
-// 			free(hd_path);
-// 			continue ;
-// 		}
-// 		if (fd == -1)
-// 			return (free(hd_path), case_error("Open", 1));
-// 		break ;
-// 	}
-// 	return (fd);
-// }
-
 static int	read_heredoc(t_redir *redirs, t_shell *shell)
 {
 	char	*line;

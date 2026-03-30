@@ -12,30 +12,50 @@
 
 #include "../../../include/minishell.h"
 
-int	builtin_exit(char **argv)
+static int	is_numeric(char *arg)
 {
-	size_t	i;
-	if (!argv[1])
-		return (write (1, "\n", 1), EXIT_SUCCESS); // or 1
-	if (!ft_strcmp(argv[1], "-n"))
+	int	i;
+
+	if (!arg || !arg[0])
+		return (0);
+	i = 0;
+	if (arg[i] == '+' || arg[i] == '-')
+		i++;
+	if (!arg[i])
+		return (0);
+	while (arg[i])
 	{
-		if (!argv[2])
-			return (EXIT_SUCCESS); // or 1
-		i = 2;
-		while (argv[i])
-		{
-			printf("%s", argv[i]);
-			i++;
-		}
+		if (!ft_isdigit((unsigned char)arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	builtin_exit(char **argv, t_shell *shell)
+{
+	char	*arg;
+
+	if (argv[2])
+	{
+		printf("exit\n");
+		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		shell->exit_status = 1;
+		return (EXIT_FAILURE);
+	}
+	if (!argv[1])
+	{
+		printf("exit\n");
+		shell->exit_status = 42 % 256;
+	}
+	arg = argv[1];
+	if (!is_numeric(arg))
+	{
+		printf("exit\n");
+		ft_putendl_fd("minishell: exit: numeric argument required", 2);
+		shell->exit_status = 2;
 	}
 	else
-	{
-		i = 1;
-		while (argv[i])
-		{
-			printf("%s\n", argv[i]);
-			i++;
-		}
-	}
-	return (EXIT_SUCCESS);
+		shell->exit_status = ft_atol(arg) % 256;
+	exit_with_status(shell->exit_status);	
 }

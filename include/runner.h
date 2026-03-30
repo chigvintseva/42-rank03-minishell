@@ -26,6 +26,10 @@ char	*parsing(char *cmd, char **envp, int *perm_error);
 void	free_matrix(char **matrix);
 int		apply_redirs(t_redir *redirs);
 
+int		is_builtin(char *cmd);
+int		execute_builtin(char **cmd_argv, t_shell *shell);
+int		run_builtin(t_cmd *cmd, t_shell *shell);
+
 char 	*get_env_var(char **env, const char *key);
 void 	update_env(char **env, const char *key, const char *value);
 
@@ -47,6 +51,6 @@ int		builtin_export(char **agrv, t_shell *shell);
 
 int		builtin_unset(char **argv, char ***env);
 int		builtin_env(char **envp, char **argv);
-int		builtin_exit(char **argv);
+int		builtin_exit(char **argv, t_shell *shell);
 
 #endif
