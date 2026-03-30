@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:20:41 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 20:02:49 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/30 20:48:19 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,23 @@ void	redir_add_back(t_redir **head, t_redir *new_node)
 	last->next = new_node;
 }
 
-t_redir	*redir_error(t_redir *head, int *error)
+static t_redir	*redir_error(t_redir *head, int *error)
 {
 	*error = 1;
 	free_redirs(head);
 	return (NULL);
 }
+
+t_redir	*process_single_redir(t_token *cur, t_token *end, t_redir *head, int *error)
+{
+	t_redir	*new_node;
+
+	if (cur == end || !cur->next)
+		return (redir_error(head, error));
+	new_node = new_redir(token_to_redir_type(cur->type), cur->next->value);
+	if (!new_node)
+		return (redir_error(head, error));
+	redir_add_back(&head, new_node);
+	return (head);
+}
+
