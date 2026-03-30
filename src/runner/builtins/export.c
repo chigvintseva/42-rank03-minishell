@@ -12,7 +12,26 @@
 
 #include "../../../include/minishell.h"
 
-int	builtin_export()
+static void	sorted_print(char **env)
 {
-	return (0);
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		
+	}
+}
+
+
+int	builtin_export(char **agrv, t_shell *shell)
+{
+	if (!argv[1])
+		return (sorted_print(env), EXIT_SUCCESS);
+	else if (!key_value_pair(argv[1]))
+	else if (key_value_pair(argv[1]))
+	else
+		return (case_error("minishell: export: ")
 }

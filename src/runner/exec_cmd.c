@@ -33,21 +33,21 @@ static int	is_builtin(char *cmd)
 	return (0);
 }
 
-static int	execute_builtin(char **cmd_argv, char **env)
+static int	execute_builtin(char **cmd_argv, t_shell *shell)
 {
 	(void)env;
 	if (!ft_strcmp(cmd_argv[0], "echo"))
 		return (builtin_echo(cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "cd"))
-		return (builtin_cd(cmd_argv, env));
+		return (builtin_cd(cmd_argv, shell->env));
 	if (!ft_strcmp(cmd_argv[0], "pwd"))
 		return (builtin_pwd());
 	if (!ft_strcmp(cmd_argv[0], "export"))
-		return (builtin_export());
+		return (builtin_export(cmd_argv, shell));
 	if (!ft_strcmp(cmd_argv[0], "unset"))
-		return (builtin_unset(cmd_argv, &env));
+		return (builtin_unset(cmd_argv, &(shell->env)));
 	if (!ft_strcmp(cmd_argv[0], "env"))
-		return (builtin_env(env, cmd_argv));
+		return (builtin_env(shell->env, cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "exit"))
 		return (builtin_exit(cmd_argv));
 	return (EXIT_FAILURE);
@@ -80,7 +80,7 @@ static void	execute_external(char **cmd_argv, char **env)
 				exit(126);
 			}
 		}
-		if (execve(cmd_path, cmd_argv, env) == -1)
+		if (execve(cmd_path, cmd_argv, clean_env(env)) == -1)
 		{
 			free(cmd_path);
 			exit_with_error();
@@ -88,7 +88,7 @@ static void	execute_external(char **cmd_argv, char **env)
 	}
 	else
 	{
-		if (execve(cmd_argv[0], cmd_argv, env) == -1)
+		if (execve(cmd_argv[0], cmd_argv, clean_env(env) == -1)
 			exit_with_error();
 	}
 }

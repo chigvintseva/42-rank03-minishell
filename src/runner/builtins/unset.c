@@ -32,8 +32,8 @@ static char	**remove_env_var(char **env, int to_rem)
 {
 	size_t	env_len;
 	char	**new_env;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	env_len = 0;
 	while(env[env_len])
@@ -54,8 +54,7 @@ static char	**remove_env_var(char **env, int to_rem)
 		j++;
 	}
 	new_env[j] = NULL;
-	printf("removed\n");
-	return (free_matrix(env), new_env);
+	return (printf("removed\n"), free_matrix(env), new_env);
 }
 
 int	builtin_unset(char **argv, char ***env)

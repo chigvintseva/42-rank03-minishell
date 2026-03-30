@@ -28,7 +28,7 @@ static int	invalid_args(char **argv)
 	return (EXIT_SUCCESS);
 }
 
-static char *get_env_var(char **env, const char *key)
+char *get_env_var(char **env, const char *key)
 {
 	int i;
 	size_t key_len;
@@ -42,7 +42,7 @@ static char *get_env_var(char **env, const char *key)
 	return (NULL);
 }
 
-static void update_env(char **env, const char *key, const char *value)
+void update_env(char **env, const char *key, const char *value)
 {
 	int i;
 	size_t key_len;

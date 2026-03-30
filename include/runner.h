@@ -26,6 +26,9 @@ char	*parsing(char *cmd, char **envp, int *perm_error);
 void	free_matrix(char **matrix);
 int		apply_redirs(t_redir *redirs);
 
+char 	*get_env_var(char **env, const char *key);
+void 	update_env(char **env, const char *key, const char *value);
+
 int		builtin_echo(char **argv);
 int		builtin_cd(char **argv, char **env);
 int		builtin_pwd(void);
