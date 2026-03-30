@@ -12,7 +12,6 @@
 
 #include "../../include/minishell.h"
 
-
 t_token *handle_operator(t_lexer *input)
 {
 	if (!input || !input->s)
