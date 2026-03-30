@@ -35,6 +35,7 @@ typedef struct	s_shell
 # include "runner.h"
 
 int		case_error(char *msg, int code);
+void	free_env_copy(char **env_copy, size_t cnt);
 void	exit_with_error();
 int		init_shell(t_shell *shell, char **envp);
 void	shell_loop(t_shell *shell);

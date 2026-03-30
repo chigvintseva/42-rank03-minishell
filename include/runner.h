@@ -32,7 +32,19 @@ void 	update_env(char **env, const char *key, const char *value);
 int		builtin_echo(char **argv);
 int		builtin_cd(char **argv, char **env);
 int		builtin_pwd(void);
-int		builtin_export();
+
+//export
+size_t	key_len(char *arg);
+int		has_equal(char *arg);
+int		is_valid_identifier(char *arg);
+size_t	find_env_key(char **env, char *arg);
+int		export_error(char *arg);
+size_t	env_len(char **env);
+char	**dup_env(char **env);
+char	**sort_env(char **copy);
+void	sorted_print(char **sorted);
+int		builtin_export(char **agrv, t_shell *shell);
+
 int		builtin_unset(char **argv, char ***env);
 int		builtin_env(char **envp, char **argv);
 int		builtin_exit(char **argv);
