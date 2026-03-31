@@ -6,11 +6,7 @@
 #    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2026/03/27 17:38:02 by achigvin         ###   ########.fr        #
-=======
 #    Updated: 2026/03/30 19:21:17 by aleksandra       ###   ########.fr        #
->>>>>>> a7f97dc (splited functions in minishell.c)
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +53,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/runner.c \
 	$(SRC_DIR)/runner/pipe.c \
 	$(SRC_DIR)/runner/exec_cmd.c \
+	$(SRC_DIR)/runner/exec_cmd_builtin.c \
 	$(SRC_DIR)/runner/external.c \
 	$(SRC_DIR)/runner/redir.c \
 	$(SRC_DIR)/runner/builtins/echo.c \
@@ -64,6 +61,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/builtins/pwd.c \
 	$(SRC_DIR)/runner/builtins/env.c \
 	$(SRC_DIR)/runner/builtins/export.c \
+	$(SRC_DIR)/runner/builtins/export_one_utils.c \
+	$(SRC_DIR)/runner/builtins/export_utils.c \
 	$(SRC_DIR)/runner/builtins/unset.c \
 	$(SRC_DIR)/runner/builtins/exit.c \
 

@@ -29,3 +29,8 @@ void	exit_with_error()
 	perror("Error");
 	exit(errno);
 }
+
+void	exit_with_status(int status)
+{
+	exit(status);
+}

@@ -14,7 +14,7 @@
 
 void	free_matrix(char **matrix)
 {
-	int	i;
+	size_t	i;
 
 	if (!matrix)
 		return ;

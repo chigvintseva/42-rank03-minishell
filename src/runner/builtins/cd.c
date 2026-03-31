@@ -28,7 +28,7 @@ static int	invalid_args(char **argv)
 	return (EXIT_SUCCESS);
 }
 
-static char *get_env_var(char **env, const char *key)
+char *get_env_var(char **env, const char *key)
 {
 	int i;
 	size_t key_len;
@@ -42,7 +42,7 @@ static char *get_env_var(char **env, const char *key)
 	return (NULL);
 }
 
-static void update_env(char **env, const char *key, const char *value)
+void update_env(char **env, const char *key, const char *value)
 {
 	int i;
 	size_t key_len;
@@ -82,7 +82,7 @@ int	builtin_cd(char **argv, char **env)
 		return (update_env(env, "OLDPWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
 	if (chdir((const char *)path) != 0)
 		return (free(cur_dir), cd_error(argv[1]), case_error("", EXIT_FAILURE));
-	update_env_var(env, "OLDPWD", cur_dir);
+	update_env(env, "OLDPWD", cur_dir);
 	free(cur_dir);
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
