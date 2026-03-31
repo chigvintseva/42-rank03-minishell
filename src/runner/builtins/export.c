@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/31 18:22:56 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:19:44 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	builtin_export(char **argv, t_shell *shell)
 		if (!env_copy)
 			return (case_error("malloc in dup_env", EXIT_FAILURE));
 		env_copy = sort_env(env_copy);
-		sorted_print(sort_env(env_copy));
+		sorted_print(env_copy);
 		free_matrix(env_copy);
 		return (EXIT_SUCCESS);
 	}

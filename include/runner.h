@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 18:39:37 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:21:58 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int		builtin_cd(char **argv, char **env);
 int		builtin_pwd(void);
 
 //export
-size_t	key_len(char *arg);
+int		key_len(char *arg);
 int		has_equal(char *arg);
 int		is_valid_identifier(char *arg);
-size_t	find_env_key(char **env, char *arg);
+int		find_env_key(char **env, char *arg);
 int		export_error(char *arg);
-size_t	env_len(char **env);
+int		env_len(char **env);
 char	**dup_env(char **env);
 char	**sort_env(char **copy);
 void	sorted_print(char **sorted);

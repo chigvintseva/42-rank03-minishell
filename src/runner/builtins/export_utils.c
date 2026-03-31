@@ -6,15 +6,15 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:29:32 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/30 14:29:32 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:21:58 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-size_t	env_len(char **env)
+int	env_len(char **env)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (env && env[i])
@@ -57,12 +57,15 @@ char	**sort_env(char **copy)
 		i = 0;
 		while (copy[i] && copy[i + 1])
 		{
-			temp = copy[i];
-			copy[i] = copy[i + 1];
-			copy[i + 1] = temp;
-			swapped = 1;
+			if (ft_strcmp(copy[i], copy[i + 1]) > 0)
+			{
+				temp = copy[i];
+				copy[i] = copy[i + 1];
+				copy[i + 1] = temp;
+				swapped = 1;
+			}
+			i++;
 		}
-		i++;
 	}
 	return (copy);
 }

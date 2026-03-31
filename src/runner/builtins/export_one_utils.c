@@ -6,13 +6,13 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:59:19 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 18:21:04 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:21:58 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-size_t	key_len(char *arg)
+int	key_len(char *arg)
 {
 	int	i;
 
@@ -54,10 +54,10 @@ int	is_valid_identifier(char *arg)
 	return (1);
 }
 
-size_t	find_env_key(char **env, char *arg)
+int	find_env_key(char **env, char *arg)
 {
-	size_t	i;
-	size_t	len;
+	int	i;
+	int	len;
 
 	i = 0;
 	while (arg[i] && arg[i] != '=')
