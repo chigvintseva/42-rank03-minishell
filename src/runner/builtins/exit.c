@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/24 16:04:50 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 18:25:12 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int	builtin_exit(char **argv, t_shell *shell)
 	}
 	else
 		shell->exit_status = ft_atol(arg) % 256;
-	exit_with_status(shell->exit_status);	
+	exit_with_status(shell->exit_status);
+	return (EXIT_FAILURE);
 }

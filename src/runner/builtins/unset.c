@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/25 17:38:21 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:24:36 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	**remove_env_var(char **env, int to_rem)
 	j = 0;
 	while (env[i])
 	{
-		if (i == to_rem)
+		if ((int)i == to_rem)
 			i++;
 		new_env[j] = ft_strdup(env[i]);
 		if (!new_env[j])

@@ -6,7 +6,7 @@
 #    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/27 17:38:02 by achigvin         ###   ########.fr        #
+#    Updated: 2026/03/31 18:26:46 by achigvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/runner.c \
 	$(SRC_DIR)/runner/pipe.c \
 	$(SRC_DIR)/runner/exec_cmd.c \
+	$(SRC_DIR)/runner/exec_cmd_builtin.c \
 	$(SRC_DIR)/runner/external.c \
 	$(SRC_DIR)/runner/redir.c \
 	$(SRC_DIR)/runner/builtins/echo.c \

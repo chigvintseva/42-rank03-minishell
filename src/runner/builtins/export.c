@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/24 16:48:39 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 18:22:56 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*dup_key_only(char *arg)
 
 static int	export_one(char *arg, t_shell *shell)
 {
-	size_t	idx;
+	int		idx;
 	char	*new_entry;
 
 	if (!is_valid_identifier(arg))
@@ -87,7 +87,7 @@ static int	export_one(char *arg, t_shell *shell)
 	return (add_env_entry(&(shell->env), new_entry));
 }
 
-int	builtin_export(char **agrv, t_shell *shell)
+int	builtin_export(char **argv, t_shell *shell)
 {
 	char **env_copy;
 	int		ret;
@@ -107,7 +107,7 @@ int	builtin_export(char **agrv, t_shell *shell)
 	i = 1;
 	while (argv[i])
 	{
-		ret = export_one(argv[i]);
+		ret = export_one(argv[i], shell);
 		i++;
 	}
 	return (ret);
