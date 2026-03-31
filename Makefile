@@ -6,7 +6,7 @@
 #    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/24 16:51:15 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/03/31 18:24:38 by aleksandra       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/minishell.c \
 	$(SRC_DIR)/shell_init_free.c \
 	$(SRC_DIR)/error_case.c \
+	$(SRC_DIR)/heredoc_utils.c \
 	$(SRC_DIR)/lexer/lexer.c \
 	$(SRC_DIR)/lexer/hadle_words_syntax.c \
 	$(SRC_DIR)/lexer/lexing_utils.c \
