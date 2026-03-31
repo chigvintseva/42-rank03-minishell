@@ -6,11 +6,18 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/31 18:25:12 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:50:45 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+static void	exit_error(char *arg)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd(": numeric argument required", 2);
+}
 
 static int	is_numeric(char *arg)
 {
@@ -34,29 +41,27 @@ static int	is_numeric(char *arg)
 
 int	builtin_exit(char **argv, t_shell *shell)
 {
-	char	*arg;
-
-	if (argv[2])
+	printf("exit\n");
+	if (!argv[1])
 	{
-		printf("exit\n");
+		shell->exit_status = 0;
+		exit_with_status(shell->exit_status);
+	}
+	else if (!is_numeric(argv[1]))
+	{
+		exit_error(argv[1]);
+		shell->exit_status = 2;
+	}
+	else if (argv[2])
+	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		shell->exit_status = 1;
 		return (EXIT_FAILURE);
 	}
-	if (!argv[1])
+	else 
 	{
-		printf("exit\n");
-		shell->exit_status = 42 % 256;
+		shell->exit_status = ft_atol(argv[1]) % 256;
+		exit_with_status(shell->exit_status);
 	}
-	arg = argv[1];
-	if (!is_numeric(arg))
-	{
-		printf("exit\n");
-		ft_putendl_fd("minishell: exit: numeric argument required", 2);
-		shell->exit_status = 2;
-	}
-	else
-		shell->exit_status = ft_atol(arg) % 256;
-	exit_with_status(shell->exit_status);
-	return (EXIT_FAILURE);
+	return (shell->exit_status);	
 }
