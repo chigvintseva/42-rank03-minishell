@@ -6,13 +6,13 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 18:14:47 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 21:13:11 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	count_cmd_words(t_token *start, t_token *end)
+static int	count_cmd_words(t_token *start, t_token *end)
 {
 	t_token	*cur;
 	int		count;
@@ -57,7 +57,7 @@ t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 	}
 	return (head);
 }
-char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
+static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
 	int		error;
 	char	**argv;

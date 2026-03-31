@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/24 15:49:44 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 18:24:36 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static char	**remove_env_var(char **env, int to_rem)
 {
 	size_t	env_len;
 	char	**new_env;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	env_len = 0;
 	while(env[env_len])
@@ -45,7 +45,7 @@ static char	**remove_env_var(char **env, int to_rem)
 	j = 0;
 	while (env[i])
 	{
-		if (i == to_rem)
+		if ((int)i == to_rem)
 			i++;
 		new_env[j] = ft_strdup(env[i]);
 		if (!new_env[j])
@@ -54,8 +54,7 @@ static char	**remove_env_var(char **env, int to_rem)
 		j++;
 	}
 	new_env[j] = NULL;
-	printf("removed\n");
-	return (free_matrix(env), new_env);
+	return (printf("removed\n"), free_matrix(env), new_env);
 }
 
 int	builtin_unset(char **argv, char ***env)
@@ -63,14 +62,16 @@ int	builtin_unset(char **argv, char ***env)
 	int		to_rem;
 	size_t	i;
 
-	if (!argv[1])
-		return(1); // or with error
 	i = 1;
 	while (argv[i])
 	{
 		to_rem = find_to_rem(*env, argv[i]);
 		if (to_rem > 0)
+		{
 			*env = remove_env_var(*env, to_rem);
+			if (!(*env))
+				return (case_error("unset", EXIT_FAILURE));
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);

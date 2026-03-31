@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 18:22:03 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 21:01:06 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ typedef struct	s_shell
 # include "runner.h"
 
 int		case_error(char *msg, int code);
+void	exit_with_status(int status);
 void	exit_with_error();
+void	free_env_copy(char **env_copy, size_t cnt);
 int		init_shell(t_shell *shell, char **envp);
 void	shell_loop(t_shell *shell);
 int		minishell(char *input, t_shell *shell);

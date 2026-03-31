@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static	void	free_env_copy(char **env_copy, size_t cnt)
+void	free_env_copy(char **env_copy, size_t cnt)
 {
 	size_t	i;
 
@@ -58,16 +58,16 @@ int init_shell(t_shell *shell, char **envp)
 		i++;
 	envp_copy = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!envp_copy)
-		return (1);
+		return (EXIT_FAILURE);
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		envp_copy[i] = ft_strdup(envp[i]);
 		if (!envp_copy[i])
-			return (free_env_copy(envp_copy, i), 1);
+			return (free_env_copy(envp_copy, i), EXIT_FAILURE);
 		i++;
 	}
 	envp_copy[i] = NULL;
 	shell->env = envp_copy;
-	return (0);
+	return (EXIT_SUCCESS);
 }

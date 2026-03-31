@@ -22,10 +22,10 @@ static int	redir_input(t_redir *redirs)
 	if (dup2(fd, 0) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	redir_output(t_redir *redirs)
@@ -34,14 +34,14 @@ static int	redir_output(t_redir *redirs)
 
 	fd = open(redirs->target, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
-		return (case_error("Open", 1));
+		return (case_error("Open", EXIT_FAILURE));
 	if (dup2(fd, 1) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	redir_append(t_redir *redirs)
@@ -50,14 +50,14 @@ static int	redir_append(t_redir *redirs)
 
 	fd = open(redirs->target, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		return (case_error("Open", 1));
+		return (case_error("Open", EXIT_FAILURE));
 	if (dup2(fd, 1) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	redir_heredoc(t_redir *redirs)
@@ -95,5 +95,5 @@ int	apply_redirs(t_redir *redirs)
 			return (status);
 		redirs = redirs->next;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

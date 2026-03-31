@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/24 18:22:16 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:15:43 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	builtin_echo(char **argv)
 {
 	size_t	i;
+
 	if (!argv[1])
 		return (write (1, "\n", 1), EXIT_SUCCESS);
 	if (!ft_strcmp(argv[1], "-n"))

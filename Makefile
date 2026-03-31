@@ -6,7 +6,7 @@
 #    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/31 18:24:38 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/03/31 21:00:48 by aleksandra       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,18 @@ NC = \033[0m
 SRC_DIR = src
 SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/minishell.c \
+	$(SRC_DIR)/heredoc_utils.c \
 	$(SRC_DIR)/shell_init_free.c \
 	$(SRC_DIR)/error_case.c \
 	$(SRC_DIR)/heredoc_utils.c \
 	$(SRC_DIR)/lexer/lexer.c \
-	$(SRC_DIR)/lexer/hadle_words_syntax.c \
+	$(SRC_DIR)/lexer/handle_op.c \
+	$(SRC_DIR)/lexer/handle_word.c \
+	$(SRC_DIR)/lexer/handle_word_fill_utils.c \
+	$(SRC_DIR)/lexer/handle_word_utils.c \
 	$(SRC_DIR)/lexer/lexing_utils.c \
 	$(SRC_DIR)/lexer/list_utils.c \
+	$(SRC_DIR)/lexer/word_len_count.c \
 	$(SRC_DIR)/parser/parser.c \
 	$(SRC_DIR)/parser/ast_builder.c \
 	$(SRC_DIR)/parser/cmd_builder.c \
@@ -49,6 +54,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/runner.c \
 	$(SRC_DIR)/runner/pipe.c \
 	$(SRC_DIR)/runner/exec_cmd.c \
+	$(SRC_DIR)/runner/exec_cmd_builtin.c \
 	$(SRC_DIR)/runner/external.c \
 	$(SRC_DIR)/runner/redir.c \
 	$(SRC_DIR)/runner/builtins/echo.c \
@@ -56,6 +62,8 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/builtins/pwd.c \
 	$(SRC_DIR)/runner/builtins/env.c \
 	$(SRC_DIR)/runner/builtins/export.c \
+	$(SRC_DIR)/runner/builtins/export_one_utils.c \
+	$(SRC_DIR)/runner/builtins/export_utils.c \
 	$(SRC_DIR)/runner/builtins/unset.c \
 	$(SRC_DIR)/runner/builtins/exit.c \
 

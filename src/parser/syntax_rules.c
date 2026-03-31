@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_rules.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:10 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 21:45:48 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:26:27 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int pipe_rules(t_token *lst)
+static int pipe_rules(t_token *lst)
 {
 	if (lst == NULL)
 		return (0);
@@ -29,7 +29,7 @@ int pipe_rules(t_token *lst)
 	return (1);
 }
 
-int	redir_rules(t_token *lst)
+static int	redir_rules(t_token *lst)
 {
 	if (lst == NULL)
 		return (0);
