@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 18:21:27 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/31 18:21:50 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 20:11:40 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	handel_heredocs(t_cmd *cmd, t_shell *shell)
 	t_redir	*redir;
 	int		status;
 
+	status = 0;
 	redir = cmd->redirs;
 	while (redir)
 	{
