@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:32:23 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/30 19:19:42 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_env_copy(char **env_copy, size_t cnt);
 int		init_shell(t_shell *shell, char **envp);
 void	shell_loop(t_shell *shell);
 int		minishell(char *input, t_shell *shell);
+int		handel_heredocs(t_cmd *cmd, t_shell *shell);
 void	free_shell(t_shell *shell);
 int		only_space(char *str);
 

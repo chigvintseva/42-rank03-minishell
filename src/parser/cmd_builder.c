@@ -6,13 +6,13 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/29 18:50:53 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/30 20:27:59 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	count_cmd_words(t_token *start, t_token *end)
+static int	count_cmd_words(t_token *start, t_token *end)
 {
 	t_token	*cur;
 	int		count;
@@ -34,22 +34,7 @@ int	count_cmd_words(t_token *start, t_token *end)
 	return (count);
 }
 
-
-t_redir	*process_single_redir(t_token *cur, t_token *end, t_redir *head, int *error)
-{
-	t_redir	*new_node;
-
-	if (cur == end || !cur->next)
-		return (redir_error(head, error));
-	new_node = new_redir(token_to_redir_type(cur->type), cur->next->value);
-	if (!new_node)
-		return (redir_error(head, error));
-	redir_add_back(&head, new_node);
-	return (head);
-}
-
-
-t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
+static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 {
 	t_token	*cur;
 	t_redir	*head;
@@ -72,7 +57,7 @@ t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 	}
 	return (head);
 }
-char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
+static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
 	int		error;
 	char	**argv;
@@ -89,32 +74,38 @@ char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **red
 	return (argv);
 }
 
+static int	prepare_argv_and_redirs(int argc, t_token *start, t_token *end, t_redir **redirs, char ***argv)
+{
+	int		error;
+
+	if (argc == 0)
+	{
+		*redirs = extract_redirs(start, end, &error);
+		if (error != 0)
+ 			return (0);
+		*argv = NULL;
+	}
+	else if (argc > 0)
+	{
+		*argv = get_argv_and_redirs(start, end, argc, redirs);
+		if (!(*argv))
+			return (0);
+	}
+	return (1);
+}
+
 t_cmd	*build_cmd(t_token *start, t_token *end)
 {
 	int		argc;
 	t_redir	*redirs;
 	char	**argv;
 	t_cmd	*cmd;
-	int		error;
 
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 		return (NULL);
 	argc = count_cmd_words(start, end);
-	if (argc < 0)
+	if (argc < 0 || !(prepare_argv_and_redirs(argc, start, end, &redirs, &argv)))
 		return (NULL);
-	if (argc == 0)
-	{
-		redirs = extract_redirs(start, end, &error);
-		if (error != 0)
- 			return (NULL);
-		argv = NULL;
-	}
-	else
-	{
-		argv = get_argv_and_redirs(start, end, argc, &redirs);
-		if (!argv)
-			return (NULL);
-	}
 	cmd = new_cmd(argv, argc, redirs);
 	if (!cmd)
 	{
