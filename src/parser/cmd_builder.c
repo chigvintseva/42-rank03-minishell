@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 21:13:11 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 21:22:35 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	count_cmd_words(t_token *start, t_token *end)
 	return (count);
 }
 
-t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
+static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 {
 	t_token	*cur;
 	t_redir	*head;
