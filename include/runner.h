@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   runner.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 15:51:41 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 20:43:00 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 int		run_cmd_node(t_ast *node, t_shell *shell);
 int		run_pipe_node(t_ast *root, t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 18:33:10 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/01 21:04:14 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,20 @@ static void	cmd_no_permission(char *cmd)
 	exit(126);
 }
 
+static int	check_errno()
+{
+	if (errno == ENOENT)
+		return (127);
+	if (errno == EACCES || errno == EISDIR 
+		|| errno == ENOEXEC || errno == ENOTDIR) 
+		return (126);
+	return (EXIT_FAILURE);
+}
+
 static void	exec_with_env(char *path, char **argv, char **env, int free_path)
 {
 	char	**exec_env;
+	int		code;
 
 	exec_env = clean_env(env);
 	if (!exec_env)
@@ -41,7 +52,8 @@ static void	exec_with_env(char *path, char **argv, char **env, int free_path)
 	free_matrix(exec_env);
 	if (free_path)
 		free(path);
-	exit_with_error(argv[0]);
+	code = check_errno();
+	exit_with_error(argv[0], code);
 }
 
 static void	resolve_and_exec(char **cmd_argv, char **env)
@@ -55,7 +67,7 @@ static void	resolve_and_exec(char **cmd_argv, char **env)
 	if (!cmd_path)
 	{
 		if (errno)
-			exit_with_error(cmd_argv[0]);
+			exit_with_error(cmd_argv[0], EXIT_FAILURE);
 		if (!perm_error)
 			cmd_not_found(cmd_argv[0]);
 		cmd_no_permission(cmd_argv[0]);
@@ -63,10 +75,29 @@ static void	resolve_and_exec(char **cmd_argv, char **env)
 	exec_with_env(cmd_path, cmd_argv, env, 1);
 }
 
+static void	check_is_dir(char *cmd_path)
+{
+	struct stat	st;
+
+	if (stat(cmd_path, &st) == 0)
+	{
+		if (S_ISDIR(st.st_mode))
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd_path, 2);
+			ft_putendl_fd(": Is a directory", 2);
+			exit(126);
+		}
+	}
+}
+
 static void	execute_external(char **cmd_argv, char **env)
 {
 	if (ft_strchr(cmd_argv[0], '/'))
+	{
+		check_is_dir(cmd_argv[0]);
 		exec_with_env(cmd_argv[0], cmd_argv, env, 0);
+	}
 	resolve_and_exec(cmd_argv, env);
 }
 

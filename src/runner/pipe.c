@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:30 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 18:39:38 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/01 19:53:00 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	child_left(int *pfd, t_ast *root, t_shell *shell)
 {
 	close(pfd[0]);
 	if (dup2(pfd[1], 1) == -1)
-		exit_with_error("Pipe: write end");
+		exit_with_error("Pipe: write end", EXIT_FAILURE);
 	close(pfd[1]);
 	exit(runner(root->left, shell));
 }
@@ -25,7 +25,7 @@ static void	child_right(int *pfd, t_ast *root, t_shell *shell)
 {
 	close(pfd[1]);
 	if (dup2(pfd[0], 0) == -1)
-		exit_with_error("Pipe: read end");
+		exit_with_error("Pipe: read end", EXIT_FAILURE);
 	close(pfd[0]);
 	exit(runner(root->right, shell));
 }
