@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/01 15:51:05 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 16:19:21 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	find_to_rem(char **env, char *key)
 	size_t	len;
 
 	i = 0;
-	len = ft_strlen(key) + 1;
+	len = ft_strlen(key);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], key, len) == 0)
