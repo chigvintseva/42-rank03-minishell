@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 15:22:30 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 18:33:10 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	exec_with_env(char *path, char **argv, char **env, int free_path)
 	free_matrix(exec_env);
 	if (free_path)
 		free(path);
-	exit_with_error();
+	exit_with_error(argv[0]);
 }
 
 static void	resolve_and_exec(char **cmd_argv, char **env)
@@ -55,7 +55,7 @@ static void	resolve_and_exec(char **cmd_argv, char **env)
 	if (!cmd_path)
 	{
 		if (errno)
-			exit_with_error();
+			exit_with_error(cmd_argv[0]);
 		if (!perm_error)
 			cmd_not_found(cmd_argv[0]);
 		cmd_no_permission(cmd_argv[0]);
@@ -76,7 +76,7 @@ static int	restore_stdio(int backup[2])
 	{
 		close(backup[0]);
 		close(backup[1]);
-		return (case_error("Dup2", 1));
+		return (case_error("Dup2", EXIT_FAILURE));
 	}
 	close(backup[0]);
 	close(backup[1]);
@@ -90,10 +90,10 @@ static int	run_redirs(t_redir *redirs)
 
 	backup[0] = dup(0);
 	if (backup[0] == -1)
-		return (case_error("Dup", 1));
+		return (case_error("Dup", EXIT_FAILURE));
 	backup[1] = dup(1);
 	if (backup[1] == -1)
-		return (close(backup[0]), case_error("Dup", 1));
+		return (close(backup[0]), case_error("Dup", EXIT_FAILURE));
 	status = apply_redirs(redirs);
 	if (restore_stdio(backup) != 0)
 		return (EXIT_FAILURE);
@@ -108,7 +108,7 @@ static void	child_cmd(t_cmd *cmd, t_shell *shell)
 	execute_external(cmd->argv, shell->env);
 }
 
-static int	wait_cmd(pid_t pid, t_shell *shell)
+static int	parent(pid_t pid, t_shell *shell)
 {
 	int	status;
 
@@ -135,5 +135,5 @@ int	run_cmd(t_cmd *cmd, t_shell *shell)
 		return (case_error("Fork", 1));
 	if (pid == 0)
 		child_cmd(cmd, shell);
-	return (wait_cmd(pid, shell));
+	return (parent(pid, shell));
 }

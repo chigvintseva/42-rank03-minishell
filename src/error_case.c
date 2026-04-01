@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_case.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 16:06:13 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/25 19:00:24 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 18:53:13 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	case_error(char *msg, int code)
 	return (code);
 }
 
-void	exit_with_error()
+void	exit_with_error(char *arg)
 {
-	perror("Error");
+	ft_putstr_fd("minishell: ", 2);
+	perror(arg);
 	exit(errno);
 }
 
