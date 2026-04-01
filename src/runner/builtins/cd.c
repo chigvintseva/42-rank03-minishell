@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/27 17:38:37 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:39:36 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,23 @@ int	builtin_cd(char **argv, char **env)
 		if (!path)
 			return (case_error("minishell: cd: HOME not set", EXIT_FAILURE));
 	}
-	if (invalid_args(argv))
-		return (EXIT_FAILURE);
-	path = argv[1];
+	else
+	{
+		path = argv[1];
+		if (invalid_args(argv))
+			return (EXIT_FAILURE);
+	}
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
 		return (case_error("getcwd failed", EXIT_FAILURE));
-	if (!ft_strcmp(argv[1], "."))
+	if (argv[1] && !ft_strcmp(argv[1], "."))
 		return (update_env(env, "OLDPWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
 	if (chdir((const char *)path) != 0)
-		return (free(cur_dir), cd_error(argv[1]), case_error("", EXIT_FAILURE));
+	{
+		if (argv[1])
+			cd_error(argv[1]);
+		return (free(cur_dir), case_error("", EXIT_FAILURE));
+	}
 	update_env(env, "OLDPWD", cur_dir);
 	free(cur_dir);
 	cur_dir = getcwd(NULL, 0);
