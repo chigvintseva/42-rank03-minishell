@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/01 17:39:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:08:49 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void update_env(char **env, const char *key, const char *value)
 	int i;
 	size_t key_len;
 	char *new_var;
+	char *temp;
 
 	key_len = ft_strlen(key);
 	for (i = 0; env[i]; i++)
@@ -54,17 +55,31 @@ void update_env(char **env, const char *key, const char *value)
 		if (!ft_strncmp(env[i], key, key_len) && env[i][key_len] == '=')
 		{
 			free(env[i]);
-			new_var = ft_strjoin(ft_strjoin(key, "="), value);
+			temp = ft_strjoin(key, "=");
+			if (!temp)
+			{
+				env[i] = ft_strdup("");
+				return ;
+			}
+			new_var = ft_strjoin(temp, value);
+			free(temp);
+			if (!new_var)
+			{
+				env[i] = ft_strdup("");
+				return ;
+			}
 			env[i] = new_var;
-			return;
+			return ;
 		}
 	}
 }
+
 
 int	builtin_cd(char **argv, char **env)
 {
 	char	*path;
 	char	*cur_dir;
+	char	*new_dir;
 
 	if (!argv[1])
 	{
@@ -91,8 +106,11 @@ int	builtin_cd(char **argv, char **env)
 	}
 	update_env(env, "OLDPWD", cur_dir);
 	free(cur_dir);
-	cur_dir = getcwd(NULL, 0);
-	if (!cur_dir)
+	new_dir = getcwd(NULL, 0);
+	if (!new_dir)
 		return (case_error("getcwd failed", EXIT_FAILURE));
-	return (update_env(env, "PWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
+	update_env(env, "PWD", new_dir);
+	free(new_dir);
+	return (EXIT_SUCCESS);
 }
+

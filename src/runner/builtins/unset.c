@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/01 16:19:21 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:06:33 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ static char	**remove_env_var(char **env, int to_rem)
 	char	**new_env;
 	size_t	i;
 	size_t	j;
+	size_t	original_len;
 
-	new_env = malloc(sizeof(char *) * env_len(env));
+	original_len = env_len(env);
+	new_env = malloc(sizeof(char *) * original_len);
 	if (!new_env)
 		return (NULL);
 	i = 0;
@@ -65,7 +67,7 @@ int	builtin_unset(char **argv, char ***env)
 	while (argv[i])
 	{
 		to_rem = find_to_rem(*env, argv[i]);
-		if (to_rem > 0)
+		if (to_rem >= 0)
 		{
 			*env = remove_env_var(*env, to_rem);
 			if (!(*env))

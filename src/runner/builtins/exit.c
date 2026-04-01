@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/31 18:50:45 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:06:37 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,43 @@ static int	is_numeric(char *arg)
 	return (1);
 }
 
+void	cleanup_shell(t_shell *shell)
+{
+	if (shell->env)
+	{
+		free_matrix(shell->env);
+		shell->env = NULL; // Nullify the pointer
+	}
+	// Clear readline history to free allocated memory
+	rl_clear_history();
+}
+
 int	builtin_exit(char **argv, t_shell *shell)
 {
 	printf("exit\n");
+
 	if (!argv[1])
 	{
 		shell->exit_status = 0;
+		cleanup_shell(shell);
 		exit_with_status(shell->exit_status);
 	}
 	else if (!is_numeric(argv[1]))
 	{
 		exit_error(argv[1]);
 		shell->exit_status = 2;
+		cleanup_shell(shell);
+		exit_with_status(shell->exit_status);
 	}
 	else if (argv[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
-		shell->exit_status = 1;
 		return (EXIT_FAILURE);
 	}
 	else 
 	{
 		shell->exit_status = ft_atol(argv[1]) % 256;
+		cleanup_shell(shell);
 		exit_with_status(shell->exit_status);
 	}
 	return (shell->exit_status);	

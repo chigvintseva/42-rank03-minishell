@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:57:15 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 15:25:55 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:06:33 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,13 @@ int	run_builtin(t_cmd *cmd, t_shell *shell)
 	status = apply_redirs(cmd->redirs);
 	if (status == 0)
 		status = execute_builtin(cmd->argv, shell);
-	if (dup2(backup[0], 0) == -1 || dup2(backup[1], 1) == -1)
+	if (dup2(backup[0], 0) == -1)
+	{
+		close(backup[0]);
+		close(backup[1]);
+		return (case_error("Dup2", 1));
+	}
+	if (dup2(backup[1], 1) == -1)
 	{
 		close(backup[0]);
 		close(backup[1]);
