@@ -47,7 +47,7 @@ void update_env(char **env, const char *key, const char *value)
 	int i;
 	size_t key_len;
 	char *new_var;
-	char *temp;
+	char	*temp;
 
 	key_len = ft_strlen(key);
 	for (i = 0; env[i]; i++)
@@ -61,7 +61,7 @@ void update_env(char **env, const char *key, const char *value)
 				env[i] = ft_strdup("");
 				return ;
 			}
-			new_var = ft_strjoin(temp, value);
+			new_var = ft_strjoin(ft_strjoin(key, "="), value);
 			free(temp);
 			if (!new_var)
 			{
@@ -109,8 +109,6 @@ int	builtin_cd(char **argv, char **env)
 	new_dir = getcwd(NULL, 0);
 	if (!new_dir)
 		return (case_error("getcwd failed", EXIT_FAILURE));
-	update_env(env, "PWD", new_dir);
-	free(new_dir);
-	return (EXIT_SUCCESS);
+	return (update_env(env, "PWD", new_dir), free(new_dir), EXIT_SUCCESS);
 }
 
