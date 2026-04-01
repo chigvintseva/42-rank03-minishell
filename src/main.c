@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/02 00:08:38 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/27 15:43:06 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,21 @@ static void	update_sigint_status(t_shell *shell)
 
 void	shell_loop(t_shell *shell)
 {
-	char	buffer[1024];
 	char	*input;
-	size_t	len;
 
 	while (shell->run_further == 1)
 	{
 		update_sigint_status(shell);
-		if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+		input = readline("minishell$ ");
+		if (input == NULL)
 			shell->run_further = 0;
+		else if (ft_strlen(input) == 0 || only_space(input))
+			free(input);
 		else
 		{
-			len = ft_strlen(buffer);
-			if (len > 0 && buffer[len - 1] == '\n')
-				buffer[len - 1] = '\0';
-			if (ft_strlen(buffer) == 0 || only_space(buffer))
-			{
-				/* do nothing, just continue */
-			}
-			else
-			{
-				input = ft_strdup(buffer);
-				if (input)
-				{
-					shell->exit_status = minishell(input, shell);
-					free(input);
-				}
-			}
+			add_history(input);
+			shell->exit_status = minishell(input, shell);
+			free(input);
 		}
 	}	
 }
