@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:28:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/29 23:09:40 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/01 17:59:52 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ static int	redir_input(t_redir *redirs)
 
 	fd = open(redirs->target, O_RDONLY);
 	if (fd == -1)
-		return (case_error("Open", 1)); // print error: "minishell: <redirs->target>: No such file or directory"
+	{
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
+	}
 	if (dup2(fd, 0) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", EXIT_FAILURE));
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
 	}
 	close(fd);
 	return (EXIT_SUCCESS);
@@ -34,11 +38,15 @@ static int	redir_output(t_redir *redirs)
 
 	fd = open(redirs->target, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
-		return (case_error("Open", EXIT_FAILURE));
+	{
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
+	}
 	if (dup2(fd, 1) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", EXIT_FAILURE));
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
 	}
 	close(fd);
 	return (EXIT_SUCCESS);
@@ -50,11 +58,15 @@ static int	redir_append(t_redir *redirs)
 
 	fd = open(redirs->target, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		return (case_error("Open", EXIT_FAILURE));
+	{
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
+	}
 	if (dup2(fd, 1) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", EXIT_FAILURE));
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
 	}
 	close(fd);
 	return (EXIT_SUCCESS);
@@ -66,11 +78,15 @@ static int	redir_heredoc(t_redir *redirs)
 
 	fd = open(redirs->target, O_RDONLY);
 	if (fd == -1)
-		return (case_error("Open", 1));
+	{
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
+	}
 	if (dup2(fd, 0) == -1)
 	{
 		close(fd);
-		return (case_error("Dup2", 1));
+		ft_putstr_fd("minishell: ", 2);
+		return (case_error(redirs->target, EXIT_FAILURE));
 	}
 	close(fd);
 	unlink(redirs->target);
