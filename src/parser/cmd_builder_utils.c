@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:20:41 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/30 20:48:19 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 21:07:18 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static t_redir	*redir_error(t_redir *head, int *error)
 	free_redirs(head);
 	return (NULL);
 }
-
 t_redir	*process_single_redir(t_token *cur, t_token *end, t_redir *head, int *error)
 {
 	t_redir	*new_node;

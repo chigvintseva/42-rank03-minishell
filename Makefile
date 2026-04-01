@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/30 19:21:17 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/03/31 21:34:42 by aleksandra       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,9 @@ NC = \033[0m
 SRC_DIR = src
 SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/minishell.c \
-	$(SRC_DIR)/heredoc_utils.c \
 	$(SRC_DIR)/shell_init_free.c \
 	$(SRC_DIR)/error_case.c \
+	$(SRC_DIR)/heredoc_utils.c \
 	$(SRC_DIR)/lexer/lexer.c \
 	$(SRC_DIR)/lexer/handle_op.c \
 	$(SRC_DIR)/lexer/handle_word.c \

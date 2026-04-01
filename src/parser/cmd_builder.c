@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/30 20:27:59 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 21:22:35 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 		return (NULL);
 	argc = count_cmd_words(start, end);
-	if (argc < 0 || !(prepare_argv_and_redirs(argc, start, end, &redirs, &argv)))
+	if (argc < 0  || !(prepare_argv_and_redirs(argc, start, end, &redirs, &argv)))
 		return (NULL);
 	cmd = new_cmd(argv, argc, redirs);
 	if (!cmd)
