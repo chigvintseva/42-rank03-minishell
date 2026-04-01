@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:28:00 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/02 00:10:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_matrix(char **matrix)
 		i++;
 	}
 	free(matrix);
+	matrix = NULL;
 }
 
 static char	const *find_path_env(char **envp)
@@ -41,34 +42,52 @@ static char	const *find_path_env(char **envp)
 	return (NULL);
 }
 
-char	*parsing(char *cmd, char **envp, int *perm_error)
+static char *create_cmd_path(char *env_path, char *cmd)
 {
-	char	**envp_path;
-	char	*cmd_path;
-	size_t	i;
+	char *cmd_path;
+
+	cmd_path = ft_strjoin(env_path, "/");
+	if (!cmd_path)
+		return (NULL);
+	cmd_path = ft_realloc_join(cmd_path, cmd);
+	if (!cmd_path)
+		return (NULL);
+	return (cmd_path);
+}
+
+static char *find_executable(char **envp_path, char *cmd, int *perm_error)
+{
+	char *cmd_path;
+	size_t i;
+
+	i = 0;
+	while (envp_path[i])
+	{
+		cmd_path = create_cmd_path(envp_path[i], cmd);
+		if (!cmd_path)
+			return (NULL);
+		if (access(cmd_path, F_OK) == 0)
+		{
+			if (access(cmd_path, X_OK) == 0)
+				return (cmd_path);
+			else
+				*perm_error = 1;
+		}
+		free(cmd_path);
+		i++;
+	}
+	return (NULL);
+}
+
+char *parsing(char *cmd, char **envp, int *perm_error)
+{
+	char **envp_path;
+	char *cmd_path;
 
 	envp_path = ft_split(find_path_env(envp), ':');
 	if (!envp_path)
 		return (NULL);
-	i = 0;
-	while (envp_path[i])
-	{
-		cmd_path = ft_strjoin(envp_path[i], "/");
-		if (!cmd_path)
-			return (free_matrix(envp_path), NULL);
-		cmd_path = ft_realloc_join(cmd_path, cmd);
-		if (!cmd_path)
-			return (free_matrix(envp_path), NULL);
-		if (access(cmd_path, F_OK) == 0)
-		{
-			if (access(cmd_path, X_OK) == 0)
-				return (free_matrix(envp_path), cmd_path);
-			else
-				*perm_error = 1;
-		}
-		errno = 0;
-		free(cmd_path);
-		i++;
-	}
-	return (free_matrix(envp_path), NULL);
+	cmd_path = find_executable(envp_path, cmd, perm_error);
+	free_matrix(envp_path);
+	return (cmd_path);
 }

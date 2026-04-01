@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/01 17:39:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:08:49 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ void update_env(char **env, const char *key, const char *value)
 				return ;
 			}
 			env[i] = new_var;
-			return;
+			return ;
 		}
 	}
 }
+
 
 int	builtin_cd(char **argv, char **env)
 {
@@ -110,3 +111,4 @@ int	builtin_cd(char **argv, char **env)
 		return (case_error("getcwd failed", EXIT_FAILURE));
 	return (update_env(env, "PWD", new_dir), free(new_dir), EXIT_SUCCESS);
 }
+
