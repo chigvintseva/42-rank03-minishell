@@ -6,15 +6,15 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:29:32 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 19:21:58 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:49:07 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int	env_len(char **env)
+size_t	env_len(char **env)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (env && env[i])

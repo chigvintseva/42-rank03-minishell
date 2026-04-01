@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/31 18:24:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:51:05 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	find_to_rem(char **env, char *key)
 {
-	int		i;
+	size_t	i;
 	size_t	len;
 
 	i = 0;
@@ -22,7 +22,7 @@ static int	find_to_rem(char **env, char *key)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], key, len) == 0)
-			return (printf("found in env\n"), i);
+			return (i);
 		i++;
 	}
 	return (-1);
@@ -30,23 +30,22 @@ static int	find_to_rem(char **env, char *key)
 
 static char	**remove_env_var(char **env, int to_rem)
 {
-	size_t	env_len;
 	char	**new_env;
 	size_t	i;
 	size_t	j;
 
-	env_len = 0;
-	while(env[env_len])
-		env_len++;
-	new_env = malloc(sizeof(char *) * env_len);
+	new_env = malloc(sizeof(char *) * env_len(env));
 	if (!new_env)
 		return (NULL);
 	i = 0;
 	j = 0;
 	while (env[i])
 	{
-		if ((int)i == to_rem)
+		if (i == (size_t)to_rem)
+		{
 			i++;
+			continue ;
+		}
 		new_env[j] = ft_strdup(env[i]);
 		if (!new_env[j])
 			return (free_matrix(new_env), NULL);
@@ -54,7 +53,7 @@ static char	**remove_env_var(char **env, int to_rem)
 		j++;
 	}
 	new_env[j] = NULL;
-	return (printf("removed\n"), free_matrix(env), new_env);
+	return (free_matrix(env), new_env);
 }
 
 int	builtin_unset(char **argv, char ***env)

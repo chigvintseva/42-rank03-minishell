@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
+#    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/03/31 21:34:42 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/04/01 15:23:28 by achigvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/shell_init_free.c \
 	$(SRC_DIR)/error_case.c \
 	$(SRC_DIR)/heredoc_utils.c \
+	$(SRC_DIR)/runner/clean_env.c \
 	$(SRC_DIR)/lexer/lexer.c \
 	$(SRC_DIR)/lexer/handle_op.c \
 	$(SRC_DIR)/lexer/handle_word.c \
