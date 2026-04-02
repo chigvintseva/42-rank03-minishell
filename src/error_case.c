@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 16:06:13 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 19:31:23 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/02 15:12:53 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,33 @@
 
 int	case_error(char *msg, int code)
 {
-	if (errno != 0)
+	int	err;
+
+	err = errno;
+	if (err != 0)
 	{
-		//code = errno;
+		ft_putstr_fd("minishell: ", 2);
+		errno = err;
 		perror(msg);
+		errno = 0;
 	}	
 	else
+	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putendl_fd(msg, 2);
+	}
 	return (code);
 }
 
 void	exit_with_error(char *arg, int code)
 {
+	int	err;
+
+	err = errno;
 	ft_putstr_fd("minishell: ", 2);
+	errno = err;
 	perror(arg);
-	//exit(errno);
+	errno = 0;
 	exit(code);
 }
 

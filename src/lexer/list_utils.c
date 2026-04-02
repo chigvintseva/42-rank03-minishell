@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:33 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/20 19:43:07 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 17:56:01 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token	*create_token(const char *value, t_token_type type)
+t_token	*create_token(const char *value, t_token_type type, t_lexer *input)
 {
 	t_token	*token;
 	char	*dup_value;
 
-	if (!value)
+	if (!value || !input)
 		return (NULL);
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
+		return (input->err = errno, NULL);
 	dup_value = ft_strdup(value);
 	if (!dup_value)
-		return (free(token), NULL);
+		return (free(token), input->err = errno, NULL);
 	token->type = type;
 	token->value = dup_value;
 	token->next = NULL;
