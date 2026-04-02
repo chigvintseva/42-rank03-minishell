@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:20:41 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 21:07:18 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/03 00:40:28 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	redir_add_back(t_redir **head, t_redir *new_node)
 static t_redir	*redir_error(t_redir *head, int *error)
 {
 	*error = 1;
+	if (errno == 0)
+		errno = EINVAL;
 	free_redirs(head);
 	return (NULL);
 }

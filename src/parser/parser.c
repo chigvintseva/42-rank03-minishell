@@ -19,9 +19,17 @@ t_ast	*parse_tokens(t_token *start)
 
 	end = get_last_token(start);
 	if (start == NULL)
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	if (!is_syntax_valid(start))
+	{
+		errno = 0;
 		return (NULL);
+	}
 	root = build_ast(start, end);
+	if (!root && errno == 0)
+		errno = EINVAL;
 	return (root);
 }
