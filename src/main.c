@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 15:43:06 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 13:29:01 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,24 @@ static void	signal_handler(int signal)
 	}
 }
 
-static void	set_signals(void)
+static int	set_signals(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	sigemptyset(&sa_int.sa_mask);
+	if (sigemptyset(&sa_int.sa_mask) == -1)
+		return (case_error("minishell: sigemptyset", 1));
 	sa_int.sa_handler = signal_handler;
 	sa_int.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa_int, NULL);
-	sigemptyset(&sa_quit.sa_mask);
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+		return (case_error("minishell: sigaction", 1));
+	if (sigemptyset(&sa_quit.sa_mask) == -1)
+		return (case_error("minishell: sigemptyset", 1));
 	sa_quit.sa_handler = SIG_IGN;
 	sa_quit.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa_quit, NULL);
+	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+		return (case_error("minishell: sigaction", 1));
+	return (0);
 }
 
 static void	update_sigint_status(t_shell *shell)
@@ -81,10 +86,11 @@ int	main(int argc, char **argv, char **envp)
 	errno = 0;
 	if (init_shell(&shell, envp) != 0)
 	{
-		shell.exit_status = case_error("Shell Initialisation Error ", 1);
+		shell.exit_status = case_error("minishell: init_shell", EXIT_FAILURE);
 		return (shell.exit_status);
 	}
-	set_signals();
+	if (set_signals() != 0)
+		return (free_shell(&shell), shell.exit_status = 1, shell.exit_status);
 	shell_loop(&shell);
 	free_shell(&shell);
 	return (shell.exit_status);
