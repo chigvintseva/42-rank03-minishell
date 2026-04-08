@@ -3,28 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/01 17:39:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/08 16:31:30 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static void	cd_error(char *arg)
+static int	cd_error(char *arg)
 {
 	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": ", 2);
+	perror(arg);
+	errno = 0;
+	return (EXIT_FAILURE);
 }
 
 static int	invalid_args(char **argv)
 {
 	if (!ft_strcmp(argv[1], "~") ||  !ft_strcmp(argv[1], "-") )
-		return (cd_error(argv[1]), case_error("Not supported argument", EXIT_FAILURE));
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putendl_fd(": not supported argument", 2);
+		return (EXIT_FAILURE);
+	}
 	if (argv[2])
-		return (case_error("minishell: cd: too many arguments", EXIT_FAILURE));
+		return (case_error("cd: too many arguments", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -70,7 +76,7 @@ int	builtin_cd(char **argv, char **env)
 	{
 		path = get_env_var(env, "HOME");
 		if (!path)
-			return (case_error("minishell: cd: HOME not set", EXIT_FAILURE));
+			return (case_error("cd: HOME not set", EXIT_FAILURE));
 	}
 	else
 	{
@@ -80,19 +86,15 @@ int	builtin_cd(char **argv, char **env)
 	}
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
-		return (case_error("getcwd failed", EXIT_FAILURE));
+		return (case_error("cd: getcwd", EXIT_FAILURE));
 	if (argv[1] && !ft_strcmp(argv[1], "."))
 		return (update_env(env, "OLDPWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
 	if (chdir((const char *)path) != 0)
-	{
-		if (argv[1])
-			cd_error(argv[1]);
-		return (free(cur_dir), case_error("", EXIT_FAILURE));
-	}
+		return (free(cur_dir), cd_error(path));
 	update_env(env, "OLDPWD", cur_dir);
 	free(cur_dir);
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
-		return (case_error("getcwd failed", EXIT_FAILURE));
+		return (case_error("cd: getcwd", EXIT_FAILURE));
 	return (update_env(env, "PWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
 }
