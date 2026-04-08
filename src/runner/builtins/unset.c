@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/01 16:19:21 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/08 18:44:24 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	find_to_rem(char **env, char *key)
 	len = ft_strlen(key);
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, len) == 0)
+		if (ft_strncmp(env[i], key, len) == 0 && (env[i][len] == '=' || !env[i][len]))
 			return (i);
 		i++;
 	}
@@ -65,7 +65,7 @@ int	builtin_unset(char **argv, char ***env)
 	while (argv[i])
 	{
 		to_rem = find_to_rem(*env, argv[i]);
-		if (to_rem > 0)
+		if (to_rem >= 0)
 		{
 			*env = remove_env_var(*env, to_rem);
 			if (!(*env))
