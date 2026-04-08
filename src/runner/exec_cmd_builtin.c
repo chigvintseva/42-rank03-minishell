@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 15:57:15 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 15:25:55 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:27:21 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute_builtin(char **cmd_argv, t_shell *shell)
 		return (builtin_env(shell->env, cmd_argv));
 	if (!ft_strcmp(cmd_argv[0], "exit"))
 		return (builtin_exit(cmd_argv, shell));
-	return (EXIT_FAILURE);
+	return (errno = 0, case_error("execute builtin: unknown builtin", EXIT_FAILURE));
 }
 
 int	run_builtin(t_cmd *cmd, t_shell *shell)

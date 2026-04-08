@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 22:55:37 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 21:04:14 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/08 19:36:40 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static void	cmd_not_found(char *cmd)
 
 static void	cmd_no_permission(char *cmd)
 {
-	ft_putstr_fd("minishell: Permission denied: ", 2);
-	ft_putendl_fd(cmd, 2);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd(": Permission denied", 2);
 	exit(126);
 }
 
@@ -46,7 +47,7 @@ static void	exec_with_env(char *path, char **argv, char **env, int free_path)
 	{
 		if (free_path)
 			free(path);
-		exit(EXIT_FAILURE);
+		exit_with_error("clean_env", EXIT_FAILURE);
 	}
 	execve(path, argv, exec_env);
 	free_matrix(exec_env);

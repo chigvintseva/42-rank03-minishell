@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:28:00 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/07 16:55:39 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,42 @@ static char	const *find_path_env(char **envp)
 
 char	*parsing(char *cmd, char **envp, int *perm_error)
 {
-	char	**envp_path;
+	char	**path;
 	char	*cmd_path;
+	char	*path_env;
 	size_t	i;
 
-	envp_path = ft_split(find_path_env(envp), ':');
-	if (!envp_path)
-		return (NULL);
-	i = 0;
-	while (envp_path[i])
+	path_env = (char *)find_path_env(envp);
+	if (!path_env)
+		return (errno = 0, NULL);
+	path = ft_split(path_env, ':');
+	if (!path)
 	{
-		cmd_path = ft_strjoin(envp_path[i], "/");
+		if (errno == 0)
+			errno = ENOMEM;
+		return (NULL);
+	}
+	i = 0;
+	while (path[i])
+	{
+		cmd_path = ft_strjoin(path[i], "/");
 		if (!cmd_path)
-			return (free_matrix(envp_path), NULL);
+		{
+			if (errno == 0)
+				errno = ENOMEM;
+			return (free_matrix(path), NULL);
+		}
 		cmd_path = ft_realloc_join(cmd_path, cmd);
 		if (!cmd_path)
-			return (free_matrix(envp_path), NULL);
+		{
+			if (errno == 0)
+				errno = ENOMEM;
+			return (free_matrix(path), NULL);
+		}
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
-				return (free_matrix(envp_path), cmd_path);
+				return (free_matrix(path), cmd_path);
 			else
 				*perm_error = 1;
 		}
@@ -70,5 +86,5 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 		free(cmd_path);
 		i++;
 	}
-	return (free_matrix(envp_path), NULL);
+	return (free_matrix(path), NULL);
 }
