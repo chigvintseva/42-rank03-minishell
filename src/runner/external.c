@@ -6,26 +6,11 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/10 15:02:04 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 16:30:24 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	free_matrix(char **matrix)
-{
-	size_t	i;
-
-	if (!matrix)
-		return ;
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
 
 static char	const *find_path_env(char **envp)
 {
@@ -59,28 +44,7 @@ static char	**init_path_dirs(char **envp)
 	return (path);
 }
 
-static char	*build_cmd_path(char *cmd, char *dir)
-{
-	char	*cmd_path;
-
-	cmd_path = ft_strjoin(dir, "/");
-	if (!cmd_path)
-	{
-		if (errno == 0)
-			errno = ENOMEM;
-		return (NULL);
-	}
-	cmd_path = ft_realloc_join(cmd_path, cmd);
-	if (!cmd_path)
-	{
-		if (errno == 0)
-			errno = ENOMEM;
-		return (NULL);
-	}
-	return (cmd_path);
-}
-
-char	*parsing(char *cmd, char **envp, int *perm_error)
+static char	*parsing(char *cmd, char **envp, int *perm_error)
 {
 	char	**path;
 	char	*cmd_path;
@@ -107,4 +71,51 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 		i++;
 	}
 	return (free_matrix(path), NULL);
+}
+
+static void	exec_with_env(char *path, char **argv, char **env, int free_path)
+{
+	char	**exec_env;
+
+	exec_env = clean_env(env);
+	if (!exec_env)
+	{
+		if (free_path)
+			free(path);
+		exit_with_error("clean_env", EXIT_FAILURE);
+	}
+	execve(path, argv, exec_env);
+	free_matrix(exec_env);
+	if (free_path)
+		free(path);
+	if (errno == ENOENT)
+		exit_with_error(argv[0], 127);
+	if (errno == EACCES || errno == EISDIR 
+		|| errno == ENOEXEC || errno == ENOTDIR) 
+		exit_with_error(argv[0], 126);
+	exit_with_error(argv[0], EXIT_FAILURE);
+}
+
+void	execute_external(char **cmd_argv, char **env)
+{
+	char	*cmd_path;
+	int		perm_error;
+
+	if (ft_strchr(cmd_argv[0], '/'))
+	{
+		check_is_dir(cmd_argv[0]);
+		exec_with_env(cmd_argv[0], cmd_argv, env, 0);
+	}
+	perm_error = 0;
+	errno = 0;
+	cmd_path = parsing(cmd_argv[0], env, &perm_error);
+	if (!cmd_path)
+	{
+		if (errno)
+			exit_with_error(cmd_argv[0], EXIT_FAILURE);
+		if (!perm_error)
+			cmd_not_found(cmd_argv[0]);
+		cmd_no_permission(cmd_argv[0]);
+	}
+	exec_with_env(cmd_path, cmd_argv, env, 1);
 }

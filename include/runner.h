@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/10 15:50:34 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 16:28:26 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ int		runner(t_ast *node, t_shell *shell);
 int		run_pipe(t_ast *root, t_shell *shell);
 
 int		run_cmd(t_cmd *cmd, t_shell	*shell);
-char	*parsing(char *cmd, char **envp, int *perm_error);
-void	free_matrix(char **matrix);
 int		apply_redirs(t_redir *redirs);
+void	execute_external(char **cmd_argv, char **env);
+void	free_matrix(char **matrix);
+char	*build_cmd_path(char *cmd, char *dir);
+void	check_is_dir(char *cmd_path);
+void	cmd_not_found(char *cmd);
+void	cmd_no_permission(char *cmd);
 
 int		is_builtin(char *cmd);
 int		execute_builtin(char **cmd_argv, t_shell *shell);
