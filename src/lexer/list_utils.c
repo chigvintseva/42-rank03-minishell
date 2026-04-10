@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:33 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/02 17:56:01 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/09 21:02:38 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ int	tokenadd_back(t_token **lst, t_token *new)
 	t_token	*tmp;
 
 	if (!lst || !new)
-		return (1);
+		return (0);
 	if (!*lst)
 	{
 		*lst = new;
-		return (0);
+		return (1);
 	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->prev = tmp;
-	return (0);
+	return (1);
 }
 
 void	free_tokens(t_token *lst)
