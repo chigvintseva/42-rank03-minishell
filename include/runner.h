@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/10 16:28:26 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 17:14:25 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int		run_cmd(t_cmd *cmd, t_shell	*shell);
 int		apply_redirs(t_redir *redirs);
 void	execute_external(char **cmd_argv, char **env);
 void	free_matrix(char **matrix);
+char	**init_path_dirs(char **envp);
 char	*build_cmd_path(char *cmd, char *dir);
+int		is_executable_path(char *cmd_path, int *perm_error);
 void	check_is_dir(char *cmd_path);
 void	cmd_not_found(char *cmd);
 void	cmd_no_permission(char *cmd);

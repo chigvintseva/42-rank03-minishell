@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 16:10:39 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/10 16:27:42 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 17:11:40 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,4 @@ void	cmd_no_permission(char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putendl_fd(": Permission denied", 2);
 	exit(126);
-}
-
-char	*build_cmd_path(char *cmd, char *dir)
-{
-	char	*cmd_path;
-
-	cmd_path = ft_strjoin(dir, "/");
-	if (!cmd_path)
-	{
-		if (errno == 0)
-			errno = ENOMEM;
-		return (NULL);
-	}
-	cmd_path = ft_realloc_join(cmd_path, cmd);
-	if (!cmd_path)
-	{
-		if (errno == 0)
-			errno = ENOMEM;
-		return (NULL);
-	}
-	return (cmd_path);
 }

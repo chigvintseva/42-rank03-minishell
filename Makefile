@@ -6,7 +6,7 @@
 #    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/04/10 16:30:04 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/04/10 17:10:57 by aleksandra       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/exec_cmd_builtin.c \
 	$(SRC_DIR)/runner/external.c \
 	$(SRC_DIR)/runner/external_utils.c \
+	$(SRC_DIR)/runner/parsing_utils.c \
 	$(SRC_DIR)/runner/redir.c \
 	$(SRC_DIR)/runner/builtins/echo.c \
 	$(SRC_DIR)/runner/builtins/cd.c \
