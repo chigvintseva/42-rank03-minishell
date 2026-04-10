@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/07 16:55:39 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 15:02:04 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ static char	const *find_path_env(char **envp)
 	return (NULL);
 }
 
-char	*parsing(char *cmd, char **envp, int *perm_error)
+static char	**init_path_dirs(char **envp)
 {
-	char	**path;
-	char	*cmd_path;
 	char	*path_env;
-	size_t	i;
+	char	**path;
 
 	path_env = (char *)find_path_env(envp);
 	if (!path_env)
@@ -58,23 +56,45 @@ char	*parsing(char *cmd, char **envp, int *perm_error)
 			errno = ENOMEM;
 		return (NULL);
 	}
+	return (path);
+}
+
+static char	*build_cmd_path(char *cmd, char *dir)
+{
+	char	*cmd_path;
+
+	cmd_path = ft_strjoin(dir, "/");
+	if (!cmd_path)
+	{
+		if (errno == 0)
+			errno = ENOMEM;
+		return (NULL);
+	}
+	cmd_path = ft_realloc_join(cmd_path, cmd);
+	if (!cmd_path)
+	{
+		if (errno == 0)
+			errno = ENOMEM;
+		return (NULL);
+	}
+	return (cmd_path);
+}
+
+char	*parsing(char *cmd, char **envp, int *perm_error)
+{
+	char	**path;
+	char	*cmd_path;
+	size_t	i;
+
+	path = init_path_dirs(envp);
+	if (!path)
+		return (NULL);
 	i = 0;
 	while (path[i])
 	{
-		cmd_path = ft_strjoin(path[i], "/");
+		cmd_path = build_cmd_path(cmd, path[i]);
 		if (!cmd_path)
-		{
-			if (errno == 0)
-				errno = ENOMEM;
 			return (free_matrix(path), NULL);
-		}
-		cmd_path = ft_realloc_join(cmd_path, cmd);
-		if (!cmd_path)
-		{
-			if (errno == 0)
-				errno = ENOMEM;
-			return (free_matrix(path), NULL);
-		}
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
