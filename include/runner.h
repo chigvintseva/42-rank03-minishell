@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/01 20:43:00 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 15:50:34 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		is_builtin(char *cmd);
 int		execute_builtin(char **cmd_argv, t_shell *shell);
 int		run_builtin(t_cmd *cmd, t_shell *shell);
 
-char 	*get_env_var(char **env, const char *key);
 void 	update_env(char **env, const char *key, const char *value);
+int		cd_error(char *arg);
 
 int		builtin_echo(char **argv);
 int		builtin_cd(char **argv, char **env);

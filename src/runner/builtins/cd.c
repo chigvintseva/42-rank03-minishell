@@ -6,19 +6,11 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/08 16:31:30 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/10 15:49:36 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-static int	cd_error(char *arg)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	perror(arg);
-	errno = 0;
-	return (EXIT_FAILURE);
-}
 
 static int	invalid_args(char **argv)
 {
@@ -34,7 +26,7 @@ static int	invalid_args(char **argv)
 	return (EXIT_SUCCESS);
 }
 
-char *get_env_var(char **env, const char *key)
+static char *get_env_var(char **env, const char *key)
 {
 	int i;
 	size_t key_len;
@@ -48,23 +40,21 @@ char *get_env_var(char **env, const char *key)
 	return (NULL);
 }
 
-void update_env(char **env, const char *key, const char *value)
+static int	resolve_cd_target(char **argv, char **env, char **path)
 {
-	int i;
-	size_t key_len;
-	char *new_var;
-
-	key_len = ft_strlen(key);
-	for (i = 0; env[i]; i++)
-	{
-		if (!ft_strncmp(env[i], key, key_len) && env[i][key_len] == '=')
-		{
-			free(env[i]);
-			new_var = ft_strjoin(ft_strjoin(key, "="), value);
-			env[i] = new_var;
-			return;
-		}
-	}
+    if (!argv[1])
+    {
+        *path = get_env_var(env, "HOME");
+        if (!*path)
+            return (case_error("cd: HOME not set", EXIT_FAILURE));
+    }
+    else
+    {
+        *path = argv[1];
+        if (invalid_args(argv))
+            return (EXIT_FAILURE);
+    }
+    return (0);
 }
 
 int	builtin_cd(char **argv, char **env)
@@ -72,18 +62,8 @@ int	builtin_cd(char **argv, char **env)
 	char	*path;
 	char	*cur_dir;
 
-	if (!argv[1])
-	{
-		path = get_env_var(env, "HOME");
-		if (!path)
-			return (case_error("cd: HOME not set", EXIT_FAILURE));
-	}
-	else
-	{
-		path = argv[1];
-		if (invalid_args(argv))
-			return (EXIT_FAILURE);
-	}
+	if (resolve_cd_target(argv, env, &path) != 0)
+		return (EXIT_FAILURE);
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
 		return (case_error("cd: getcwd", EXIT_FAILURE));
