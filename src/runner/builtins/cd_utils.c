@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:34:15 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/10 15:50:53 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/15 16:19:02 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ void	update_env(char **env, const char *key, const char *value)
 		}
 	}
 }
-

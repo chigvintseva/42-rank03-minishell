@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 14:46:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/10 13:17:57 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/15 16:16:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	init_lexer(t_lexer *input, char *str)
 	input->err = 0;
 	input->tokens = NULL;
 }
-
 
 static int	process_operator_token(t_lexer *input, int *err_out)
 {
@@ -44,6 +43,7 @@ static int	process_operator_token(t_lexer *input, int *err_out)
 	}
 	return (1);
 }
+
 static int	process_word_token(t_lexer *input, int *err_out, t_shell *shell)
 {
 	t_token	*new_token;

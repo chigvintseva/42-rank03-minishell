@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/03 00:40:28 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/15 16:17:17 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 	}
 	return (head);
 }
+
 static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
 	int		error;
