@@ -1,6 +1,5 @@
 *This project has been created as part of the 42 curriculum by achigvin, asergina.*
 
-___
 
 ## Description
 
@@ -128,7 +127,6 @@ Executed without `execve()` when required (e.g. `cd`, `pwd`)
 - Uses `sigaction`
 - Only one global variable allowed (stores signal number)
 
----
 
 ## Instructions
 
@@ -160,9 +158,6 @@ minishell/
 │
 ├── Makefile
 └── README.md
-
----
+```
 
 ## Resources
-
----
