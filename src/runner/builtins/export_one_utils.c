@@ -6,11 +6,19 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:59:19 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/31 19:21:58 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:20:11 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+int	export_error(char *arg)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	return (EXIT_FAILURE);
+}
 
 int	key_len(char *arg)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_op.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:24:12 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:24:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 17:52:36 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ t_token *handle_operator(t_lexer *input)
 	if (!input || !input->s)
 		return (NULL);
 	if (input->s[input->i] == '|')
-		return (create_token("|", PIPE));
+		return (create_token("|", PIPE, input));
 	else if (input->s[input->i] == '<')
 	{
 		if (input->s[input->i + 1] == '<')
 		{
 			input->i++;
-			return (create_token("<<", HEREDOC));
+			return (create_token("<<", HEREDOC, input));
 		}
 		else
-			return (create_token("<", REDIR_IN));
+			return (create_token("<", REDIR_IN, input));
 	}
 	else if (input->s[input->i] == '>')
 	{
 		if (input->s[input->i + 1] == '>')
 		{
 			input->i++;
-			return (create_token(">>", REDIR_APPEND));
+			return (create_token(">>", REDIR_APPEND, input));
 		}
 		else
-			return (create_token(">", REDIR_OUT));
+			return (create_token(">", REDIR_OUT, input));
 	}
 	return (NULL);
 }

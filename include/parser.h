@@ -69,6 +69,7 @@ t_redir			*new_redir(t_redir_type type, char *target);
 
 // syntax_rules
 int				is_syntax_valid(t_token *lst);
+t_token			*syntax_error_token(t_token *lst);
 
 // free_functions
 void			free_redirs(t_redir *head);

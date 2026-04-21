@@ -19,11 +19,11 @@ int	builtin_env(char **env, char **argv)
 
 	cleaned_env = clean_env(env);
 	if (!cleaned_env)
-		return (EXIT_FAILURE);
+		return (case_error("env: clean_env", EXIT_FAILURE));
 	i = 0;
 	if (argv[1] != NULL)
 	{
-		ft_putstr_fd("env: '", 2);
+		ft_putstr_fd("minishell: env: '", 2);
 		ft_putstr_fd(argv[1], 2);
 		ft_putendl_fd("': No such file or directory", 2);
 		return (free_matrix(cleaned_env), 127);

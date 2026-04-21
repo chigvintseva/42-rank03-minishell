@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:41:51 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:37:10 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 17:54:54 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ typedef struct s_lexer
 {
 	size_t	i;
 	char 	*s;
+	int		err;
 	t_token	*tokens;
 }	t_lexer;
 
-t_token *lexer(char *str, t_shell *shell);
+t_token *lexer(char *str, t_shell *shell, int *err_out);
 
 t_token	*handle_operator(t_lexer *input);
 
@@ -66,7 +67,7 @@ void	fill_dollar(char *word, size_t *k, t_lexer *input, t_shell *shell);
 int 	is_operator(char c);
 int 	is_space(const char c);
 int		check_specialchars(char *s);
-t_token	*create_token(const char *value, t_token_type type);
+t_token	*create_token(const char *value, t_token_type type, t_lexer *input);
 int		tokenadd_back(t_token **lst, t_token *new);
 void	free_tokens(t_token *lst);
 

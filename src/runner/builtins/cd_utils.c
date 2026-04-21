@@ -1,42 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/15 16:33:46 by achigvin         ###   ########.fr       */
+/*   Created: 2026/04/10 15:34:15 by aleksandra        #+#    #+#             */
+/*   Updated: 2026/04/15 16:19:02 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int	builtin_echo(char **argv)
+int	cd_error(char *arg)
 {
-	size_t	i;
-	int		n_flag;
+	ft_putstr_fd("minishell: cd: ", 2);
+	perror(arg);
+	errno = 0;
+	return (EXIT_FAILURE);
+}
 
-	n_flag = 0;
-	i = 1;
-	if (!argv[i])
-		return (write (1, "\n", 1), EXIT_SUCCESS);
-	while (!ft_strcmp(argv[i], "-n"))
+void	update_env(char **env, const char *key, const char *value)
+{
+	int i;
+	size_t key_len;
+	char *new_var;
+
+	key_len = ft_strlen(key);
+	for (i = 0; env[i]; i++)
 	{
-		i++;
-		if (!argv[i])
-			return (EXIT_SUCCESS);
+		if (!ft_strncmp(env[i], key, key_len) && env[i][key_len] == '=')
+		{
+			free(env[i]);
+			new_var = ft_strjoin(ft_strjoin(key, "="), value);
+			env[i] = new_var;
+			return;
+		}
 	}
-	if (i > 1)
-		n_flag = 1;	
-	while (argv[i])
-	{
-		printf("%s", argv[i]);
-		i++;
-		if (argv[i])
-			printf(" ");
-	}
-	if (n_flag == 0)
-		printf("\n");
-	return (EXIT_SUCCESS);
 }

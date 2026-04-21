@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
 /*   Updated: 2026/04/02 00:06:37 by achigvin         ###   ########.fr       */

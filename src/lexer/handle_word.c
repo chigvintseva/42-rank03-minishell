@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:37:50 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/02 17:52:48 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ t_token	*handle_word(t_lexer *input, t_shell *shell)
 	len = count_len(input, shell);
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
-		return (NULL);
+		return (input->err = errno, NULL);
 	fill_word(word, input, shell);
-	token = create_token(word, WORD);
+	token = create_token(word, WORD, input);
 	free(word);
 	return (token);
 }

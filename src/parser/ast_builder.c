@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/21 20:02:52 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/03 00:40:28 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ static t_ast	*build_cmd_node(t_token *start, t_token *end)
 
 	cmd = build_cmd(start, end);
 	if (cmd == NULL)
+	{
+		if (errno == 0)
+			errno = EINVAL;
 		return (NULL);
+	}
 	node = ast_new_cmd(cmd);
 	if (node == NULL)
 		return (free_cmd(cmd), NULL);
@@ -34,7 +38,11 @@ static t_ast	*build_pipe_node(t_token *start, t_token *end, t_token *pipe)
 
 	left = build_ast(start, pipe->prev);
 	if (!left)
+	{
+		if (errno == 0)
+			errno = EINVAL;
 		return (NULL);
+	}
 	right = build_ast(pipe->next, end);
 	if (!right)
 		return (free_ast(left), NULL);
@@ -52,7 +60,10 @@ t_ast	*build_ast(t_token *start, t_token *end)
 
 	if (start == NULL || end == NULL 
 		|| token_in_range(start, end, end) == 0)
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	pipe = find_last_pipe(start, end);
 	if (!pipe)
 		return (build_cmd_node(start, end));

@@ -18,7 +18,7 @@ int	builtin_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (case_error("getcwd failed", EXIT_FAILURE));
+		return (case_error("pwd: getcwd", EXIT_FAILURE));
 	printf("%s\n", pwd);
 	free(pwd);
 	return (EXIT_SUCCESS);

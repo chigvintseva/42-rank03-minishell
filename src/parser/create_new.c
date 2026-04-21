@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/29 18:50:07 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/03 00:40:28 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ t_ast	*ast_new_cmd(t_cmd *cmd)
 	t_ast	*cmd_node;
 
 	if (cmd == NULL)
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	cmd_node = malloc(sizeof(t_ast));
 	if (!cmd_node)
 		return (NULL);
@@ -47,7 +50,10 @@ t_cmd	*new_cmd(char **argv, int argc, t_redir *redirs)
 	t_cmd	*new;
 
 	if (argc < 0 || (argc > 0 && argv == NULL) || (argc == 0 && redirs == NULL))
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
@@ -62,7 +68,10 @@ t_redir	*new_redir(t_redir_type type, char *target)
 	t_redir	*new;
 
 	if (target == NULL)
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	new = malloc(sizeof(t_redir));
 	if (!new)
 		return (NULL);
