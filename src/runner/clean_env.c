@@ -12,6 +12,7 @@
 
 #include "../../include/minishell.h"
 
+
 static int	clean_env_len(char **env)
 {
 	int	i;

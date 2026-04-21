@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
+#    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/04/10 17:10:57 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/04/01 15:23:28 by achigvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,12 +56,9 @@ SRC = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/runner/exec_cmd.c \
 	$(SRC_DIR)/runner/exec_cmd_builtin.c \
 	$(SRC_DIR)/runner/external.c \
-	$(SRC_DIR)/runner/external_utils.c \
-	$(SRC_DIR)/runner/parsing_utils.c \
 	$(SRC_DIR)/runner/redir.c \
 	$(SRC_DIR)/runner/builtins/echo.c \
 	$(SRC_DIR)/runner/builtins/cd.c \
-	$(SRC_DIR)/runner/builtins/cd_utils.c \
 	$(SRC_DIR)/runner/builtins/pwd.c \
 	$(SRC_DIR)/runner/builtins/env.c \
 	$(SRC_DIR)/runner/builtins/export.c \

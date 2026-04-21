@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
 /*   Updated: 2026/04/02 00:06:33 by achigvin         ###   ########.fr       */
@@ -21,7 +21,7 @@ static int	find_to_rem(char **env, char *key)
 	len = ft_strlen(key);
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, len) == 0 && (env[i][len] == '=' || !env[i][len]))
+		if (ft_strncmp(env[i], key, len) == 0)
 			return (i);
 		i++;
 	}

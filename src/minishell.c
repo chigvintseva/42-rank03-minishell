@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:17:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/10 14:06:07 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/31 21:04:35 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,48 +18,10 @@ static int	input_precheck(char *input)
 
 	ret = check_specialchars(input);
 	if (ret == 1)
-		return (errno = 0, case_error("Invalid character", 2));
+		return (case_error("minishell: Invalid character", EXIT_FAILURE));
 	if (ret == 2)
-		return (errno = 0,
-			case_error("unexpected EOF while looking for matching `\"'", 2));
+		return (case_error("minishell:  unexpected EOF while looking for matching `\"'", 2));
 	return (EXIT_SUCCESS);
-}
-
-static int	tokenize_input(char *input, t_shell *shell, t_token **tokens)
-{
-    int	err;
-
-    errno = 0;
-    err = 0;
-    *tokens = lexer(input, shell, &err);
-    if (!*tokens)
-    {
-        errno = err;
-        return (case_error("lexer", EXIT_FAILURE));
-    }
-    return (0);
-}
-
-static int	parse_input(t_ast **root, t_token *tokens)
-{
-	t_token	*bad_token;
-
-	errno = 0;
-	*root = parse_tokens(tokens);
-	if (*root)
-		return (0);
-	if (errno != 0)
-		return (case_error("parser", EXIT_FAILURE));
-	bad_token = syntax_error_token(tokens);
-	if (!bad_token)
-		ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-	else
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-		ft_putstr_fd(bad_token->value, 2);
-		ft_putendl_fd("'", 2);
-	}
-	return (2);
 }
 
 static int	prepare_heredocs_ast(t_ast *root, t_shell *shell)
@@ -71,7 +33,7 @@ static int	prepare_heredocs_ast(t_ast *root, t_shell *shell)
 	status = 0;
 	if (root->type == AST_CMD && root->cmd)
 	{
-		status = handle_heredocs(root->cmd, shell);
+		status = handel_heredocs(root->cmd, shell);
 		if (status != 0)
 			return (status);
 	}
@@ -96,12 +58,13 @@ int	minishell(char *input, t_shell *shell)
 	status = input_precheck(input);
 	if (status != 0)
 		return (status);
-	status = tokenize_input(input, shell, &tokens);
-	if (status != 0)
-		return (status);
-	status = parse_input(&root, tokens);
-	if (status != 0)
-		return (free_tokens(tokens), status);
+	errno = 0;
+	tokens = lexer(input, shell);
+	if (!tokens)
+		return (case_error("minishell: lexer error", 1));
+	root = parse_tokens(tokens);
+	if (!root)
+		return (free_tokens(tokens), case_error("minishell: syntax error near unexpected token", 1));
 	status = prepare_heredocs_ast(root, shell);
 	if (status == 0)
 		status = runner(root, shell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/15 16:17:17 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/03/31 21:22:35 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 		{
 			head = process_single_redir(cur, end, head, error);
 			if (*error)
-			{
-				if (errno == 0)
-					errno = EINVAL;
 				return (NULL);
-			}
 			cur = cur->next;
 		}
 		if (cur == end)
@@ -61,7 +57,6 @@ static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 	}
 	return (head);
 }
-
 static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
 {
 	int		error;
@@ -69,11 +64,7 @@ static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redi
 
 	*redirs = extract_redirs(start, end, &error);
 	if (error != 0)
-	{
-		if (errno == 0)
-			errno = EINVAL;
 		return (NULL);
-	}
 	argv = extract_argv(start, end, argc);
 	if (!argv)
 	{
@@ -91,11 +82,7 @@ static int	prepare_argv_and_redirs(int argc, t_token *start, t_token *end, t_red
 	{
 		*redirs = extract_redirs(start, end, &error);
 		if (error != 0)
-		{
-			if (errno == 0)
-				errno = EINVAL;
  			return (0);
-		}
 		*argv = NULL;
 	}
 	else if (argc > 0)
@@ -115,17 +102,10 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 	t_cmd	*cmd;
 
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
-	{
-		errno = EINVAL;
 		return (NULL);
-	}
 	argc = count_cmd_words(start, end);
 	if (argc < 0  || !(prepare_argv_and_redirs(argc, start, end, &redirs, &argv)))
-	{
-		if (errno == 0)
-			errno = EINVAL;
 		return (NULL);
-	}
 	cmd = new_cmd(argv, argc, redirs);
 	if (!cmd)
 	{

@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/02 14:48:56 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/03/27 15:43:06 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,19 @@ static void	signal_handler(int signal)
 	}
 }
 
-static int	set_signals(void)
+static void	set_signals(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	if (sigemptyset(&sa_int.sa_mask) == -1)
-		return (case_error("sigemptyset", EXIT_FAILURE));
+	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_handler = signal_handler;
 	sa_int.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		return (case_error("sigaction", EXIT_FAILURE));
-	if (sigemptyset(&sa_quit.sa_mask) == -1)
-		return (case_error("sigemptyset", EXIT_FAILURE));
+	sigaction(SIGINT, &sa_int, NULL);
+	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_handler = SIG_IGN;
 	sa_quit.sa_flags = SA_RESTART;
-	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-		return (case_error("sigaction", EXIT_FAILURE));
-	return (0);
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
 static void	update_sigint_status(t_shell *shell)
@@ -86,14 +81,10 @@ int	main(int argc, char **argv, char **envp)
 	errno = 0;
 	if (init_shell(&shell, envp) != 0)
 	{
-		shell.exit_status = case_error("init_shell", EXIT_FAILURE);
+		shell.exit_status = case_error("Shell Initialisation Error ", 1);
 		return (shell.exit_status);
 	}
-	if (set_signals() != 0)
-	{
-		free_shell(&shell);
-		return (EXIT_FAILURE);
-	}
+	set_signals();
 	shell_loop(&shell);
 	free_shell(&shell);
 	return (shell.exit_status);

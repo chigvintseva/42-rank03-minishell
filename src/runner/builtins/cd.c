@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/10 15:49:36 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/02 00:08:49 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
+static void	cd_error(char *arg)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": ", 2);
+}
+
 static int	invalid_args(char **argv)
 {
 	if (!ft_strcmp(argv[1], "~") ||  !ft_strcmp(argv[1], "-") )
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putendl_fd(": not supported argument", 2);
-		return (EXIT_FAILURE);
-	}
+		return (cd_error(argv[1]), case_error("Not supported argument", EXIT_FAILURE));
 	if (argv[2])
-		return (case_error("cd: too many arguments", EXIT_FAILURE));
+		return (case_error("minishell: cd: too many arguments", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
-static char *get_env_var(char **env, const char *key)
+char *get_env_var(char **env, const char *key)
 {
 	int i;
 	size_t key_len;
@@ -40,7 +42,7 @@ static char *get_env_var(char **env, const char *key)
 	return (NULL);
 }
 
-static int	resolve_cd_target(char **argv, char **env, char **path)
+void update_env(char **env, const char *key, const char *value)
 {
 	int i;
 	size_t key_len;
@@ -72,21 +74,36 @@ static int	resolve_cd_target(char **argv, char **env, char **path)
 	}
 }
 
+
 int	builtin_cd(char **argv, char **env)
 {
 	char	*path;
 	char	*cur_dir;
 	char	*new_dir;
 
-	if (resolve_cd_target(argv, env, &path) != 0)
-		return (EXIT_FAILURE);
+	if (!argv[1])
+	{
+		path = get_env_var(env, "HOME");
+		if (!path)
+			return (case_error("minishell: cd: HOME not set", EXIT_FAILURE));
+	}
+	else
+	{
+		path = argv[1];
+		if (invalid_args(argv))
+			return (EXIT_FAILURE);
+	}
 	cur_dir = getcwd(NULL, 0);
 	if (!cur_dir)
-		return (case_error("cd: getcwd", EXIT_FAILURE));
+		return (case_error("getcwd failed", EXIT_FAILURE));
 	if (argv[1] && !ft_strcmp(argv[1], "."))
 		return (update_env(env, "OLDPWD", cur_dir), free(cur_dir), EXIT_SUCCESS);
 	if (chdir((const char *)path) != 0)
-		return (free(cur_dir), cd_error(path));
+	{
+		if (argv[1])
+			cd_error(argv[1]);
+		return (free(cur_dir), case_error("", EXIT_FAILURE));
+	}
 	update_env(env, "OLDPWD", cur_dir);
 	free(cur_dir);
 	new_dir = getcwd(NULL, 0);
