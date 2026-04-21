@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:17:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/10 14:06:07 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:11:05 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

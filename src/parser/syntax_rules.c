@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_rules.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:10 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/03 00:25:17 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:13:48 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

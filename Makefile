@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+         #
+#    By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/01 20:45:35 by achigvin          #+#    #+#              #
-#    Updated: 2026/04/10 17:10:57 by aleksandra       ###   ########.fr        #
+#    Updated: 2026/04/21 19:01:59 by achigvin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

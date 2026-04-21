@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:18 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/03 00:40:28 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:11:32 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

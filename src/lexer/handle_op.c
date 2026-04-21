@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_op.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:24:12 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/02 17:52:36 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:07:54 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

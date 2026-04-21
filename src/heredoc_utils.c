@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 18:21:27 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/03 01:08:35 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:07:27 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

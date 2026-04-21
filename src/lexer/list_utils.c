@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:33 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/09 21:02:38 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:09:01 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

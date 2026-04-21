@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/02 17:52:48 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/21 19:08:15 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
