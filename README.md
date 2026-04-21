@@ -7,91 +7,86 @@ ___
 **Minishell** is a simplified reimplementation of a Unix shell,inspired by **bash**.
 The goal of this project is to deeply understand how shells work internally, including:
 
-....* process creation and management
-....* file descriptors and redirections
-....* environment variables
-....* signal handling
-....* parsing and command execution
+- process creation and management
+- file descriptors and redirections
+- environment variables
+- signal handling
+- parsing and command execution
 
 This project recreates a minimal interactive shell that can interpret and execute user commands while respecting Unix behavior as closely as possible.
 
-
+---
 
 ### Core functionality
 
-....* Interactive prompt using `readline`
-....* Command history
-....* Execution of binaries via:
-......* absolute paths (`/bin/ls`)
-......* relative paths (`./a.out`)
-......* $PATH resolution
+- Interactive prompt using `readline`
+- Command history
+- Execution of binaries via:
+  - absolute paths (`/bin/ls`)
+  - relative paths (`./a.out`)
+  - $PATH resolution
 
-
+---
 
 #### Pipes
 
-....* Supports chaining commands with `|`
+- Supports chaining commands with `|`
 
 Example:
 
 	ls -l | grep .c | wc -l
 
-
+---
 
 #### Redirections
 
-**Operator**			**Description**
-
-`<`						input redirection
-
-`>`						output redirection
-
-`>>`					append output
-
-`<<`					heredoc
+| **Operator** | **Description**    |
+|--------------|--------------------|
+| `<`          | `stdin` redirect   |
+| `>`          | `stdout` overwrite |
+| `>>`         | `stdout` append    |
+| `<<`         | heredoc            |
 
 Example:
 
 	cat < input.txt > output.txt
 
-
+---
 
 #### Environment variables
 
-....* `$VAR` → expansion
-....* `$?` → last exit status
+- `$VAR` → expansion
+- `$?` → last exit status
 
-
+---
 
 #### Quotes
-....* `'single quotes'` → no expansion
-....* `"double quotes"` → allows `$` expansion
+- `'single quotes'` → no expansion
+- `"double quotes"` → allows `$` expansion
 
-
+---
 
 #### Builtins
 
-....* `echo` (with `-n`)
-....* `cd`
-....* `pwd`
-....* `export`
-....* `unset`
-....* `env`
-....* `exit`
+- `echo` (with `-n`)
+- `cd`
+- `pwd`
+- `export`
+- `unset`
+- `env`
+- `exit`
 
-
+---
 
 #### Signals
 
-**Key**					**Behavior**
+| **Key**    | **Behavior**    |
+|------------|-----------------|
+| `Ctrl+C`   | new prompt      |
+| `Ctrl+D`   | exit shell      |
+| `Ctrl+\`   | ignored         |
 
-`Ctrl+C`				new prompt
-
-`Ctrl+D`				exit shell
-
-`Ctrl+\`				ignored
-
-
+---
 
 ### Architecture
 
@@ -101,28 +96,28 @@ Minishell is divided into several logical components:
 
 Splits input into tokens:
 
-....* commands
-....* arguments
-....* operators (`|`, `<`, `>` etc.)
-....* quote logic
-....* environment variables
+- commands
+- arguments
+- operators (`|`, `<`, `>` etc.)
+- quote logic
+- environment variables
 
 #### 2. Parser
 
 Builds a structured representation of commands:
 
-....* command nodes
-....* redirections
-....* pipelines
+- command nodes
+- redirections
+- pipelines
 
 #### 3. Executor
 
 Responsible for:
 
-....* `fork()`
-....* `execve()`
-....* `pipe()`
-....* `dup2()`
+- `fork()`
+- `execve()`
+- `pipe()`
+- `dup2()`
 
 #### 4. Builtins
 
@@ -130,10 +125,10 @@ Executed without `execve()` when required (e.g. `cd`, `pwd`)
 
 #### 5. Signal handling
 
-....* Uses `sigaction`
-....* Only one global variable allowed (stores signal number)
+- Uses `sigaction`
+- Only one global variable allowed (stores signal number)
 
-
+---
 
 ## Instructions
 
@@ -145,10 +140,11 @@ make
 
 ./minishell
 
-
+---
 
 ### Project Structure
 
+```text
 minishell/
 │
 ├── include/
@@ -165,7 +161,8 @@ minishell/
 ├── Makefile
 └── README.md
 
-
+---
 
 ## Resources
 
+---
