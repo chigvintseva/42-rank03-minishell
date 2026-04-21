@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/21 19:04:08 by achigvin          #+#    #+#             */
+/*   Updated: 2026/04/21 19:04:30 by achigvin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -69,6 +81,7 @@ t_redir			*new_redir(t_redir_type type, char *target);
 
 // syntax_rules
 int				is_syntax_valid(t_token *lst);
+t_token			*syntax_error_token(t_token *lst);
 
 // free_functions
 void			free_redirs(t_redir *head);

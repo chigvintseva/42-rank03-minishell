@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:06 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/03/25 17:52:01 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:18:48 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtin_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (case_error("getcwd failed", EXIT_FAILURE));
+		return (case_error("pwd: getcwd", EXIT_FAILURE));
 	printf("%s\n", pwd);
 	free(pwd);
 	return (EXIT_SUCCESS);

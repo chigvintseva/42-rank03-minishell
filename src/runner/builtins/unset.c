@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:54:49 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/02 00:06:33 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:19:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	find_to_rem(char **env, char *key)
 	len = ft_strlen(key);
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, len) == 0)
+		if (ft_strncmp(env[i], key, len) == 0 && (env[i][len] == '=' || !env[i][len]))
 			return (i);
 		i++;
 	}
@@ -33,10 +33,8 @@ static char	**remove_env_var(char **env, int to_rem)
 	char	**new_env;
 	size_t	i;
 	size_t	j;
-	size_t	original_len;
 
-	original_len = env_len(env);
-	new_env = malloc(sizeof(char *) * original_len);
+	new_env = malloc(sizeof(char *) * env_len(env));
 	if (!new_env)
 		return (NULL);
 	i = 0;
