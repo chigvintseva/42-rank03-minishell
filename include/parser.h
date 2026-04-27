@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 19:04:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/27 16:27:20 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:25:35 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ typedef struct s_ast
 	struct s_ast	*right;
 	t_cmd			*cmd;
 }	t_ast;
+
+typedef struct s_cmd_parts
+{
+	int		argc;
+	char	**argv;
+	t_redir	*redirs;
+}	t_cmd_parts;
 
 // parser
 t_ast			*parse_tokens(t_token *tokens);

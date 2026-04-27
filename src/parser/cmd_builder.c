@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/27 16:46:08 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:37:31 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,32 @@ static char	**get_argv_and_redirs(t_token *start,
 	{
 		if (*redirs)
 			free_redirs(*redirs);
+		*redirs = NULL;
 	}
 	return (argv);
 }
 
-static int	prepare_argv_and_redirs(int argc, t_token *start,
-		t_token *end, t_redir **redirs, char ***argv)
+static int	prepare_argv_and_redirs(t_token *start, t_token *end, 
+		t_cmd_parts *parts)
 {
 	int		error;
 
-	if (argc == 0)
+	if (parts->argc == 0)
 	{
-		*redirs = extract_redirs(start, end, &error);
+		parts->redirs = extract_redirs(start, end, &error);
 		if (error != 0)
 		{
 			if (errno == 0)
 				errno = EINVAL;
 			return (0);
 		}
-		*argv = NULL;
+		parts->argv = NULL;
 	}
-	else if (argc > 0)
+	else if (parts->argc > 0)
 	{
-		*argv = get_argv_and_redirs(start, end, argc, redirs);
-		if (!(*argv))
+		parts->argv = get_argv_and_redirs(start, end, parts->argc,
+				&parts->redirs);
+		if (!(parts->argv))
 			return (0);
 	}
 	return (1);
@@ -111,29 +113,28 @@ static int	prepare_argv_and_redirs(int argc, t_token *start,
 
 t_cmd	*build_cmd(t_token *start, t_token *end)
 {
-	int		argc;
-	t_redir	*redirs;
-	char	**argv;
-	t_cmd	*cmd;
+	t_cmd_parts	parts;
+	t_cmd		*cmd;
 
 	if (start == NULL || end == NULL || token_in_range(start, end, end) == 0)
 	{
 		errno = EINVAL;
 		return (NULL);
 	}
-	argc = count_cmd_words(start, end);
-	if (argc < 0 || !(prepare_argv_and_redirs(argc, start,
-				end, &redirs, &argv)))
+	parts.argv = NULL;
+	parts.redirs = NULL;
+	parts.argc = count_cmd_words(start, end);
+	if (parts.argc < 0 || !(prepare_argv_and_redirs(start, end, &parts)))
 	{
 		if (errno == 0)
 			errno = EINVAL;
 		return (NULL);
 	}
-	cmd = new_cmd(argv, argc, redirs);
+	cmd = new_cmd(parts.argv, parts.argc, parts.redirs);
 	if (!cmd)
 	{
-		free_argv(argv);
-		free_redirs(redirs);
+		free_argv(parts.argv);
+		free_redirs(parts.redirs);
 	}
 	return (cmd);
 }
