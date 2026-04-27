@@ -161,3 +161,35 @@ minishell/
 ```
 
 ## Resources
+
+### External Materials
+
+#### 1. Guides we consulted to understad the flow and solution approaches of the project:
+- https://www.cyberciti.biz/faq/linux-bash-exit-status-set-exit-statusin-bash/
+
+- https://42-cursus.gitbook.io/guide/3-rank-03/minishell/functions
+
+- https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
+
+- https://harm-smits.github.io/42docs/projects/minishell 
+
+#### 2. Theoretical materials we went through to acquire the knowledge of the topics required within the project's development
+
+- https://www.cyberciti.biz/faq/linux-bash-exit-status-set-exit-statusin-bash/
+
+- https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet
+
+- https://www.gnu.org/software/bash/manual/bash.html
+
+- https://learngitbranching.js.org/
+
+- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+
+### AI Usage Cases
+
+#### 1. Beginning of the project: 
+After gathering the knowledge from the existing guides and theoretical materials on Bash performance, we used AI chat bots to **summarize the knowledge and get the general summarization of the flow of the developemnt of the minishell and identify what we still lack**. It allowed us not to floow someone's guide exactly but to go from the particular to geeral which later resulted in our own implementation architecture.
+
+#### 2. Development stage:
+While writing the code, AI was mainly used for **quality assurance** of the written code parts in order to avoid multiple repetitive and tedious tasks, **identify and avoid common risks and biases** such as going too much into details and loosing the crucial logic parts due to some human-prone biases.
+
