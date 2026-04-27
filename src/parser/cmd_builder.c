@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:54 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:12:48 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:46:08 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	count_cmd_words(t_token *start, t_token *end)
 	while (cur)
 	{
 		if (is_redir_token(cur->type))
-			cur = cur->next; // go to target
+			cur = cur->next;
 		else if (cur->type == WORD)
 			count++;
 		if (cur == end)
@@ -62,7 +62,8 @@ static t_redir	*extract_redirs(t_token *start, t_token *end, int *error)
 	return (head);
 }
 
-static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redir **redirs)
+static char	**get_argv_and_redirs(t_token *start,
+		t_token *end, int argc, t_redir **redirs)
 {
 	int		error;
 	char	**argv;
@@ -83,7 +84,8 @@ static char	**get_argv_and_redirs(t_token *start, t_token *end, int argc, t_redi
 	return (argv);
 }
 
-static int	prepare_argv_and_redirs(int argc, t_token *start, t_token *end, t_redir **redirs, char ***argv)
+static int	prepare_argv_and_redirs(int argc, t_token *start,
+		t_token *end, t_redir **redirs, char ***argv)
 {
 	int		error;
 
@@ -94,7 +96,7 @@ static int	prepare_argv_and_redirs(int argc, t_token *start, t_token *end, t_red
 		{
 			if (errno == 0)
 				errno = EINVAL;
- 			return (0);
+			return (0);
 		}
 		*argv = NULL;
 	}
@@ -120,7 +122,8 @@ t_cmd	*build_cmd(t_token *start, t_token *end)
 		return (NULL);
 	}
 	argc = count_cmd_words(start, end);
-	if (argc < 0  || !(prepare_argv_and_redirs(argc, start, end, &redirs, &argv)))
+	if (argc < 0 || !(prepare_argv_and_redirs(argc, start,
+				end, &redirs, &argv)))
 	{
 		if (errno == 0)
 			errno = EINVAL;

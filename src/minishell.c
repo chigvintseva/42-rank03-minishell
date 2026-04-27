@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 19:17:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:11:05 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:49:36 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ static int	input_precheck(char *input)
 
 static int	tokenize_input(char *input, t_shell *shell, t_token **tokens)
 {
-    int	err;
+	int	err;
 
-    errno = 0;
-    err = 0;
-    *tokens = lexer(input, shell, &err);
-    if (!*tokens)
-    {
-        errno = err;
-        return (case_error("lexer", EXIT_FAILURE));
-    }
-    return (0);
+	errno = 0;
+	err = 0;
+	*tokens = lexer(input, shell, &err);
+	if (!*tokens)
+	{
+		errno = err;
+		return (case_error("lexer", EXIT_FAILURE));
+	}
+	return (0);
 }
 
 static int	parse_input(t_ast **root, t_token *tokens)
@@ -52,7 +52,10 @@ static int	parse_input(t_ast **root, t_token *tokens)
 		return (case_error("parser", EXIT_FAILURE));
 	bad_token = syntax_error_token(tokens);
 	if (!bad_token)
-		ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+	{
+		ft_putstr_fd("minishell: syntax error", 2);
+		ft_putendl_fd("near unexpected token `newline'", 2);
+	}
 	else
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);

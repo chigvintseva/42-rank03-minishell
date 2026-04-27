@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:39:23 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:09:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:30:56 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	shell_loop(t_shell *shell)
 			shell->exit_status = minishell(input, shell);
 			free(input);
 		}
-	}	
+	}
 }
 
 int	main(int argc, char **argv, char **envp)

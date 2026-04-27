@@ -6,20 +6,20 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 19:04:08 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:04:30 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:27:20 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-typedef enum	e_ast_type
+typedef enum e_ast_type
 {
 	AST_CMD,
 	AST_PIPE
 }	t_ast_type;
 
-typedef enum	e_redir_type
+typedef enum e_redir_type
 {
 	R_IN,
 	R_OUT,
@@ -58,7 +58,8 @@ t_ast			*build_ast(t_token *start, t_token *end);
 // cmd_builder_utils
 t_redir_type	token_to_redir_type(t_token_type type);
 void			redir_add_back(t_redir **head, t_redir *new_node);
-t_redir			*process_single_redir(t_token *cur, t_token *end, t_redir *head, int *error);
+t_redir			*process_single_redir(t_token *cur, t_token *end, 
+					t_redir *head, int *error);
 
 // cmd_argv
 char			**extract_argv(t_token *start, t_token *end, int argc);

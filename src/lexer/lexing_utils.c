@@ -6,13 +6,13 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:25 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 16:01:23 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:47:53 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int is_operator(char c)
+int	is_operator(char c)
 {
 	if (c == '|' || c == '<' || c == '>')
 		return (1);
@@ -43,8 +43,8 @@ int	only_space(char *str)
 int	check_specialchars(char *s)
 {
 	size_t	i; 
-	int	in_single;
-	int	in_double;
+	int		in_single;
+	int		in_double;
 
 	i = 0;
 	in_single = 0;
@@ -75,5 +75,5 @@ void	print_tokens(t_token *lst)
 	{
 		printf("type: %d valuse: %s\n", lst->type, lst->value);
 		lst = lst->next;
-	}	
+	}
 }

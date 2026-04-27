@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 16:06:13 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:05:34 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:29:43 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	case_error(char *msg, int code)
 		errno = err;
 		perror(msg);
 		errno = 0;
-	}	
+	}
 	else
 	{
 		ft_putstr_fd("minishell: ", 2);

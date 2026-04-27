@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_init_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 17:59:53 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/26 22:41:14 by aleksandra       ###   ########.fr       */
+/*   Updated: 2026/04/27 16:33:15 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	free_shell(t_shell *shell)
 	rl_clear_history();
 }
 
-int init_shell(t_shell *shell, char **envp)
+int	init_shell(t_shell *shell, char **envp)
 {
 	char	**envp_copy;
 	size_t	i;
-	
+
 	shell->env = NULL;
 	shell->exit_status = 0;
 	shell->run_further = 1;

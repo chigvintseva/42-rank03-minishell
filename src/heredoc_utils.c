@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 18:21:27 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/21 19:07:27 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:32:13 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static int	read_heredoc(t_redir *redirs, t_shell *shell)
 	if (!write_hd_lines(fd, redirs))
 	{
 		errno = 0;
-		ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd("minishell: warning: \
+			here-document delimited by end-of-file (wanted `", 2);
 		ft_putstr_fd(redirs->target, 2);
 		ft_putendl_fd("')", 2);
 	}
@@ -83,7 +84,8 @@ static int	read_heredoc(t_redir *redirs, t_shell *shell)
 	free(redirs->target);
 	redirs->target = ft_strdup(hd_path);
 	if (!redirs->target)
-		return (free(hd_path), errno = ENOMEM, case_error("here-document", EXIT_FAILURE));
+		return (free(hd_path), errno = ENOMEM,
+			case_error("here-document", EXIT_FAILURE));
 	free(hd_path);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:00:58 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/07 14:00:58 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:46:43 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_redirs(t_redir *head)
 {
-	t_redir *temp;
+	t_redir	*temp;
 
 	while (head != NULL)
 	{
@@ -27,7 +27,7 @@ void	free_redirs(t_redir *head)
 
 void	free_argv(char **argv)
 {
-	size_t i;
+	size_t	i;
 
 	if (argv == NULL)
 		return ;
@@ -44,7 +44,6 @@ void	free_cmd(t_cmd *cmd)
 {
 	if (cmd == NULL)
 		return ;
-	
 	free_argv(cmd->argv);
 	free_redirs(cmd->redirs);
 	free(cmd);
@@ -63,7 +62,7 @@ void	free_ast(t_ast *root)
 
 void	free_part_argv(char **argv, size_t filled)
 {
-	size_t i;
+	size_t	i;
 
 	if (argv == NULL)
 		return ;

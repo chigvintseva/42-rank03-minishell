@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:20:41 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:13:09 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:44:17 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static t_redir	*redir_error(t_redir *head, int *error)
 	return (NULL);
 }
 
-t_redir	*process_single_redir(t_token *cur, t_token *end, t_redir *head, int *error)
+t_redir	*process_single_redir(t_token *cur, t_token *end,
+		t_redir *head, int *error)
 {
 	t_redir	*new_node;
 

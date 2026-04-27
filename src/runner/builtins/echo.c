@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/21 19:16:06 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:38:44 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	builtin_echo(char **argv)
 			return (EXIT_SUCCESS);
 	}
 	if (i > 1)
-		n_flag = 1;	
+		n_flag = 1;
 	while (argv[i])
 	{
 		printf("%s", argv[i]);

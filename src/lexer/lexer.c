@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 14:46:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:08:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:48:16 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	process_word_token(t_lexer *input, int *err_out, t_shell *shell)
 	return (1);
 }
 
-t_token *lexer(char *str, t_shell *shell, int *err_out)
+t_token	*lexer(char *str, t_shell *shell, int *err_out)
 {
 	t_lexer	input;
 

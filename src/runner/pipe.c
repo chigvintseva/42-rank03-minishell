@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:57:30 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:23:16 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:42:53 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ int	run_pipe(t_ast *root, t_shell *shell)
 	}
 	if (pid1 == 0)
 		child_left(pfd, root, shell);
-	return(parent_process(pfd, pid1, root, shell));
+	return (parent_process(pfd, pid1, root, shell));
 }

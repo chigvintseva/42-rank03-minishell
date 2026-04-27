@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static char	const *find_path_env(char **envp)
+static char	const	*find_path_env(char **envp)
 {
 	int	i;
 

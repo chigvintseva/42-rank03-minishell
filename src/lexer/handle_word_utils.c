@@ -6,12 +6,11 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:24:44 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:27:56 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:48:26 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
 
 int	is_word_end(char c, int inside)
 {

@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 16:19:26 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:04:57 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:27:55 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		is_builtin(char *cmd);
 int		execute_builtin(char **cmd_argv, t_shell *shell);
 int		run_builtin(t_cmd *cmd, t_shell *shell);
 
-void 	update_env(char **env, const char *key, const char *value);
+void	update_env(char **env, const char *key, const char *value);
 int		cd_error(char *arg);
 
 int		builtin_echo(char **argv);

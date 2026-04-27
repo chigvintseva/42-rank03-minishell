@@ -6,20 +6,12 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 18:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:03:40 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:53:49 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-typedef struct	s_shell
-{
-	char			**env;
-	int				exit_status;
-	int				run_further;
-	unsigned int	heredoc_id;
-} t_shell;
 
 # include <stdio.h>
 # include <stdlib.h>

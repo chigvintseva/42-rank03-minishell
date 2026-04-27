@@ -22,19 +22,21 @@ int	cd_error(char *arg)
 
 void	update_env(char **env, const char *key, const char *value)
 {
-	int i;
-	size_t key_len;
-	char *new_var;
+	int		i;
+	size_t	key_len;
+	char	*new_var;
 
 	key_len = ft_strlen(key);
-	for (i = 0; env[i]; i++)
+	i = 0;
+	while (env[i])
 	{
 		if (!ft_strncmp(env[i], key, key_len) && env[i][key_len] == '=')
 		{
 			free(env[i]);
 			new_var = ft_strjoin(ft_strjoin(key, "="), value);
 			env[i] = new_var;
-			return;
+			return ;
 		}
+		i++;
 	}
 }

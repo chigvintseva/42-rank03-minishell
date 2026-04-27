@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/21 19:17:35 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:36:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	export_one(char *arg, t_shell *shell)
 
 int	builtin_export(char **argv, t_shell *shell)
 {
-	char **env_copy;
+	char	**env_copy;
 	int		ret;
 	size_t	i;
 

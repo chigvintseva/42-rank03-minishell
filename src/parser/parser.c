@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 14:01:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:13:31 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:43:49 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_ast	*parse_tokens(t_token *start)
 {
 	t_ast	*root;
-	t_token *end;
+	t_token	*end;
 
 	end = get_last_token(start);
 	if (start == NULL)

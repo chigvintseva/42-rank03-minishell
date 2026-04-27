@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 14:55:11 by aleksandra        #+#    #+#             */
-/*   Updated: 2026/04/21 19:17:03 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:38:57 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ int	builtin_exit(char **argv, t_shell *shell)
 		shell->exit_status = ft_atol(argv[1]) % 256;
 		exit_with_status(shell->exit_status);
 	}
-	return (shell->exit_status);	
+	return (shell->exit_status);
 }
