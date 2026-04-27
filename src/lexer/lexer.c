@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 14:46:03 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/21 19:08:36 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:45:10 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	init_lexer(t_lexer *input, char *str)
+static void	init_lexer(t_lexer *input, char *str, t_shell *shell)
 {
 	input->s = str;
 	input->i = 0;
 	input->err = 0;
 	input->tokens = NULL;
+	input->shell = shell;
 }
 
 static int	process_operator_token(t_lexer *input, int *err_out)
@@ -74,7 +75,7 @@ t_token *lexer(char *str, t_shell *shell, int *err_out)
 
 	if (!str || !shell)
 		return (*err_out = EINVAL, NULL);
-	init_lexer(&input, str);
+	init_lexer(&input, str, shell);
 	while (input.s[input.i])
 	{
 		if (is_space(input.s[input.i]))
