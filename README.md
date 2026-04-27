@@ -188,7 +188,7 @@ minishell/
 ### AI Usage Cases
 
 #### 1. Beginning of the project: 
-After gathering the knowledge from the existing guides and theoretical materials on Bash performance, we used AI chat bots to **summarize the knowledge and get the general summarization of the flow of the developemnt of the minishell and identify what we still lack**. It allowed us not to floow someone's guide exactly but to go from the particular to geeral which later resulted in our own implementation architecture.
+After gathering the knowledge from the existing guides and theoretical materials on Bash performance, we used AI chat bots to **summarize the knowledge and get the general summarization of the flow of the developemnt of the minishell and identify what we still lack**. It allowed us not to follow someone's guide exactly but to go from the particular to general which later resulted in our own implementation architecture.
 
 #### 2. Development stage:
 While writing the code, AI was mainly used for **quality assurance** of the written code parts in order to avoid multiple repetitive and tedious tasks, **identify and avoid common risks and biases** such as going too much into details and loosing the crucial logic parts due to some human-prone biases.
