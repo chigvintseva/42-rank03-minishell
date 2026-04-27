@@ -6,17 +6,17 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:42:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/27 16:35:16 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:11:13 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 static void	fill_one_part(char *word, size_t *k,
-	t_lexer *input, t_shell *shell, int inside)
+	t_lexer *input, int inside)
 {
 	if (input->s[input->i] == '$' && inside != 2)
-		fill_dollar(word, k, input, shell);
+		fill_dollar(word, k, input, input->shell);
 	else
 	{
 		word[*k] = input->s[input->i];
@@ -25,7 +25,7 @@ static void	fill_one_part(char *word, size_t *k,
 	}
 }
 
-static void	fill_word(char *word, t_lexer *input, t_shell *shell)
+static void	fill_word(char *word, t_lexer *input)
 {
 	size_t	k;
 	int		inside;
@@ -36,7 +36,7 @@ static void	fill_word(char *word, t_lexer *input, t_shell *shell)
 	{
 		if (handle_quote_fill(input, &inside))
 			continue ;
-		fill_one_part(word, &k, input, shell, inside);
+		fill_one_part(word, &k, input, inside);
 	}
 	word[k] = '\0';
 }
@@ -49,11 +49,11 @@ t_token	*handle_word(t_lexer *input, t_shell *shell)
 
 	if (!input || !input->s || !shell)
 		return (NULL);
-	len = count_len(input, shell);
+	len = count_len(input);
 	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (input->err = errno, NULL);
-	fill_word(word, input, shell);
+	fill_word(word, input);
 	token = create_token(word, WORD, input);
 	free(word);
 	return (token);

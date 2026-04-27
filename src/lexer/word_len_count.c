@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_len_count.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 17:29:29 by achigvin          #+#    #+#             */
-/*   Updated: 2026/03/27 17:31:13 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:48:22 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ size_t	count_dollar_len(t_lexer *input, t_shell *shell, size_t *j)
 	return (ft_strlen(value));
 }
 
-void	count_one_part(t_lexer *input, t_shell *shell,
+void	count_one_part(t_lexer *input,
 	size_t *j, size_t *len, int inside)
 {
 	if (input->s[*j] == '$' && inside != 2)
-		*len += count_dollar_len(input, shell, j);
+		*len += count_dollar_len(input, input->shell, j);
 	else
 	{
 		(*len)++;
@@ -68,7 +68,7 @@ void	count_one_part(t_lexer *input, t_shell *shell,
 	}
 }
 
-size_t	count_len(t_lexer *input, t_shell *shell)
+size_t	count_len(t_lexer *input)
 {
 	size_t	len;
 	size_t	j;
@@ -81,7 +81,7 @@ size_t	count_len(t_lexer *input, t_shell *shell)
 	{
 		if (handle_quote_len(input, &j, &inside))
 			continue ;
-		count_one_part(input, shell, &j, &len, inside);
+		count_one_part(input, &j, &len, inside);
 	}
 	return (len);
 }

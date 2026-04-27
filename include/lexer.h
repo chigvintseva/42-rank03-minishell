@@ -6,7 +6,7 @@
 /*   By: achigvin <achigvin@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 16:41:51 by achigvin          #+#    #+#             */
-/*   Updated: 2026/04/27 16:54:10 by achigvin         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:11:19 by achigvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_lexer
 	char	*s;
 	int		err;
 	t_token	*tokens;
+	t_shell	*shell;
 }	t_lexer;
 
 t_token	*lexer(char *str, t_shell *shell, int *err_out);
@@ -61,9 +62,8 @@ char	*get_env_value(t_shell *shell, char *name, size_t len);
 
 int		handle_quote_len(t_lexer *input, size_t *j, int *inside);
 size_t	count_dollar_len(t_lexer *input, t_shell *shell, size_t *j);
-void	count_one_part(t_lexer *input, t_shell *shell,
-			size_t *j, size_t *len, int inside);
-size_t	count_len(t_lexer *input, t_shell *shell);
+void	count_one_part(t_lexer *input, size_t *j, size_t *len, int inside);
+size_t	count_len(t_lexer *input);
 
 int		handle_quote_fill(t_lexer *input, int *inside);
 void	copy_value(char *word, size_t *k, char *value);
